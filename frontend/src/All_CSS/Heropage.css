@@ -1,0 +1,14 @@
+
+.img-box{
+   
+    animation: move 6s linear infinite;
+}
+
+@keyframes move {
+    0%{
+        transform: translateX(0%);
+    }
+    100%{
+        transform: translateX(calc(250px * 7));
+    }
+}

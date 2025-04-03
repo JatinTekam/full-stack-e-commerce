@@ -1,0 +1,20 @@
+[
+    {
+        "url":"../assets/img1.jpeg"
+    },
+    {
+        "url":"img2.jpg"
+    },
+    {
+        "url":"./img3.jpg"
+    },
+    {
+        "url":"./img3.jpg"
+    },
+    {
+        "url":"./img4.jpg"
+    },
+    {
+        "url":"./img5.jpg"
+    }
+]

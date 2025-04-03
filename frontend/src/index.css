@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+.active{
+    width: 3px;
+    color: rgba(255, 255, 255, 0.692);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.685);
+    padding-bottom: 5px;
+    
+}
+
+@media (max-width:640px) {
+
+    .phone{
+        padding-left: 30px;
+        padding-right: 35px;
+    }
+    .option{
+        right: 120px;
+    }
+
+    .hide{
+        display: none;
+    }
+    
+}
+
+@media (max-width:455px) {
+    .hide1{
+        display: none;
+    }
+}
