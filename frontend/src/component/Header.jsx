@@ -5,13 +5,14 @@ import { LiaUserSolid } from "react-icons/lia";
 import { Search } from "../Context/SearchContext";
 import { Link, NavLink } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
+import { IoMdArrowBack } from "react-icons/io";
+import { AiFillHome } from "react-icons/ai";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 const Header = () => {
 
   const[visible,setVisible]=useState(false);
   const [sreach, setSearch] = useContext(Search);
-    console.log(visible);
     
   const handleSearch = () => {
     setSearch(!sreach);
@@ -22,7 +23,7 @@ const Header = () => {
       <h2 className="text-3xl">
         <i>Rive</i>
       </h2>
-      <ul className="hidden lg:flex  justify-between  gap-7">
+      <ul className="hidden lg:flex  justify-between  gap-7 ml-15">
         <li className="py-2  hover:cursor-pointe ">
           <NavLink to="/">Home</NavLink>
         </li>
@@ -87,8 +88,28 @@ const Header = () => {
 
      {/* Side Menu Bar For Mobile Screen */}
 
-      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
-        Jatin
+      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-black transition-all ${visible ? 'w-full' : 'w-0'}`}>
+        <div className="flex flex-col">
+            <div className="flex items-center  gap-1 p-3 text-white text-2xl " onClick={()=>setVisible(false)}>
+                    <IoMdArrowBack className="cursor-pointer"/>
+                    <p className="pb-0.5 cursor-pointer">Back</p>
+            </div>
+
+            <div className="mt-10 flex flex-col gap-2 text-center">
+            <li className="mb-4 mt-2 list-none">
+            <NavLink to="/" className="p-3" onClick={()=>setVisible(false)}>Home</NavLink>
+            </li>
+            <li className="mb-4 mt-2 list-none">
+            <NavLink to="/collection" className="p-3" onClick={()=>setVisible(false)}>Collection</NavLink>
+            </li>
+            <li className="mb-4 mt-2 list-none">
+            <NavLink to="/contact" className="p-3 " onClick={()=>setVisible(false)}>Contact</NavLink>
+            </li>
+            <li className="mb-4 mt-2 list-none">
+            <NavLink to="/about" className="p-3 " onClick={()=>setVisible(false)}>About</NavLink>
+            </li> 
+            </div>
+        </div>
       </div>
 
     </div>

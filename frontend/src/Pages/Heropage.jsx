@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import image from "../assets/image.js"
 import "../All_CSS/Heropage.css";
 import { Search } from '../Context/SearchContext';
+import BestSelling from '../component/BestSelling.jsx';
 
 const Heropage = () => {
 
@@ -10,6 +11,7 @@ const Heropage = () => {
 
     
   return (
+    <>
     <div className=' pb-10 bg-black  text-white pt-10'>
        { sreach && <div className='text-center mb-10'> 
             <input type="text" className='bg-transparent w-[400px] p-2 outline-none border rounded-2xl' placeholder='Search Here'/>
@@ -42,9 +44,10 @@ const Heropage = () => {
         </div>
        
        </div>
-      
-        
     </div>
+
+    <BestSelling/>
+    </>
   )
 }
 
