@@ -1,4 +1,3 @@
-
 import img1 from "../assets/img1.jpeg";
 import img2 from "../assets/img2.jpg";
 import img3 from "../assets/img3.jpg";
@@ -8,43 +7,128 @@ import img6 from "../assets/img6.jpg";
 import img7 from "../assets/img7.jpg";
 import img8 from "../assets/img8.jpg";
 import img9 from "../assets/img9.jpg";
+import img10 from "../assets/img10.jpg";
+import img11 from "../assets/img11.jpg";
+import img12 from "../assets/img12.jpg";
+import img13 from "../assets/img13.jpg";
 
- const imgs={
-     img1,
-     img2,
-     img2,
-     img3,
-     img4,
-     img5,
-     img6
-}
+export const images = [
+  {
+    img: img1,
+  },
+  {
+    img: img2,
+  },
+  {
+    img: img3,
+  },
+  {
+    img: img4,
+  },
+  {
+    img: img5,
+  },
+  {
+    img: img6,
+  },
+];
 
-export const bestSelling=[
-    {
-        id:1,
-        url:img7,
-        title:"Japan coffee outer",
-        description:"Silk and linen blend polo shirt with stripes that fits slim",
-        price:400
+export const bestSelling = [
+  {
+    id: 1,
+    url: img7,
+    title: "Japan coffee outer",
+    description: "Silk and linen blend polo shirt with stripes that fits slim",
+    price: 450,
+  },
+  {
+    id: 2,
+    url: img9,
+    title: "CozyCloud",
+    description: "Silk and linen blend polo shirt with stripes that fits slim",
+    price: 600,
+  },
+  {
+    id: 3,
+    url: img8,
+    title: "Urban Moss",
+    description:
+      "Stylish olive-green hoodie crafted from premium organic fabric",
+    price: 700,
+  },
 
-    },
-    {
-        id:2,
-        url:img9,
-        title:"CozyCloud",
-        description:"Silk and linen blend polo shirt with stripes that fits slim",
-        price:600
-
-    },
-    {
-        id:3,
-        url:img8,
-        title:"Urban Moss",
-        description:"Stylish olive-green hoodie crafted from premium organic fabric",
-        price:700
-
-    },
-    
-]
-
-export default imgs;
+  {
+    id: 4,
+    url: img4,
+    title: "Urban Moss Hoodie",
+    description:
+      "Comfortable beige travel tee, made for everyday wear.",
+    price: 800,
+  },
+  {
+    id: 5,
+    url: img2,
+    title: "Velvet Ember Jacket",
+    description:
+      "A sleek maroon jacket with soft inner lining and minimalist design.",
+    price: 700,
+  },
+  {
+    id: 6,
+    url: img3,
+    title: "Nomad Thread T-Shirt",
+    description: "Comfortable beige travel tee, made for everyday wear.",
+    price: 550,
+  },
+  {
+    id: 7,
+    url: img4,
+    title: "Shadow Loom Sweater",
+    description: "Cozy black knit sweater perfect for chilly evenings.",
+    price: 720,
+  },
+  {
+    id: 8,
+    url: img5,
+    title: "Ivory Drift Tee",
+    description:
+      "Classic off-white t-shirt with a relaxed fit and soft cotton feel.",
+    price: 500,
+  },
+  {
+    id: 9,
+    url: img6,
+    title: "Copper Lane Flannel",
+    description:
+      "Earth-toned flannel shirt ideal for layering in cooler weather.",
+    price: 680,
+  },
+  {
+    id: 10,
+    url: img10,
+    title: "Crimson Dune Hoodie",
+    description: "Bold red hoodie with kangaroo pocket and adjustable hood.",
+    price: 750,
+  },
+  {
+    id: 11,
+    url: img11,
+    title: "Frost Theory Jacket",
+    description: "Lightweight silver windbreaker with water-resistant fabric.",
+    price: 880,
+  },
+  {
+    id: 12,
+    url: img12,
+    title: "Lunar Grove Sweatshirt",
+    description: "Forest green crewneck with eco-conscious cotton blend.",
+    price: 730,
+  },
+  {
+    id: 13,
+    url: img13,
+    title: "Echo Knit Pullover",
+    description: "Ultra-soft knit pullover with a calming neutral tone.",
+    price: 690,
+  },
+];

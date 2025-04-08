@@ -2,7 +2,7 @@ import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
-import { MySearchContext } from '../Context/SearchContext'
+import { MySearchContext } from "../ProductContext/ProductContext.jsx"
 
 const Applayout = () => {
   return (

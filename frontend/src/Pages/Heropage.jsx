@@ -1,20 +1,21 @@
 import React, { useContext, useState } from 'react'
 //import imges from "../Heroimages.json";
-import image from "../assets/image.js"
+import {images} from "../assets/image.js"
 import "../All_CSS/Heropage.css";
-import { Search } from '../Context/SearchContext';
+import { Search } from '../ProductContext/ProductContext.jsx';
 import BestSelling from '../component/BestSelling.jsx';
+import HeroPageImages from '../component/HeroPageImages.jsx';
 
 const Heropage = () => {
 
-  const [sreach]= useContext(Search);
-
+  const [sreach,setSearch,bestSellingPrtoudct]= useContext(Search);
+  
     
   return (
     <>
     <div className=' pb-10 bg-black  text-white pt-10'>
        { sreach && <div className='text-center mb-10'> 
-            <input type="text" className='bg-transparent w-[400px] p-2 outline-none border rounded-2xl' placeholder='Search Here'/>
+            <input type="text" className='w-[70vw] bg-transparent md:w-[450px] p-2 outline-none border rounded-2xl' placeholder='Search Here'/>
         </div>}
         <div className='flex flex-col items-center'>
         <h3 className='py-3 px-2 border rounded-xl '>New Spring Collection 2025</h3>
@@ -23,24 +24,11 @@ const Heropage = () => {
         </div>
       <div className='overflow-x-hidden'>
         <div className='flex justify-around mt-15 gap-5 '>
-            <figure className='min-w-[200px] h-[300px] '>
-                <img src={image.img1} alt="" className='w-full h-[300px] rounded-t-4xl'/>
-            </figure>
-            <figure className='hide1 min-w-[200px] h-[300px]'>
-                <img src={image.img2} alt="" className='w-full h-[300px] rounded-t-4xl'/>
-            </figure>
-            <figure className='hide min-w-[200px] h-[300px]'>
-                <img src={image.img3} alt="" className='w-full h-[300px] rounded-t-4xl'/>
-            </figure>
-            <figure className='hidden md:block min-w-[200px] h-[300px]'>
-                <img src={image.img4} alt="" className='w-full h-[300px] rounded-t-4xl'/>
-            </figure>
-            <figure className='hidden lg:block min-w-[200px] h-[300px] '>
-                <img src={image.img5} alt="" className='w-full h-[300px] rounded-t-4xl'/>
-            </figure>
-            <figure className='hidden lg:block min-w-[200px] h-[300px]'>
-                <img src={image.img6} alt="" className='w-full h-[300px] rounded-t-4xl'/>
-            </figure>     
+           {
+            images.map((image,index)=>{
+                return <HeroPageImages image={image} index={index} key={index}/>
+            })
+           }
         </div>
        
        </div>

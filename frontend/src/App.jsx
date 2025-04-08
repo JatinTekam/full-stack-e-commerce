@@ -1,6 +1,5 @@
 
 import Applayout from './component/Applayout'
-import { MySearchContext } from './Context/SearchContext'
 import Heropage from './Pages/Heropage'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Signup from './Pages/Signup';

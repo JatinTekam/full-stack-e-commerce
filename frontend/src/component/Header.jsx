@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FiShoppingBag } from "react-icons/fi";
 import { LiaUserSolid } from "react-icons/lia";
-import { Search } from "../Context/SearchContext";
+import { Search } from "../ProductContext/ProductContext.jsx";
 import { Link, NavLink } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoMdArrowBack } from "react-icons/io";
@@ -12,10 +12,13 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 const Header = () => {
 
   const[visible,setVisible]=useState(false);
-  const [sreach, setSearch] = useContext(Search);
+  const [search, setSearch] = useContext(Search);
+
+
+  
     
   const handleSearch = () => {
-    setSearch(!sreach);
+    setSearch(!search);
   };
 
   return (
