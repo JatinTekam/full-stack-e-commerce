@@ -8,6 +8,27 @@
     
 }
 
+.imghover:hover{
+    transform: scale(1.5);
+    transition: all 0.3s;
+}
+
+.move{
+    animation: forward 1s infinite linear;
+}
+
+@keyframes forward {
+    0%{
+        transform: translateX(0);
+    }
+    50%{
+        transform: translateX(3px);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
 @media (max-width:640px) {
 
     .phone{

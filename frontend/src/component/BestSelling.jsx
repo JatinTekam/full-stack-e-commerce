@@ -1,18 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import BestSellingProduct from "./BestSellingProduct.jsx";
 import { Search } from "../ProductContext/ProductContext.jsx";
+import AllProduct from '../component/AllProduct.jsx';
 
-
-const BestSelling = () => {
-  const[sreach,setSearch,bestSellingPrtoudct] = useContext(Search);
+ const BestSelling = () => {
+  const[sreach,setSearch,allProduct] = useContext(Search);
   const[bestProduct,setBestProduct]=useState([]);
 
   useEffect(()=>{
-    setBestProduct(bestSellingPrtoudct.slice(0,4))
+    setBestProduct(allProduct.slice(0,4))
   },[])
  
   return (
-    <div className="h-[300px] text-center">
+    <div className=" text-center">
       <h2 className="pt-12 text-4xl font-bold">
         <i>Best selling</i>
       </h2>
@@ -20,11 +19,11 @@ const BestSelling = () => {
         Stay cozy and stylish with our exclusive collection of best-selling
         hoodies !
       </p>
-      <div className="w-full  pb-3 pt-7 flex flex-wrap justify-center gap-5">
+      <div className="w-full pb-3 pt-7 mb-5 flex flex-wrap justify-center gap-5">
        
         {
           bestProduct.map((product)=>{
-           return <BestSellingProduct product={product} width={"300px"} key={product.id}/>
+           return <AllProduct product={product} key={product.id}/>
           })
         }
       </div>

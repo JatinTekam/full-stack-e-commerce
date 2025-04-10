@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import {bestSelling} from "../assets/image.js"
+import {allProduct} from "../assets/image.js"
 
 export const Search=createContext();
 
@@ -7,7 +7,7 @@ export const MySearchContext=({children})=>{
   const[sreach,setSearch]=useState(false);
 
   const bestSellingPrtoudct=[
-    ...bestSelling
+    ...allProduct
   ]
   
   

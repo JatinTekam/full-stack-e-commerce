@@ -2,18 +2,16 @@ import React from "react";
 import { FiShoppingBag } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-const BestSellingProduct = ({ product,width}) => {
+const AllProduct = ({ product}) => {
   
-  const{id,url,title,description,price}=product;
+ const{id,url,title,description,price}=product;
 
-
-  
 
   return (
-    <Link to={`/product/${id}`}>
-            <div className={`w-[${width}] pb-5`}>
+    <Link to={`/product/${id} `} className="">
+            <div className={`w-[300px] pb-5 rounded-2xl`}>
               <figure className=" h-[320px] rounded-2xl overflow-hidden">
-                <img src={url} alt="" />
+                <img src={url} alt="" className="imghover"/>
               </figure>
               <p className="text-start pl-3 pt-3 font-bold text-lg">
                 {title}{" "}
@@ -29,7 +27,8 @@ const BestSellingProduct = ({ product,width}) => {
               </div>
             </div>
           </Link>
+    
   );
 };
 
-export default BestSellingProduct;
+export default AllProduct;

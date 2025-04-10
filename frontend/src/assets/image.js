@@ -33,7 +33,7 @@ export const images = [
   },
 ];
 
-export const bestSelling = [
+export const allProduct = [
   {
     id: 1,
     url: img7,
@@ -76,7 +76,7 @@ export const bestSelling = [
   {
     id: 6,
     url: img3,
-    title: "Nomad Thread T-Shirt",
+    title: "Crimson Dune Hoodie",
     description: "Comfortable beige travel tee, made for everyday wear.",
     price: 550,
   },
@@ -106,7 +106,7 @@ export const bestSelling = [
   {
     id: 10,
     url: img10,
-    title: "Crimson Dune Hoodie",
+    title: "Nomad Thread T-Shirt",
     description: "Bold red hoodie with kangaroo pocket and adjustable hood.",
     price: 750,
   },
