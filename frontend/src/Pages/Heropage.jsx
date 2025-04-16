@@ -8,6 +8,8 @@ import HeroPageImages from '../component/HeroPageImages.jsx';
 import FreshArrival from '../component/FreshArrival.jsx';
 import { FaArrowRight } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
+import Testimonials from '../component/Testimonials.jsx';
+import Service from '../component/Service.jsx';
 
 const Heropage = () => {
 
@@ -22,7 +24,7 @@ const Heropage = () => {
         </div>}
         <div className='flex flex-col items-center'>
        <Link to="/collection">
-       <h3 className='py-3 px-2 border rounded-xl flex justify-center items-center gap-2 hover:cursor-pointer'>New Spring Collection 2025 <FaArrowRight className='move text-2xl'/></h3>
+       <h3 className='py-3 px-2 border rounded-xl flex justify-center items-center gap-2 hover:cursor-pointer'>New Spring Collection 2025</h3>
        </Link>
         <p className='text-4xl mt-8 text-center'><i>Where style meets expression, trends inspire, and fashion thrives</i></p>
         <p className='pt-4 text-md text-center'>Step into a fashion where the latest trends meet your unique style aspirations. Redefine your wardrobe with Desober today !</p>
@@ -40,6 +42,8 @@ const Heropage = () => {
     </div>
     <BestSelling/>
     <FreshArrival/>
+    <Testimonials/>
+    <Service/>
     </>
   )
 }

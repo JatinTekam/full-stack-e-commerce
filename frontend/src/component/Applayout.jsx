@@ -11,7 +11,7 @@ const Applayout = () => {
     <Header/>
     <Outlet/>
     </MySearchContext>
-    {/* <Footer/> */}
+    <Footer/>
     </>
   )
 }

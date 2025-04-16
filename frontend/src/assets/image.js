@@ -11,6 +11,11 @@ import img10 from "../assets/img10.jpg";
 import img11 from "../assets/img11.jpg";
 import img12 from "../assets/img12.jpg";
 import img13 from "../assets/img13.jpg";
+import test1 from "../assets/test1.jpg";
+import test2 from "../assets/test2.jpg";
+import test3 from "../assets/test3.jpeg";
+import test4 from "../assets/test4.png";
+
 
 export const images = [
   {
@@ -75,14 +80,14 @@ export const allProduct = [
   },
   {
     id: 6,
-    url: img3,
+    url: img13,
     title: "Crimson Dune Hoodie",
     description: "Comfortable beige travel tee, made for everyday wear.",
     price: 550,
   },
   {
     id: 7,
-    url: img4,
+    url: img3,
     title: "Shadow Loom Sweater",
     description: "Cozy black knit sweater perfect for chilly evenings.",
     price: 720,
@@ -124,11 +129,30 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     price: 730,
   },
-  {
-    id: 13,
-    url: img13,
-    title: "Echo Knit Pullover",
-    description: "Ultra-soft knit pullover with a calming neutral tone.",
-    price: 690,
-  },
+ 
 ];
+
+
+export const testimonialsImg=[
+
+  {
+     name:"Jhon Cooper",
+     img:test1,
+     location: 'London, UK'
+  },
+  {
+     name:"Lily",
+     img:test2,
+     location: 'Paris, France'
+  },
+  {
+      name:"Anvi",
+      img:test3,
+      location: 'Mumbai, India'
+  },
+  {
+      name:"James",
+      img:test4,
+      location: 'Pune, India'
+  }
+]

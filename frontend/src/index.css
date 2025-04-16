@@ -42,6 +42,27 @@
     .hide{
         display: none;
     }
+    .gap-box{
+        gap: 15px;
+    }
+    .width-phone{
+        width: 14rem;
+    }
+    .test-box{
+        width: 90vw;
+       
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    .center{
+        text-align: center;
+    }
+    .mybox{
+        justify-content: left;
+    }
+    
     
 }
 
