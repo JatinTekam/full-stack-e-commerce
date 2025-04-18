@@ -4,7 +4,7 @@ import {allProduct} from "../assets/image.js"
 export const Search=createContext();
 
 export const MySearchContext=({children})=>{
-  const[sreach,setSearch]=useState(false);
+  const[search,setSearch]=useState(false);
 
   const bestSellingPrtoudct=[
     ...allProduct
@@ -12,5 +12,5 @@ export const MySearchContext=({children})=>{
   
   
 
-    return <Search.Provider value={[sreach,setSearch,bestSellingPrtoudct]}>{children}</Search.Provider>
+    return <Search.Provider value={{search,setSearch,bestSellingPrtoudct}}>{children}</Search.Provider>
 }

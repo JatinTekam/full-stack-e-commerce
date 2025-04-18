@@ -3,11 +3,11 @@ import { Search } from "../ProductContext/ProductContext";
 import AllProduct from "./AllProduct";
 
 const FreshArrival = () => {
-  const [sreach, setSearch, allProduct] = useContext(Search);
+  const {bestSellingPrtoudct} = useContext(Search);
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    setProduct(allProduct.slice(0,12));
+    setProduct(bestSellingPrtoudct.slice(0,12));
   }, []);
 
 

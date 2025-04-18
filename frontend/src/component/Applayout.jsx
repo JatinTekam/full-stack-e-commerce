@@ -10,8 +10,9 @@ const Applayout = () => {
     <MySearchContext>
     <Header/>
     <Outlet/>
-    </MySearchContext>
     <Footer/>
+    </MySearchContext>
+    
     </>
   )
 }

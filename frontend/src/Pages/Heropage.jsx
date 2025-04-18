@@ -13,14 +13,14 @@ import Service from '../component/Service.jsx';
 
 const Heropage = () => {
 
-  const [sreach]= useContext(Search);
+  const {search}= useContext(Search);
   
     
   return (
     <>
     <div className=' pb-10 bg-black  text-white pt-10'>
-       { sreach && <div className='text-center mb-10'> 
-            <input type="text" className='w-[70vw] bg-transparent md:w-[450px] p-2 outline-none border rounded-2xl' placeholder='Search Here'/>
+       { search && <div className='text-center mb-10 '> 
+            <input type="text" className='w-[70vw] bg-transparent md:w-[450px] p-2 outline-none border rounded-2xl transition-opacity' placeholder='Search Here'/>
         </div>}
         <div className='flex flex-col items-center'>
        <Link to="/collection">

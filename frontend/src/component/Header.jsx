@@ -2,23 +2,20 @@ import React, { useContext, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FiShoppingBag } from "react-icons/fi";
 import { LiaUserSolid } from "react-icons/lia";
-import { Search } from "../ProductContext/ProductContext.jsx";
 import { Link, NavLink } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoMdArrowBack } from "react-icons/io";
 import { AiFillHome } from "react-icons/ai";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { Search } from "../ProductContext/ProductContext";
 
 const Header = () => {
 
+  const{search,setSearch}=useContext(Search);
   const[visible,setVisible]=useState(false);
-  const [search, setSearch] = useContext(Search);
 
-
-  
-    
   const handleSearch = () => {
-    setSearch(!search);
+    setSearch(!search)
   };
 
   return (
@@ -31,13 +28,13 @@ const Header = () => {
           <NavLink to="/">Home</NavLink>
         </li>
         <li className=" py-2  hover:cursor-pointer ">
-          <NavLink to="/collection">Collection</NavLink>{" "}
+          <NavLink to="/collection">Collection</NavLink>
         </li>
         <li className=" py-2  hover:cursor-pointer ">Men</li>
         <li className=" py-2  hover:cursor-pointer ">Women</li>
         <li className=" py-2  hover:cursor-pointer ">Chidren</li>
         <li className=" py-2  hover:cursor-pointer ">
-          <NavLink to="/contact">Contact</NavLink>{" "}
+          <NavLink to="/contact">Contact</NavLink>
         </li>
       </ul>
       <div className="flex gap-3 justify-center items-center">

@@ -3,11 +3,11 @@ import { Search } from "../ProductContext/ProductContext.jsx";
 import AllProduct from '../component/AllProduct.jsx';
 
  const BestSelling = () => {
-  const[sreach,setSearch,allProduct] = useContext(Search);
+  const{bestSellingPrtoudct} = useContext(Search);
   const[bestProduct,setBestProduct]=useState([]);
 
   useEffect(()=>{
-    setBestProduct(allProduct.slice(0,4))
+    setBestProduct(bestSellingPrtoudct.slice(0,4))
   },[])
  
   return (
