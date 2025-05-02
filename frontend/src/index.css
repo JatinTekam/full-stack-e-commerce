@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+.active{
+    width: 3px;
+    color: rgba(255, 255, 255, 0.692);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.685);
+    padding-bottom: 5px;
+    
+}
+
+.imghover:hover{
+    transform: scale(1.5);
+    transition: all 0.3s;
+}
+
+.move{
+    animation: forward 1s infinite linear;
+}
+
+@keyframes forward {
+    0%{
+        transform: translateX(0);
+    }
+    50%{
+        transform: translateX(3px);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+@media (max-width:640px) {
+
+    .phone{
+        padding-left: 30px;
+        padding-right: 35px;
+    }
+    .option{
+        right: 120px;
+    }
+
+    .hide{
+        display: none;
+    }
+    .gap-box{
+        gap: 15px;
+    }
+    .width-phone{
+        width: 14rem;
+    }
+    .test-box{
+        width: 90vw;
+       
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    .center{
+        text-align: center;
+    }
+    .mybox{
+        justify-content: left;
+    }
+    
+    
+}
+
+@media (max-width:455px) {
+    .hide1{
+        display: none;
+    }
+    .pl-mobile{
+        padding-left: 5px;
+    }
+}
