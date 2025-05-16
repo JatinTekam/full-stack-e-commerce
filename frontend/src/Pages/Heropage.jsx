@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 //import imges from "../Heroimages.json";
 import {images} from "../assets/image.js"
 import "../All_CSS/Heropage.css";
@@ -10,10 +10,20 @@ import { FaArrowRight } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import Testimonials from '../component/Testimonials.jsx';
 import Service from '../component/Service.jsx';
+import { useSelector } from 'react-redux';
 
 const Heropage = () => {
 
+  const[headerImages,setHeaderImages]=useState([]);
   const {search}= useContext(Search);
+
+
+ useEffect(()=>{
+ setHeaderImages(images)
+  
+ },[])
+
+ 
   
     
   return (
@@ -32,7 +42,7 @@ const Heropage = () => {
       <div className='overflow-x-hidden'>
         <div className='flex justify-around mt-15 gap-5 '>
            {
-            images.map((image,index)=>{
+             headerImages?.map((image,index)=>{
                 return <HeroPageImages image={image} index={index} key={index}/>
             })
            }

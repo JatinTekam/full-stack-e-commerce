@@ -1,13 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Search } from "../ProductContext/ProductContext.jsx";
 import AllProduct from '../component/AllProduct.jsx';
+import { useSelector } from "react-redux";
+
 
  const BestSelling = () => {
-  const{bestSellingPrtoudct} = useContext(Search);
+
   const[bestProduct,setBestProduct]=useState([]);
+  
+  const product=useSelector((state)=>state.productReducer.product);
+ 
+  
 
   useEffect(()=>{
-    setBestProduct(bestSellingPrtoudct.slice(0,4))
+    setBestProduct(product.slice(0,4))
   },[])
  
   return (

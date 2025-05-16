@@ -6,6 +6,9 @@ import Signup from './Pages/Signup';
 import Contact from './Pages/Contact';
 import Collection from './Pages/Collection';
 import Cart from './Pages/Cart';
+
+
+
 const router=createBrowserRouter([
   {
     path:"/",
@@ -36,6 +39,7 @@ const router=createBrowserRouter([
 ])
 
 function App() {
+  
 
  return <div className=''>
    <RouterProvider router={router}/>
