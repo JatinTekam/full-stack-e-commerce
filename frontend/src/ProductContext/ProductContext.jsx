@@ -5,6 +5,7 @@ export const Search=createContext();
 
 export const MySearchContext=({children})=>{
   const[search,setSearch]=useState(false);
+  const[showCart,setShowCart]=useState(true);
 
   const bestSellingPrtoudct=[
     ...allProduct
@@ -12,5 +13,5 @@ export const MySearchContext=({children})=>{
   
   
 
-    return <Search.Provider value={{search,setSearch,bestSellingPrtoudct}}>{children}</Search.Provider>
+    return <Search.Provider value={{search,setSearch,bestSellingPrtoudct,showCart,setShowCart}}>{children}</Search.Provider>
 }

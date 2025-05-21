@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom'
 import {Provider} from 'react-redux'
 import { store } from '../store/store'
 import { MySearchContext } from '../ProductContext/ProductContext'
+import Cart from '../Pages/Cart'
 const Applayout = () => {
   return (
     <>
@@ -14,6 +15,7 @@ const Applayout = () => {
     <Outlet/>
     <Footer/>
     </Provider>
+    <Cart/>
     </MySearchContext>
     </>
   )

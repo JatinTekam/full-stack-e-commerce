@@ -7,7 +7,7 @@ const FreshArrival = () => {
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    setProduct(bestSellingPrtoudct.slice(0,12));
+    setProduct(bestSellingPrtoudct.slice(0,16));
   }, []);
 
 

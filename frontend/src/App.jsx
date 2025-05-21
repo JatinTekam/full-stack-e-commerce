@@ -6,6 +6,9 @@ import Signup from './Pages/Signup';
 import Contact from './Pages/Contact';
 import Collection from './Pages/Collection';
 import Cart from './Pages/Cart';
+import IndiviualPage from './Pages/IndiviualPage';
+import { getIndiviualData } from './Pages/getIndiviualData';
+
 
 
 
@@ -24,11 +27,13 @@ const router=createBrowserRouter([
       },
       {
         path:"/collection",
-        element:<Collection/>
+        element:<Collection/>,
+
       },
       {
-        path:"/cart",
-        element:<Cart/>
+        path:"/product/:id",
+        element:<IndiviualPage/>,
+        loader:getIndiviualData
       }
     ]
   },

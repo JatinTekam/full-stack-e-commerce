@@ -11,7 +11,7 @@ import { Search } from "../ProductContext/ProductContext";
 
 const Header = () => {
 
-  const{search,setSearch}=useContext(Search);
+  const{search,setSearch,showCart,setShowCart}=useContext(Search);
   const[visible,setVisible]=useState(false);
 
   const handleSearch = () => {
@@ -76,7 +76,7 @@ const Header = () => {
           <CiSearch />
         </li>
         <li className="list-none p-2 text-xl border rounded-xl hover:cursor-pointer">
-          <NavLink to="/cart" className="relative">
+          <NavLink className="relative" onClick={()=>setShowCart(!showCart)}>
             <FiShoppingBag />
             <p className="absolute left-[20px] top-[11px] border border-amber-50 rounded-3xl px-1 bg-black text-sm">1</p>
           </NavLink>
