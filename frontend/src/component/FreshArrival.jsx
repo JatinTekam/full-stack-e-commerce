@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Search } from "../ProductContext/ProductContext";
 import AllProduct from "./AllProduct";
+import { useSelector } from "react-redux";
 
 const FreshArrival = () => {
-  const {bestSellingPrtoudct} = useContext(Search);
+  const products=useSelector((state)=>state.productReducer.productData);
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    setProduct(bestSellingPrtoudct.slice(0,16));
+    setProduct(products.slice(0,16));
   }, []);
 
 

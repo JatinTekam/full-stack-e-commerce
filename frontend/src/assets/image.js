@@ -62,7 +62,10 @@ export const allProduct = [
     description: "Silk and linen blend polo shirt with stripes that fits slim",
     rating:4.2,
     price: 450,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 2,
@@ -71,7 +74,10 @@ export const allProduct = [
     description: "Silk and linen blend polo shirt with stripes that fits slim",
     rating:4,
     price: 600,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 3,
@@ -81,7 +87,10 @@ export const allProduct = [
       "Stylish olive-green hoodie crafted from premium organic fabric",
       rating:4.2,
     price: 700,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
 
   {
@@ -92,7 +101,10 @@ export const allProduct = [
       "Comfortable beige travel tee, made for everyday wear.",
       rating:3.7,
     price: 800,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 5,
@@ -102,7 +114,10 @@ export const allProduct = [
       "A sleek maroon jacket with soft inner lining and minimalist design.",
       rating:4,
     price: 700,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 6,
@@ -111,7 +126,10 @@ export const allProduct = [
     description: "Comfortable beige travel tee, made for everyday wear.",
     rating:4.7,
     price: 550,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 7,
@@ -120,7 +138,10 @@ export const allProduct = [
     description: "Cozy black knit sweater perfect for chilly evenings.",
     rating:4.8,
     price: 720,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 8,
@@ -130,7 +151,10 @@ export const allProduct = [
       "Classic off-white t-shirt with a relaxed fit and soft cotton feel.",
       rating:3.5,
     price: 500,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 9,
@@ -140,7 +164,10 @@ export const allProduct = [
       "Earth-toned flannel shirt ideal for layering in cooler weather.",
       rating:4.2,
     price: 680,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 10,
@@ -149,7 +176,10 @@ export const allProduct = [
     description: "Bold red hoodie with kangaroo pocket and adjustable hood.",
     rating:4.4,
     price: 750,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 11,
@@ -158,7 +188,10 @@ export const allProduct = [
     description: "Lightweight silver windbreaker with water-resistant fabric.",
     rating:4.9,
     price: 880,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 12,
@@ -167,7 +200,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.5,
     price: 730,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 13,
@@ -176,7 +212,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.1,
     price: 700,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 14,
@@ -185,7 +224,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4,
     price: 550,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 15,
@@ -194,7 +236,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.5,
     price: 650,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 16,
@@ -203,7 +248,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.1,
     price: 500,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 17,
@@ -212,7 +260,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.7,
     price: 500,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 18,
@@ -221,7 +272,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.2,
     price: 500,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 19,
@@ -230,7 +284,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.2,
     price: 500,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 20,
@@ -239,7 +296,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.9,
     price: 500,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 21,
@@ -248,7 +308,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:5,
     price: 750,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 22,
@@ -257,7 +320,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.2,
     price: 550,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 23,
@@ -266,7 +332,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.1,
     price: 500,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 24,
@@ -275,7 +344,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.8,
     price: 450,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 25,
@@ -284,7 +356,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.4,
     price: 520,
-    category:"Women"
+    category:"Women",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 26,
@@ -293,7 +368,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.9,
     price: 700,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 27,
@@ -302,7 +380,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:5,
     price: 500,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
   {
     id: 28,
@@ -311,7 +392,10 @@ export const allProduct = [
     description: "Forest green crewneck with eco-conscious cotton blend.",
     rating:4.2,
     price: 490,
-    category:"Men"
+    category:"Men",
+    color:"",
+    quantity:1,
+    size:"M"
   },
 
  

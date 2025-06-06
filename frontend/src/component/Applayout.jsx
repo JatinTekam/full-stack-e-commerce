@@ -10,11 +10,9 @@ const Applayout = () => {
   return (
     <>
    <MySearchContext>
-    <Provider store={store}>
     <Header/>
     <Outlet/>
     <Footer/>
-    </Provider>
     <Cart/>
     </MySearchContext>
     </>

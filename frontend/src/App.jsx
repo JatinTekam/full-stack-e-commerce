@@ -5,9 +5,9 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Signup from './Pages/Signup';
 import Contact from './Pages/Contact';
 import Collection from './Pages/Collection';
-import Cart from './Pages/Cart';
 import IndiviualPage from './Pages/IndiviualPage';
 import { getIndiviualData } from './Pages/getIndiviualData';
+import Login from './Pages/Login';
 
 
 
@@ -40,6 +40,10 @@ const router=createBrowserRouter([
   {
     path:"/signup",
     element:<Signup/>
+  },
+  {
+    path:"/login",
+    element:<Login/>
   }
 ])
 

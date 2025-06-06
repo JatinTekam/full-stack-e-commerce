@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Search } from "../ProductContext/ProductContext";
 import { IoMdArrowDropdown } from "react-icons/io";
 import AllProduct from "../component/AllProduct";
+import { useSelector } from "react-redux";
 
 const Collection = () => {
-  const { bestSellingPrtoudct } = useContext(Search);
+  const products=useSelector((state)=>state.productReducer.productData);
   const [showFilter, setShowFilter] = useState(false);
   const [collectionProduct, setcollectionProduct] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -21,7 +22,7 @@ const Collection = () => {
 
 
   const filterProduct=()=>{
-    let copyProduct=bestSellingPrtoudct.slice();
+    let copyProduct=products.slice();
     if(categories.length > 0){
       copyProduct=copyProduct.filter(item=>categories.includes(item.category))
     }

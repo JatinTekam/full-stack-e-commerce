@@ -8,18 +8,19 @@ import { useSelector } from "react-redux";
 
   const[bestProduct,setBestProduct]=useState([]);
   
-  const product=useSelector((state)=>state.productReducer.product);
+  const product=useSelector((state)=>state.productReducer.productData);
  
   
 
   useEffect(()=>{
     setBestProduct(product.slice(0,4))
+    
   },[])
  
   return (
     <div className=" text-center">
       <h2 className="pt-12 text-4xl font-bold">
-        <i>Best selling</i>
+        <i>Best selling Products</i>
       </h2>
       <p className="mt-2 text-lg">
         Stay cozy and stylish with our exclusive collection of best-selling
