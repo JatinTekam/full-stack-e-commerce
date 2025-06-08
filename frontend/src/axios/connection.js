@@ -17,3 +17,18 @@ export const userRegister = async (data) => {
   }
 
 };
+
+
+export const userLogin = async (data) => {
+ try {
+    const response = await api.post("/login",data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response;
+  } catch (error) {
+    throw error; 
+  }
+
+};
