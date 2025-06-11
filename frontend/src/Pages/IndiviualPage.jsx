@@ -7,6 +7,8 @@ import { Search } from '../ProductContext/ProductContext.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../features/product/ProductSlice.js';
 import { FaArrowLeftLong } from 'react-icons/fa6';
+import { errorFlag } from '../allMessages/messages.js';
+import { ToastContainer } from 'react-toastify';
 
 
 const IndiviualPage = () => {
@@ -18,6 +20,7 @@ const IndiviualPage = () => {
     const[quantity,setQuantity]=useState(1);
     const{cartItem,setcartItem}=useContext(Search);
     const[cartItems,setCartItems]=useState([]);
+    const[logIn,setLogIn]=useState(false);
 
     const dispatch=useDispatch();
     const productsCart=useSelector((state)=>state.productReducer.products);
@@ -66,7 +69,8 @@ const IndiviualPage = () => {
 
    const handleAddToCart=(product)=>{
 
-
+    if(!logIn) return errorFlag("Please Login or Sign up first")
+     
     dispatch(addToCart({...product,quantity,size,color}))
     
     //console.log(productsCart);
@@ -168,6 +172,18 @@ const IndiviualPage = () => {
               </div>
         </div>
        }
+        <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover={false}
+                    theme="dark"
+                  />
     </div>
   )
 }

@@ -1,6 +1,5 @@
 package com.rive.rivebackend.model;
 
-import com.rive.rivebackend.entity.User;
 import com.rive.rivebackend.repository.UserRepository;
 import com.rive.rivebackend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserImpl implements UserModal{
+public class UserService implements UserModal{
 
     @Autowired
     private AuthService authService;
