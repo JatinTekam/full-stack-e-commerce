@@ -1,4 +1,5 @@
 package com.rive.rivebackend.config;
+import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.passwordEncode.PasswordEncoderConfig;
 import com.rive.rivebackend.service.UserExists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class SecurityConfig{
                 .csrf(AbstractHttpConfigurer::disable)
                .authorizeHttpRequests(auth->auth
 
-                       .requestMatchers("/login").permitAll().anyRequest().authenticated()
+                       .requestMatchers("/api/v1/login","/api/v1/signup").permitAll().anyRequest().authenticated()
                ).sessionManagement(session-> session.sessionCreationPolicy(
 
                        SessionCreationPolicy.STATELESS
