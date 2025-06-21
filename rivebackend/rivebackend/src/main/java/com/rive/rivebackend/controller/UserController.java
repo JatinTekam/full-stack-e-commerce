@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -61,28 +63,43 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> userLogIn(@RequestBody UserEntity user){
-        System.out.println("LginIn");
+    public ResponseEntity<?> login(@RequestBody UserEntity user) {
         Map<String, Object> response = new HashMap<>();
-        try{
-            authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword()));
-            response.put("success", true);
-            response.put("message", "Login successful");
-            response.put("status", 200);
-            response.put("username", user.getUserName());
-            return ResponseEntity.ok(response);
-        } catch (BadCredentialsException e) {
-                response.put("error",true);
-                response.put("message","Email And Password Is Incorrect");
-                response.put("status", 401);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        }
+
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getUsername(),
+                            user.getPassword()
+                    )
+            );
+
+            if (authentication.isAuthenticated()) {
+                response.put("success", true);
+                response.put("message", "Login successful");
+                response.put("status", 200);
+                response.put("username", user.getUsername());
+                return ResponseEntity.ok(response);
+            }
+
+
+            // Consider adding token generation here
+            return ResponseEntity.ok().build();
+
+//        catch (AuthenticationException e) {
+//            response.put("error", true);
+//            response.put("message", "Invalid username or password");
+//            response.put("status", 401);
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+//        }
+
+
     }
+
 
 
     private boolean isValidUser(UserEntity user) {
         return user != null &&
-                user.getUserName() != null && !user.getUserName().trim().isEmpty() &&
+                user.getUsername() != null && !user.getUsername().trim().isEmpty() &&
                 user.getEmail() != null && !user.getEmail().trim().isEmpty() &&
                 user.getName() != null && !user.getName().trim().isEmpty() &&
                 user.getPassword() != null && !user.getPassword().trim().isEmpty() &&
@@ -97,7 +114,7 @@ public class UserController {
         }
 
 
-        boolean existingUserByUsername = userModal.findByUsername(user.getUserName());
+        boolean existingUserByUsername = userModal.findByUsername(user.getUsername());
         if (existingUserByUsername) {
             return "Username already exists";
         }

@@ -1,7 +1,6 @@
 package com.rive.rivebackend.config;
-import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.passwordEncode.PasswordEncoderConfig;
-import com.rive.rivebackend.service.UserExists;
+import com.rive.rivebackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,27 +8,32 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig{
 
     @Autowired
-    private UserExists userExists;
+    private UserService userExists;
 
     @Autowired
     private PasswordEncoderConfig passwordEncoder;
 
     @Bean
-    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
-                cors(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
+                csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                .authorizeHttpRequests(auth->auth
 
                        .requestMatchers("/api/v1/login","/api/v1/signup").permitAll().anyRequest().authenticated()
@@ -37,7 +41,7 @@ public class SecurityConfig{
 
                        SessionCreationPolicy.STATELESS
                ))
-                .logout(AbstractHttpConfigurer::disable);
+                .addFilterBefore(filterObject, UsernamePasswordAuthenticationFilter.class);
 
              return http.build();
 
@@ -45,13 +49,29 @@ public class SecurityConfig{
 
 
    @Bean
-   public AuthenticationManager authManager(){
-       DaoAuthenticationProvider daoProvider=new DaoAuthenticationProvider();
-       daoProvider.setUserDetailsService(userExists);
-       daoProvider.setPasswordEncoder(passwordEncoder.passwordEncoder());
-       return new ProviderManager(daoProvider);
+   public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(12);
    }
+
+
+    @Bean
+    public AuthenticationManager authManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+
+    }
 }
+
+
+
+//   @Bean
+//   public AuthenticationManager authManager(){
+//       DaoAuthenticationProvider daoProvider=new DaoAuthenticationProvider();
+//       daoProvider.setUserDetailsService(userExists);
+//       daoProvider.setPasswordEncoder(passwordEncoder.passwordEncoder());
+//       return new ProviderManager(daoProvider);
+//   }
+
+
 //public class SecurityConfig {
 
 //  @Bean

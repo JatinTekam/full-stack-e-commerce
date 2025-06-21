@@ -17,17 +17,31 @@ public class UserEntity {
     @Column
     private String name;
 
-    @Column
+    @Column(unique = true)
     private String userName;
 
     @Column
     private String password;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
     @Column
     private String mobileNo;
+
+    @Column
+    private boolean userIsEnabled=false;
+
+
+    public boolean isUserEnabled() {
+        return userIsEnabled;
+    }
+
+    public void setUserEnabled(boolean userEnabled) {
+        this.userIsEnabled = userEnabled;
+    }
+
+
 
     public String getName() {
         return name;
@@ -45,7 +59,7 @@ public class UserEntity {
         this.name = name;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return userName;
     }
 
