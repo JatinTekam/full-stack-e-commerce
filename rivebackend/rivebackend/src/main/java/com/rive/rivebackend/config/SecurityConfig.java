@@ -1,9 +1,10 @@
 package com.rive.rivebackend.config;
-import com.rive.rivebackend.passwordEncode.PasswordEncoderConfig;
-import com.rive.rivebackend.service.UserService;
+//import com.rive.rivebackend.passwordEncode.PasswordEncoderConfig;
+import com.rive.rivebackend.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -24,10 +25,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig{
 
     @Autowired
-    private UserService userExists;
+    private UserServices userExists;
 
     @Autowired
-    private PasswordEncoderConfig passwordEncoder;
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,12 +43,18 @@ public class SecurityConfig{
                 .cors(Customizer.withDefaults())
                .authorizeHttpRequests(auth->auth
 
-                       .requestMatchers("/api/v1/login","/api/v1/signup").permitAll().anyRequest().authenticated()
-               ).sessionManagement(session-> session.sessionCreationPolicy(
+                       .requestMatchers(HttpMethod.POST,"/api/v1/signup").permitAll()
+                       .requestMatchers(HttpMethod.POST,"/api/v1/login").permitAll()
+                       .requestMatchers(HttpMethod.GET,"/api/v1/**").authenticated()
+                       .anyRequest().permitAll()
+
+               )
+                .exceptionHandling(exception->exception.authenticationEntryPoint(customAuthenticationEntryPoint))
+                .sessionManagement(session-> session.sessionCreationPolicy(
 
                        SessionCreationPolicy.STATELESS
                ))
-                .addFilterBefore(filterObject, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
              return http.build();
 

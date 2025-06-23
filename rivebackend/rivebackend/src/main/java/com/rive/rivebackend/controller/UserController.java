@@ -1,32 +1,42 @@
 package com.rive.rivebackend.controller;
-
+import com.rive.rivebackend.Dto.AuthRequest;
+import com.rive.rivebackend.Dto.JwtResponse;
+import com.rive.rivebackend.Dto.RefreshTokenRequest;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.model.UserModal;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.rive.rivebackend.repository.UserRepository;
+import com.rive.rivebackend.service.JwtService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
 
 
-    @Autowired
-    private UserModal userModal;
 
-    @Autowired
-    private AuthenticationManager authManager;
+    private final UserModal userModal;
 
+
+    private final AuthenticationManager authManager;
+
+    private final JwtService jwtService;
+
+    private final UserRepository userRepository;
+
+    public UserController(UserModal userModal, AuthenticationManager authManager, JwtService jwtService, UserRepository userRepository) {
+        this.userModal = userModal;
+        this.authManager = authManager;
+        this.jwtService = jwtService;
+        this.userRepository = userRepository;
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> userSignUp(@RequestBody UserEntity user) {
@@ -62,38 +72,50 @@ public class UserController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserEntity user) {
-        Map<String, Object> response = new HashMap<>();
 
-            Authentication authentication = authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            user.getUsername(),
-                            user.getPassword()
-                    )
-            );
-
-            if (authentication.isAuthenticated()) {
-                response.put("success", true);
-                response.put("message", "Login successful");
-                response.put("status", 200);
-                response.put("username", user.getUsername());
-                return ResponseEntity.ok(response);
-            }
-
-
-            // Consider adding token generation here
-            return ResponseEntity.ok().build();
-
-//        catch (AuthenticationException e) {
-//            response.put("error", true);
-//            response.put("message", "Invalid username or password");
-//            response.put("status", 401);
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-//        }
-
-
+    @GetMapping("/allUser")
+    public List<UserEntity> getAllUser(){
+       return userModal.getAllUser();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AuthRequest user) {
+        Map<String, Object> response = new HashMap<>();
+        System.out.println(user.getEmail()+" "+user.getPassword());
+        authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
+
+       String accessToken=jwtService.generateToken(user.getEmail(),true);
+
+       String refreshToken=jwtService.generateToken(user.getEmail(),false);
+
+       UserEntity dbUser=userRepository.findByEmail(user.getEmail()).get();
+
+      JwtResponse jwtResponse=new JwtResponse(accessToken,refreshToken,dbUser);
+
+      return ResponseEntity.ok(jwtResponse);
+    }
+
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest user) {
+
+        if(jwtService.validateToken(user.refreshToken())){
+         String usernameFromToken=jwtService.getUsernameFromToken(user.refreshToken());
+
+         String accessToken=jwtService.generateToken(usernameFromToken,true);
+         String refreshToken=jwtService.generateToken(usernameFromToken,false);
+
+            UserEntity dbUser=userRepository.findByEmail(usernameFromToken).get();
+
+            JwtResponse jwtResponse=new JwtResponse(accessToken,refreshToken,dbUser);
+
+            return ResponseEntity.ok(jwtResponse);
+
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Refresh Token");
+    }
+
+
 
 
 

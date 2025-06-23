@@ -30,14 +30,14 @@ public class UserEntity {
     private String mobileNo;
 
     @Column
-    private boolean userIsEnabled=false;
+    private Boolean userIsEnabled=true;
 
 
-    public boolean isUserEnabled() {
+    public Boolean isUserEnabled() {
         return userIsEnabled;
     }
 
-    public void setUserEnabled(boolean userEnabled) {
+    public void setUserEnabled(Boolean userEnabled) {
         this.userIsEnabled = userEnabled;
     }
 

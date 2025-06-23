@@ -6,6 +6,7 @@ import com.rive.rivebackend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service
@@ -23,6 +24,10 @@ public class UserService implements UserModal{
         user.setPassword(encodedPassword);
         userRepository.save(user);
         return user;
+    }
+
+    public List<UserEntity> getAllUser(){
+        return userRepository.findAll();
     }
 
     public boolean findExistingEmail(String email){
