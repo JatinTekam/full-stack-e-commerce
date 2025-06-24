@@ -24,7 +24,6 @@ public class UserController {
 
     private final UserModal userModal;
 
-
     private final AuthenticationManager authManager;
 
     private final JwtService jwtService;
@@ -81,7 +80,6 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest user) {
         Map<String, Object> response = new HashMap<>();
-        System.out.println(user.getEmail()+" "+user.getPassword());
         authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
 
        String accessToken=jwtService.generateToken(user.getEmail(),true);
@@ -115,6 +113,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Refresh Token");
     }
 
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getUser(@PathVariable long id){
+       UserEntity user=userModal.getUserById(id);
+       if (user!=null){
+           return ResponseEntity.status(HttpStatus.OK).body(user);
+       }
+
+       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
+    }
 
 
 
