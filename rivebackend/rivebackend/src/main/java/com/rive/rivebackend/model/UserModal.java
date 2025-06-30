@@ -8,10 +8,12 @@ import java.util.Optional;
 
 public interface UserModal {
 
-    UserEntity signUp(UserEntity user);
+    UserEntity saveNewUser(UserEntity user);
     boolean findExistingEmail(String email);
     boolean findByUsername(String userName);
     boolean findByMobileNo(String mobileNo);
     List<UserEntity> getAllUser();
     UserEntity getUserById(long id);
+    UserEntity findByUser(String userName);
+    UserEntity updateUser(UserEntity user);
 }

@@ -5,11 +5,14 @@ import com.rive.rivebackend.Dto.RefreshTokenRequest;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.model.UserModal;
 import com.rive.rivebackend.repository.UserRepository;
+import com.rive.rivebackend.service.AuthService;
 import com.rive.rivebackend.service.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +23,6 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class UserController {
 
-
-
     private final UserModal userModal;
 
     private final AuthenticationManager authManager;
@@ -30,18 +31,22 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    public UserController(UserModal userModal, AuthenticationManager authManager, JwtService jwtService, UserRepository userRepository) {
+    private final AuthService service;
+
+    public UserController(UserModal userModal, AuthenticationManager authManager, JwtService jwtService, UserRepository userRepository,AuthService service) {
         this.userModal = userModal;
         this.authManager = authManager;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
+        this.service=service;
     }
+
 
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> userSignUp(@RequestBody UserEntity user) {
         Map<String, Object> response = new HashMap<>();
         try {
-            if (!isValidUser(user)) {
+            if (!service.isValidUser(user)) {
                 response.put("success", false);
                 response.put("message", "All fields are required: userName, email, name, password, mobileNo");
                 response.put("status", 400);
@@ -50,6 +55,7 @@ public class UserController {
 
 
             String conflictMessage = checkForExistingUser(user);
+
             if (conflictMessage != null) {
                 response.put("success", false);
                 response.put("message", conflictMessage);
@@ -57,7 +63,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
             }
 
-            userModal.signUp(user);
+            userModal.saveNewUser(user);
             response.put("success", true);
             response.put("message", "User registered successfully");
             response.put("status", 201);
@@ -72,14 +78,15 @@ public class UserController {
     }
 
 
+
     @GetMapping("/allUser")
     public List<UserEntity> getAllUser(){
        return userModal.getAllUser();
     }
 
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest user) {
-        Map<String, Object> response = new HashMap<>();
         authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
 
        String accessToken=jwtService.generateToken(user.getEmail(),true);
@@ -92,6 +99,7 @@ public class UserController {
 
       return ResponseEntity.ok(jwtResponse);
     }
+
 
 
     @PostMapping("/refresh-token")
@@ -114,29 +122,21 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<?> getUser(@PathVariable long id){
-       UserEntity user=userModal.getUserById(id);
-       if (user!=null){
-           return ResponseEntity.status(HttpStatus.OK).body(user);
-       }
 
-       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
-    }
+//    @PutMapping("/user")
+//    public ResponseEntity<?> getUser(@RequestBody UserEntity user){
+//        System.out.println("hello");
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String userName = authentication.getName();
+//        UserEntity dbUser=userModal.findByUser(userName);
+//        dbUser.setUserName(user.getUsername());
+//        dbUser.setPassword(user.getPassword());
+//        UserEntity saveUser = userModal.signUp(dbUser);
+//        return ResponseEntity.status(HttpStatus.OK).body(saveUser);
+//    }
 
 
-
-
-    private boolean isValidUser(UserEntity user) {
-        return user != null &&
-                user.getUsername() != null && !user.getUsername().trim().isEmpty() &&
-                user.getEmail() != null && !user.getEmail().trim().isEmpty() &&
-                user.getName() != null && !user.getName().trim().isEmpty() &&
-                user.getPassword() != null && !user.getPassword().trim().isEmpty() &&
-                user.getMobileNo() != null && !user.getMobileNo().trim().isEmpty();
-    }
-
-    private String checkForExistingUser(UserEntity user) {
+    public String checkForExistingUser(UserEntity user) {
 
         boolean existingUserByEmail = userModal.findExistingEmail(user.getEmail());
         if (existingUserByEmail) {

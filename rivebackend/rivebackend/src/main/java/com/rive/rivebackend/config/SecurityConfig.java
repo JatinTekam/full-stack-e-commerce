@@ -1,12 +1,9 @@
 package com.rive.rivebackend.config;
-//import com.rive.rivebackend.passwordEncode.PasswordEncoderConfig;
-import com.rive.rivebackend.service.UserServices;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -14,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,17 +20,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig{
 
-    @Autowired
-    private UserServices userExists;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
-    @Autowired
-    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-
-
-
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -46,7 +39,8 @@ public class SecurityConfig{
                        .requestMatchers(HttpMethod.POST,"/api/v1/signup").permitAll()
                        .requestMatchers(HttpMethod.POST,"/api/v1/login").permitAll()
                        .requestMatchers(HttpMethod.GET,"/api/v1/allUser").permitAll()
-                       .requestMatchers(HttpMethod.GET,"/api/v1/**").authenticated()
+                       .requestMatchers("/user/**").permitAll()
+                       .requestMatchers("/api/v1/**").authenticated()
                        .anyRequest().permitAll()
 
                )
@@ -62,6 +56,8 @@ public class SecurityConfig{
    }
 
 
+
+
    @Bean
    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(12);
@@ -73,34 +69,8 @@ public class SecurityConfig{
         return configuration.getAuthenticationManager();
 
     }
+
+
+
+
 }
-
-
-
-//   @Bean
-//   public AuthenticationManager authManager(){
-//       DaoAuthenticationProvider daoProvider=new DaoAuthenticationProvider();
-//       daoProvider.setUserDetailsService(userExists);
-//       daoProvider.setPasswordEncoder(passwordEncoder.passwordEncoder());
-//       return new ProviderManager(daoProvider);
-//   }
-
-
-//public class SecurityConfig {
-
-//  @Bean
-//  public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-//      httpSecurity.exceptionHandling(c->c.authenticationEntryPoint(
-//              new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-//              .csrf(AbstractHttpConfigurer::disable)
-//              .sessionManagement(c->c.sessionCreationPolicy(
-//                      SessionCreationPolicy.STATELESS
-//              ))
-//              .authorizeHttpRequests(req->req.anyRequest().permitAll());
-//
-//      return httpSecurity.build();
-//  }
-
-
-
-//}

@@ -20,7 +20,7 @@ public class UserService implements UserModal{
     private UserRepository userRepository;
 
     @Override
-    public UserEntity signUp(UserEntity user) {
+    public UserEntity saveNewUser(UserEntity user) {
         String encodedPassword=authService.encodePassword(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
@@ -51,4 +51,20 @@ public class UserService implements UserModal{
         return userRepository.existsByMobileNo(mobileNo);
     }
 
+    @Override
+    public UserEntity updateUser(UserEntity user){
+       return userRepository.save(user);
+    }
+
+    @Override
+    public UserEntity findByUser(String userName){
+        UserEntity user = userRepository.findByUserName(userName);
+
+        if (user!=null){
+            return user;
+        }
+
+        return null;
+
+    }
 }

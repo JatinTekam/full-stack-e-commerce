@@ -23,9 +23,9 @@ public class JwtService {
         long expiration= isAccessToken ? ACCESS_TOKEN_EXP : REFRESH_TOKEN_EXP;
 
         return Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+expiration))
+                .subject(email)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis()+expiration))
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8)))
                 //.signWith(SignatureAlgorithm.HS256,SECRET_KEY)
                 .compact();
