@@ -23,12 +23,12 @@ export const userLogin = async (data) => {
   
  try {
     const response = await api.post("/login",data, {
+      withCredentials:true,
       headers: {
         'Content-Type': 'application/json'
-      }
-    });    
-    //console.log(data);
-    
+      },
+      
+    });      
     return response;
   } catch (error) {
     throw error; 

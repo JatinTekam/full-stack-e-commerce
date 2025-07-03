@@ -7,9 +7,8 @@ import { Search } from '../ProductContext/ProductContext.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../features/product/ProductSlice.js';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import { errorFlag } from '../allMessages/messages.js';
+import { errorNotification } from '../allMessages/messages.js';
 import { ToastContainer } from 'react-toastify';
-
 
 const IndiviualPage = () => {
   const products=useSelector((state)=>state.productReducer.productData);
@@ -69,15 +68,14 @@ const IndiviualPage = () => {
 
    const handleAddToCart=(product)=>{
 
-    if(!logIn) return errorFlag("Please Login or Sign up first")
+    if(!logIn) return errorNotification("Please Login First")
      
     dispatch(addToCart({...product,quantity,size,color}))
     
-    //console.log(productsCart);
     
    
     const present=productsCart.filter((item)=>item.id===product.id);
-    //console.log(pre);
+
     
      let newItem=null; 
     

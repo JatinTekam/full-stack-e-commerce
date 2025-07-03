@@ -1,6 +1,6 @@
 import { toast } from "react-toastify"
 
-export const errorFlag = (message) => {
+export const errorNotification = (message) => {
     toast.error(`${message}`, {
       position: "top-center",
       autoClose: 5000,
@@ -14,7 +14,7 @@ export const errorFlag = (message) => {
   };
 
 
-  export const userSignUpSuccessful = (message) => {
+  export const successfulNotification = (message) => {
     toast.success(`${message}`, {
       position: "top-center",
       autoClose: 5000,

@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -90,28 +91,33 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest user, HttpServletResponse response) {
-        authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
+        try{
+            authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
 
-       String accessToken=jwtService.generateToken(user.getEmail(),true);
+            String accessToken=jwtService.generateToken(user.getEmail(),true);
 
-       String refreshToken=jwtService.generateToken(user.getEmail(),false);
+            String refreshToken=jwtService.generateToken(user.getEmail(),false);
 
-       UserEntity dbUser=userRepository.findByEmail(user.getEmail()).get();
+            UserEntity dbUser=userRepository.findByEmail(user.getEmail()).get();
 
-        Cookie refreshCookie=new Cookie("refreshCookie",refreshToken);
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setSecure(true);
-        refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(7*24*60*60);
-        response.addCookie(refreshCookie);
+            Cookie refreshCookie=new Cookie("refreshCookie",refreshToken);
+            refreshCookie.setHttpOnly(true);
+            refreshCookie.setSecure(true);
+            refreshCookie.setPath("/");
+            refreshCookie.setMaxAge(7*24*60*60);
+            response.addCookie(refreshCookie);
 
-        LoginResponse loginResponse=new LoginResponse();
-        loginResponse.setAccessToken(accessToken);
-        loginResponse.setEmail(dbUser.getEmail());
-        loginResponse.setExpiresIn(1200);
-        loginResponse.setMessage("Welcome "+dbUser.getName());
+            LoginResponse loginResponse=new LoginResponse();
+            loginResponse.setAccessToken(accessToken);
+            loginResponse.setEmail(dbUser.getEmail());
+            loginResponse.setExpiresIn(1200);
+            loginResponse.setMessage("Welcome "+dbUser.getName());
+            return ResponseEntity.ok(loginResponse);
 
-      return ResponseEntity.ok(loginResponse);
+        }catch (BadCredentialsException e){
+            throw new BadCredentialsException("Invalid email or password");
+        }
+
     }
 
 

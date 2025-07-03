@@ -2,10 +2,9 @@
 import React, { useEffect, useState } from "react";
 import loadingGif from "../assets/images/loading.gif";
 import { FaArrowRightLong } from "react-icons/fa6";
-
 import { ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { userSignUpSuccessful, errorFlag } from "../allMessages/messages";
+import { successfulNotification, errorNotification } from "../allMessages/messages";
 import { UserSignUp } from "../features/signup/SignupSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -33,10 +32,10 @@ const Form = () => {
 
   useEffect(() => {
     if (error) {
-      return errorFlag(error.message);
+      return errorNotification(error.message);
     }
     if (user) {
-      return userSignUpSuccessful(user.message);
+      return successfulNotification(user.message);
     }
   }, [error, user]);
 
@@ -48,6 +47,8 @@ const Form = () => {
       }
     }, 2000);
   }, [isSubmitSuccessful, reset]);
+
+
   return (
     <form
           action=""
@@ -185,7 +186,7 @@ const Form = () => {
                     type="submit"
                   >
                     {isSubmitting ? (
-                      <p className="flex items-center gap-2">
+                      <p className="flex items-center gap-2" >
                         Please Wait{" "}
                         <img src={loadingGif} alt="" className="w-5" />
                       </p>
