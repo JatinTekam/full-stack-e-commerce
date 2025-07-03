@@ -28,8 +28,8 @@ export const errorFlag = (message) => {
   };
 
 
-  export const regitrationFailed = () => {
-    toast.error("Regestrion Failed Due To Some Error", {
+  export const regitrationFailed = (msg) => {
+    toast.error(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,

@@ -1,12 +1,15 @@
 package com.rive.rivebackend.controller;
 import com.rive.rivebackend.Dto.AuthRequest;
 import com.rive.rivebackend.Dto.JwtResponse;
+import com.rive.rivebackend.Dto.LoginResponse;
 import com.rive.rivebackend.Dto.RefreshTokenRequest;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.model.UserModal;
 import com.rive.rivebackend.repository.UserRepository;
 import com.rive.rivebackend.service.AuthService;
 import com.rive.rivebackend.service.JwtService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -86,7 +89,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest user) {
+    public ResponseEntity<?> login(@RequestBody AuthRequest user, HttpServletResponse response) {
         authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
 
        String accessToken=jwtService.generateToken(user.getEmail(),true);
@@ -95,9 +98,20 @@ public class UserController {
 
        UserEntity dbUser=userRepository.findByEmail(user.getEmail()).get();
 
-      JwtResponse jwtResponse=new JwtResponse(accessToken,refreshToken,dbUser);
+        Cookie refreshCookie=new Cookie("refreshCookie",refreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setSecure(true);
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(7*24*60*60);
+        response.addCookie(refreshCookie);
 
-      return ResponseEntity.ok(jwtResponse);
+        LoginResponse loginResponse=new LoginResponse();
+        loginResponse.setAccessToken(accessToken);
+        loginResponse.setEmail(dbUser.getEmail());
+        loginResponse.setExpiresIn(1200);
+        loginResponse.setMessage("Welcome "+dbUser.getName());
+
+      return ResponseEntity.ok(loginResponse);
     }
 
 

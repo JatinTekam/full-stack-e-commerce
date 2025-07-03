@@ -1,19 +1,21 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { userLogin } from "../../axios/connection";
 
+export const loginUser = async(user)=>{
+    try {
+      const response = await userLogin(user);
+      //console.log(user);
 
-export const loginUser = async (user) => {
-  try {
-    const response = await userLogin(user);
-    console.log(response.data);
-    
-    //return response.data;
-  } catch (error) {
-    // return rejectWithValue({
-    //   message: error.response?.data?.message || "Registration failed",
-    //   status: error.response?.status,
-    //   data: error.response?.data,
-    // });
-    console.log(error);
-    
-  }
+      console.log(response.data);
+      
+      //return response.data;
+    } catch (error) {
+      console.log(error);
+      return ({
+        message: error.response?.data?.message || "Login failed",
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+      
+    }
 };

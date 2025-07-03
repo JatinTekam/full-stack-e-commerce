@@ -14,8 +14,8 @@ public class JwtService {
 
     @Value("${JWT_SECRET_KEY}")
     private String SECRET_KEY;
-    private static final long ACCESS_TOKEN_EXP= 20 * 60 * 1000;
-    private static final long REFRESH_TOKEN_EXP= 72 * 60 * 60 * 1000;
+    private static final long ACCESS_TOKEN_EXP= 20 * 60;
+    private static final long REFRESH_TOKEN_EXP= 7 * 24 * 60 * 60 * 1000L;
 
 
     public String generateToken(String email,boolean isAccessToken){

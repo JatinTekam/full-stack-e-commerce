@@ -5,6 +5,7 @@ import SignupImg from "../component/SignupImg";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../features/login/login";
+import { ToastContainer } from "react-toastify";
 
 const Login = () => {
   const {
@@ -37,28 +38,28 @@ const Login = () => {
           onSubmit={handleSubmit(onSubmit)}
           method="post"
         >
-          <label htmlFor="username">Username</label>
+          <div className="flex flex-col">
+              <label htmlFor="email">Email</label>
               <input
-                type="text"
-                id="username"
-                name="username"
+                type="email"
+                id="email"
                 className={`w-full outline-none ${
-                  errors.userName ? "border-b border-b-red-600" : "border-b"
+                  errors.email ? "border-b border-b-red-600" : "border-b"
                 } `}
-                {...register("userName", {
-                  required: "Username is required",
+                {...register("email", {
+                  required: "Email is required",
                   pattern: {
-                    value: 5,
-                    message: "Username must be greater then 5 character",
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
                   },
                 })}
               />
-              {errors.userName && (
+              {errors.email && (
                 <p className="text-red-500 text-end text-sm">
-                  {errors.userName.message} *
+                  {errors.email.message} *
                 </p>
               )}
-
+            </div>
               
            <label htmlFor="password">Password</label>
               <input
@@ -93,12 +94,23 @@ const Login = () => {
             Don't Have An Account ?
             <Link to="/signup">
               <span className="text-blue-500 hover:cursor-pointer">
-                {" "}
                 Sign up
               </span>
             </Link>
           </p>
         </form>
+         <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover={false}
+                    theme="dark"
+                  />
       </div>
     </div>
   );

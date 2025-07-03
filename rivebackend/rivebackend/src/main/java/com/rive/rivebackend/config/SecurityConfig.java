@@ -35,11 +35,11 @@ public class SecurityConfig{
                 csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                .authorizeHttpRequests(auth->auth
-
-                       .requestMatchers(HttpMethod.POST,"/api/v1/signup").permitAll()
-                       .requestMatchers(HttpMethod.POST,"/api/v1/login").permitAll()
-                       .requestMatchers(HttpMethod.GET,"/api/v1/allUser").permitAll()
+                       .requestMatchers(HttpMethod.POST, "/api/v1/signup").permitAll()
+                       .requestMatchers(HttpMethod.POST, "/api/v1/login").permitAll()
+                       .requestMatchers(HttpMethod.GET, "/api/v1/allUser").permitAll()
                        .requestMatchers("/user/**").permitAll()
+
                        .requestMatchers("/api/v1/**").authenticated()
                        .anyRequest().permitAll()
 
