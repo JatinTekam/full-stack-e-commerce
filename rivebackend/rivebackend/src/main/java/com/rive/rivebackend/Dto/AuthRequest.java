@@ -2,6 +2,7 @@ package com.rive.rivebackend.Dto;
 
 public class AuthRequest {
 
+
     private String email;
     private String password;
 

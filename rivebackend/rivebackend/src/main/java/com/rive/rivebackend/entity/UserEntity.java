@@ -1,33 +1,40 @@
 package com.rive.rivebackend.entity;
-
-
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table
 public class UserEntity {
-
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
-    @Column
+    @Column(nullable = false,length = 100)
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false, length = 30)
     private String userName;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false, length = 100)
     private String email;
 
-    @Column(unique = true)
-    private String mobileNo;
+    @Column(unique = true, nullable = false, length = 10)
+    private String phoneNumber;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 
     @Column
     private Boolean userIsEnabled=true;
@@ -41,7 +48,33 @@ public class UserEntity {
         this.userIsEnabled = userEnabled;
     }
 
+    public String getUserName() {
+        return userName;
+    }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Boolean getUserIsEnabled() {
+        return userIsEnabled;
+    }
+
+    public void setUserIsEnabled(Boolean userIsEnabled) {
+        this.userIsEnabled = userIsEnabled;
+    }
 
     public String getName() {
         return name;
@@ -83,12 +116,12 @@ public class UserEntity {
         this.email = email;
     }
 
-    public String getMobileNo() {
-        return mobileNo;
+    public String getPhoneNumber() {
+        return phoneNumber ;
     }
 
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber  = phoneNumber;
     }
 
 

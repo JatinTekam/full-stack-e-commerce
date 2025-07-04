@@ -28,7 +28,7 @@ public class AuthService {
                 user.getEmail() != null && !user.getEmail().trim().isEmpty() &&
                 user.getName() != null && !user.getName().trim().isEmpty() &&
                 user.getPassword() != null && !user.getPassword().trim().isEmpty() &&
-                user.getMobileNo() != null && !user.getMobileNo().trim().isEmpty();
+                user.getPhoneNumber() != null && !user.getPhoneNumber().trim().isEmpty();
     }
 
 

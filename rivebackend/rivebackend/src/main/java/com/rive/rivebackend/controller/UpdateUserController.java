@@ -33,7 +33,7 @@ public class UpdateUserController {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String userName = authentication.getName();
         UserEntity dbUser=userModal.findByUser(user.getUsername());
-        dbUser.setMobileNo(user.getMobileNo());
+        dbUser.setPhoneNumber(user.getPhoneNumber());
         UserEntity saveUser = userModal.updateUser(dbUser);
         return ResponseEntity.status(HttpStatus.OK).body(saveUser);
     }

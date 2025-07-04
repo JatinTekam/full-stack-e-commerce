@@ -3,7 +3,10 @@ import com.rive.rivebackend.Dto.AuthRequest;
 import com.rive.rivebackend.Dto.JwtResponse;
 import com.rive.rivebackend.Dto.LoginResponse;
 import com.rive.rivebackend.Dto.RefreshTokenRequest;
+import com.rive.rivebackend.Dto.user.UserSignUpRequest;
+import com.rive.rivebackend.Dto.user.UserSignUpResponse;
 import com.rive.rivebackend.entity.UserEntity;
+import com.rive.rivebackend.errors.UserAlreadyExistsException;
 import com.rive.rivebackend.model.UserModal;
 import com.rive.rivebackend.repository.UserRepository;
 import com.rive.rivebackend.service.AuthService;
@@ -47,38 +50,49 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<Map<String, Object>> userSignUp(@RequestBody UserEntity user) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            if (!service.isValidUser(user)) {
-                response.put("success", false);
-                response.put("message", "All fields are required: userName, email, name, password, mobileNo");
-                response.put("status", 400);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
+    public ResponseEntity<?> userSignUp(@RequestBody UserSignUpRequest user) {
+        Map<String,Object> errMsg=new HashMap<>();
 
-
-            String conflictMessage = checkForExistingUser(user);
-
-            if (conflictMessage != null) {
-                response.put("success", false);
-                response.put("message", conflictMessage);
-                response.put("status", 409);
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-            }
-
-            userModal.saveNewUser(user);
-            response.put("success", true);
-            response.put("message", "User registered successfully");
-            response.put("status", 201);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-
-        } catch (Exception e) {
-            response.put("success", false);
-            response.put("message", "Registration failed due to server error");
-            response.put("status", 500);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        try{
+            UserSignUpResponse userSignUpResponse = userModal.saveNewUser(user);
+           return ResponseEntity.status(HttpStatus.CREATED).body(userSignUpResponse);
+        }catch (UserAlreadyExistsException e){
+            errMsg.put("message",e.getMessage());
+            errMsg.put("status",409);
+           return ResponseEntity.status(HttpStatus.CONFLICT).body(errMsg);
         }
+
+//        try {
+//            if (!service.isValidUser(user)) {
+//                response.put("success", false);
+//                response.put("message", "All fields are required: userName, email, name, password, mobileNo");
+//                response.put("status", 400);
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//            }
+//
+//
+//            String conflictMessage = checkForExistingUser(user);
+//
+//            if (conflictMessage != null) {
+//                response.put("success", false);
+//                response.put("message", conflictMessage);
+//                response.put("status", 409);
+//                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+//            }
+//
+//            userModal.saveNewUser(user);
+//            response.put("success", true);
+//            response.put("message", "User registered successfully");
+//            response.put("status", 201);
+//            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+//
+//        } catch (Exception e) {
+//            response.put("success", false);
+//            response.put("message", "Registration failed due to server error");
+//            response.put("status", 500);
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+//        }
+
     }
 
 
@@ -170,7 +184,7 @@ public class UserController {
         }
 
 
-        boolean existingUserByMobile = userModal.findByMobileNo(user.getMobileNo());
+        boolean existingUserByMobile = userModal.findByMobileNo(user.getPhoneNumber());
         if (existingUserByMobile) {
             return "Mobile number already exists";
         }
