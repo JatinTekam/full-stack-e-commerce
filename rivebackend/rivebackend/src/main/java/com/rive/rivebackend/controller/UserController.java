@@ -1,12 +1,13 @@
 package com.rive.rivebackend.controller;
-import com.rive.rivebackend.Dto.AuthRequest;
+import com.rive.rivebackend.Dto.user.UserLogInRequest;
 import com.rive.rivebackend.Dto.JwtResponse;
-import com.rive.rivebackend.Dto.LoginResponse;
+import com.rive.rivebackend.Dto.user.UserLogInResponse;
 import com.rive.rivebackend.Dto.RefreshTokenRequest;
 import com.rive.rivebackend.Dto.user.UserSignUpRequest;
 import com.rive.rivebackend.Dto.user.UserSignUpResponse;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.errors.UserAlreadyExistsException;
+import com.rive.rivebackend.errors.UserValidate;
 import com.rive.rivebackend.model.UserModal;
 import com.rive.rivebackend.repository.UserRepository;
 import com.rive.rivebackend.service.AuthService;
@@ -18,8 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
@@ -52,47 +51,14 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> userSignUp(@RequestBody UserSignUpRequest user) {
         Map<String,Object> errMsg=new HashMap<>();
-
         try{
             UserSignUpResponse userSignUpResponse = userModal.saveNewUser(user);
            return ResponseEntity.status(HttpStatus.CREATED).body(userSignUpResponse);
-        }catch (UserAlreadyExistsException e){
+        }catch (UserAlreadyExistsException | UserValidate e){
             errMsg.put("message",e.getMessage());
             errMsg.put("status",409);
            return ResponseEntity.status(HttpStatus.CONFLICT).body(errMsg);
         }
-
-//        try {
-//            if (!service.isValidUser(user)) {
-//                response.put("success", false);
-//                response.put("message", "All fields are required: userName, email, name, password, mobileNo");
-//                response.put("status", 400);
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//            }
-//
-//
-//            String conflictMessage = checkForExistingUser(user);
-//
-//            if (conflictMessage != null) {
-//                response.put("success", false);
-//                response.put("message", conflictMessage);
-//                response.put("status", 409);
-//                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-//            }
-//
-//            userModal.saveNewUser(user);
-//            response.put("success", true);
-//            response.put("message", "User registered successfully");
-//            response.put("status", 201);
-//            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-//
-//        } catch (Exception e) {
-//            response.put("success", false);
-//            response.put("message", "Registration failed due to server error");
-//            response.put("status", 500);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-//        }
-
     }
 
 
@@ -104,29 +70,11 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest user, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody UserLogInRequest user, HttpServletResponse response) {
         try{
-            authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
 
-            String accessToken=jwtService.generateToken(user.getEmail(),true);
-
-            String refreshToken=jwtService.generateToken(user.getEmail(),false);
-
-            UserEntity dbUser=userRepository.findByEmail(user.getEmail()).get();
-
-            Cookie refreshCookie=new Cookie("refreshCookie",refreshToken);
-            refreshCookie.setHttpOnly(true);
-            refreshCookie.setSecure(true);
-            refreshCookie.setPath("/");
-            refreshCookie.setMaxAge(7*24*60*60);
-            response.addCookie(refreshCookie);
-
-            LoginResponse loginResponse=new LoginResponse();
-            loginResponse.setAccessToken(accessToken);
-            loginResponse.setEmail(dbUser.getEmail());
-            loginResponse.setExpiresIn(1200);
-            loginResponse.setMessage("Welcome "+dbUser.getName());
-            return ResponseEntity.ok(loginResponse);
+            UserLogInResponse userLogInResponse = userModal.loginUser(user, response);
+            return ResponseEntity.status(HttpStatus.OK).body(userLogInResponse);
 
         }catch (BadCredentialsException e){
             throw new BadCredentialsException("Invalid email or password");

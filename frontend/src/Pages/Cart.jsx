@@ -18,7 +18,6 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(totalCartPrice());
-    console.log(products.length);
   }, [products]);
 
   return (

@@ -7,11 +7,12 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/login/login";
 import { ToastContainer } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   errorNotification,
   successfulNotification,
 } from "../allMessages/messages";
+import { AuthContext } from "../authContext/AuthContext";
 
 const Login = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
@@ -25,6 +26,8 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const {accessToken}=useContext(AuthContext);
 
   const onSubmit = (data) => {
     handleLogIn(data);
@@ -57,6 +60,12 @@ const Login = () => {
       }
     }, 2000);
   }, [isSubmitSuccessful, reset]);
+
+  useEffect(()=>{
+    console.log(accessToken);
+    
+  },[])
+
 
   return (
     <div className="w-full h-screen  flex  gap-15 items-center relative bg-black">

@@ -1,6 +1,6 @@
-package com.rive.rivebackend.Dto;
+package com.rive.rivebackend.Dto.user;
 
-public class LoginResponse {
+public class UserLogInResponse {
 
     private String accessToken;
     private String email;
@@ -9,7 +9,7 @@ public class LoginResponse {
     private String message;
 
 
-    public LoginResponse(){
+    public UserLogInResponse(){
         this.tokenType="Bearer";
     }
 

@@ -17,12 +17,12 @@ public class UserEntity {
     private String name;
 
     @Column(unique = true, nullable = false, length = 30)
-    private String userName;
+    private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true, nullable = false, length = 100)
+    @Column(unique = true, nullable = false, length = 50)
     private String email;
 
     @Column(unique = true, nullable = false, length = 10)
@@ -37,20 +37,8 @@ public class UserEntity {
     private LocalDateTime updatedAt;
 
     @Column
-    private Boolean userIsEnabled=true;
+    private boolean userIsEnabled=true;
 
-
-    public Boolean isUserEnabled() {
-        return userIsEnabled;
-    }
-
-    public void setUserEnabled(Boolean userEnabled) {
-        this.userIsEnabled = userEnabled;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -68,7 +56,7 @@ public class UserEntity {
         this.updatedAt = updatedAt;
     }
 
-    public Boolean getUserIsEnabled() {
+    public boolean getUserIsEnabled() {
         return userIsEnabled;
     }
 
@@ -93,11 +81,11 @@ public class UserEntity {
     }
 
     public String getUsername() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

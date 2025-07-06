@@ -6,6 +6,7 @@ import {Provider} from 'react-redux'
 import { store } from '../store/store'
 import { MySearchContext } from '../ProductContext/ProductContext'
 import Cart from '../Pages/Cart'
+
 const Applayout = () => {
   return (
     <>

@@ -7,12 +7,14 @@ import { useForm } from "react-hook-form";
 import { successfulNotification, errorNotification } from "../allMessages/messages";
 import { UserSignUp } from "../features/signup/SignupSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const Form = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
   const { user, loading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -32,18 +34,24 @@ const Form = () => {
 
   useEffect(() => {
     if (error) {
-      return errorNotification(error.message);
+       errorNotification(error.message);
+       return;
     }
     if (user) {
-      return successfulNotification(user.message);
+    successfulNotification(user.message);
+    const timer = setTimeout(() => {
+      navigate("/login");
+    }, 2000);
+    return () => clearTimeout(timer); 
     }
-  }, [error, user]);
+  }, [error, user, navigate]);
 
   useEffect(() => {
     setTimeout(() => {
       if (isSubmitSuccessful) {
         reset();
         setIsSubmiting(false);
+
       }
     }, 2000);
   }, [isSubmitSuccessful, reset]);
@@ -110,7 +118,7 @@ const Form = () => {
                 id="username"
                 name="username"
                 className={`w-70 outline-none ${
-                  errors.userName ? "border-b border-b-red-600" : "border-b"
+                  errors.username ? "border-b border-b-red-600" : "border-b"
                 } `}
                 {...register("userName", {
                   required: "Username is required",
@@ -120,9 +128,9 @@ const Form = () => {
                   },
                 })}
               />
-              {errors.userName && (
+              {errors.username && (
                 <p className="text-red-500 text-end text-sm">
-                  {errors.userName.message} *
+                  {errors.username.message} *
                 </p>
               )}
             </div>

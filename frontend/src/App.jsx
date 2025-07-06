@@ -9,6 +9,7 @@ import { getIndiviualData } from "./Pages/getIndiviualData";
 import Login from "./Pages/Login";
 import ProtectedRoutes from "./proctcedroutes/ProtectedRoutes";
 import { useSelector } from "react-redux";
+import { AuthProvider } from "./authContext/AuthContext";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.login.user !== null);
@@ -54,9 +55,9 @@ function App() {
   ]);
 
   return (
-    <div>
+    <AuthProvider>
       <RouterProvider router={router} />
-    </div>
+    </AuthProvider>
   );
 }
 

@@ -1,6 +1,6 @@
-package com.rive.rivebackend.Dto;
+package com.rive.rivebackend.Dto.user;
 
-public class AuthRequest {
+public class UserLogInRequest {
 
 
     private String email;
