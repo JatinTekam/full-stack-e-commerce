@@ -38,6 +38,7 @@ public class SecurityConfig{
                        .requestMatchers(HttpMethod.POST, "/api/v1/signup").permitAll()
                        .requestMatchers(HttpMethod.POST, "/api/v1/login").permitAll()
                        .requestMatchers(HttpMethod.GET, "/api/v1/allUser").permitAll()
+                       .requestMatchers(HttpMethod.POST, "/api/v1/refresh-token").permitAll()
                        .requestMatchers("/user/**").permitAll()
 
                        .requestMatchers("/api/v1/**").authenticated()

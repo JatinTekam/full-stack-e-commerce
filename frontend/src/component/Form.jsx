@@ -4,7 +4,7 @@ import loadingGif from "../assets/images/loading.gif";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { successfulNotification, errorNotification } from "../allMessages/messages";
+import { success, error } from "../allMessages/messages";
 import { UserSignUp } from "../features/signup/SignupSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -34,11 +34,11 @@ const Form = () => {
 
   useEffect(() => {
     if (error) {
-       errorNotification(error.message);
+       error(error.message);
        return;
     }
     if (user) {
-    successfulNotification(user.message);
+    success(user.message);
     const timer = setTimeout(() => {
       navigate("/login");
     }, 2000);

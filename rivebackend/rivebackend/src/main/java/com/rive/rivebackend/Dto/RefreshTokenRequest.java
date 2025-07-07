@@ -1,4 +1,4 @@
 package com.rive.rivebackend.Dto;
 
-public record RefreshTokenRequest(String refreshToken) {
+public record RefreshTokenRequest(String email) {
 }

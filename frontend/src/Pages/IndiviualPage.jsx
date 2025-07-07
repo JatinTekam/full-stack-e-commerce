@@ -7,7 +7,7 @@ import { Search } from '../ProductContext/ProductContext.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../features/product/ProductSlice.js';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import { errorNotification } from '../allMessages/messages.js';
+import { error } from '../allMessages/messages.js';
 import { ToastContainer } from 'react-toastify';
 
 const IndiviualPage = () => {
@@ -68,7 +68,7 @@ const IndiviualPage = () => {
 
    const handleAddToCart=(product)=>{
 
-    if(!logIn) return errorNotification("Please Login First")
+    if(!logIn) return error("Please Login First")
      
     dispatch(addToCart({...product,quantity,size,color}))
     

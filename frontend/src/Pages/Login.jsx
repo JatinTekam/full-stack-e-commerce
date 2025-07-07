@@ -9,8 +9,8 @@ import { loginUser } from "../features/login/login";
 import { ToastContainer } from "react-toastify";
 import { useContext, useEffect, useState } from "react";
 import {
-  errorNotification,
-  successfulNotification,
+  error,
+  success,
 } from "../allMessages/messages";
 import { AuthContext } from "../authContext/AuthContext";
 
@@ -40,14 +40,15 @@ const Login = () => {
 
   useEffect(() => {
     if (error) {
-       errorNotification(error.message);
+       error(error.message);
        return;
     }
     if (user) {
-    successfulNotification(user.message);
+    success(user.message);
     const timer = setTimeout(() => {
       navigate("/");
     }, 2000);
+    
     return () => clearTimeout(timer);
     }
   }, [error, user, navigate]);
@@ -61,10 +62,6 @@ const Login = () => {
     }, 2000);
   }, [isSubmitSuccessful, reset]);
 
-  useEffect(()=>{
-    console.log(accessToken);
-    
-  },[])
 
 
   return (

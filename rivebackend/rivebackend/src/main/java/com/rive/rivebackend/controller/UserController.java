@@ -13,6 +13,7 @@ import com.rive.rivebackend.repository.UserRepository;
 import com.rive.rivebackend.service.AuthService;
 import com.rive.rivebackend.service.JwtService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,22 +88,32 @@ public class UserController {
 
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest user) {
+    public ResponseEntity<?> refreshToken(@CookieValue(name = "refreshCookie",required = false) String refreshCookie,RefreshTokenRequest request,HttpServletResponse response) {
 
-        if(jwtService.validateToken(user.refreshToken())){
-         String usernameFromToken=jwtService.getUsernameFromToken(user.refreshToken());
-
-         String accessToken=jwtService.generateToken(usernameFromToken,true);
-         String refreshToken=jwtService.generateToken(usernameFromToken,false);
-
-            UserEntity dbUser=userRepository.findByEmail(usernameFromToken).get();
-
-            JwtResponse jwtResponse=new JwtResponse(accessToken,refreshToken,dbUser);
-
-            return ResponseEntity.ok(jwtResponse);
-
+        try {
+            //System.out.println(refreshCookie);
+            UserLogInResponse userLogInResponse = userModal.refreshToken(refreshCookie, request, response);
+            return ResponseEntity.status(HttpStatus.OK).body(userLogInResponse);
+        }catch (UserValidate e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Refresh Token");
+
+
+//        if(jwtService.validateToken(user.refreshToken())){
+//         String usernameFromToken=jwtService.getUsernameFromToken(user.refreshToken());
+//
+//         String accessToken=jwtService.generateToken(usernameFromToken,true);
+//         String refreshToken=jwtService.generateToken(usernameFromToken,false);
+//
+//            UserEntity dbUser=userRepository.findByEmail(usernameFromToken).get();
+//
+//            JwtResponse jwtResponse=new JwtResponse(accessToken,refreshToken,dbUser);
+//
+//            return ResponseEntity.ok(jwtResponse);
+//
+//        }
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Refresh Token");
+
     }
 
 

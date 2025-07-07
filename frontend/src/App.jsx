@@ -7,9 +7,9 @@ import Collection from "./Pages/Collection";
 import IndiviualPage from "./Pages/IndiviualPage";
 import { getIndiviualData } from "./Pages/getIndiviualData";
 import Login from "./Pages/Login";
-import ProtectedRoutes from "./proctcedroutes/ProtectedRoutes";
 import { useSelector } from "react-redux";
 import { AuthProvider } from "./authContext/AuthContext";
+import ProtectedRoutes from "./procetedroutes/ProtectedRoutes";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.login.user !== null);

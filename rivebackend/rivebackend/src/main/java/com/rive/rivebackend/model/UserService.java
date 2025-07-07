@@ -1,21 +1,26 @@
 package com.rive.rivebackend.model;
 
+import com.rive.rivebackend.Dto.RefreshTokenRequest;
 import com.rive.rivebackend.Dto.user.UserLogInRequest;
 import com.rive.rivebackend.Dto.user.UserLogInResponse;
 import com.rive.rivebackend.Dto.user.UserSignUpRequest;
 import com.rive.rivebackend.Dto.user.UserSignUpResponse;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.errors.UserAlreadyExistsException;
+import com.rive.rivebackend.errors.UserValidate;
 import com.rive.rivebackend.repository.UserRepository;
 import com.rive.rivebackend.service.AuthService;
 import com.rive.rivebackend.service.JwtService;
+import com.rive.rivebackend.service.UserServices;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,11 +40,14 @@ public class UserService implements UserModal{
 
     private final JwtService jwtService;
 
-    public UserService(AuthService authService, UserRepository userRepository, AuthenticationManager authManager, JwtService jwtService) {
+    private final UserServices userServices;
+
+    public UserService(AuthService authService, UserRepository userRepository, AuthenticationManager authManager, JwtService jwtService,UserServices userServices) {
         this.authService = authService;
         this.userRepository = userRepository;
         this.authManager = authManager;
         this.jwtService = jwtService;
+        this.userServices=userServices;
     }
 
     @Override
@@ -135,6 +143,42 @@ public class UserService implements UserModal{
     @Override
     public UserEntity updateUser(UserEntity user){
        return userRepository.save(user);
+    }
+
+    @Override
+    public UserLogInResponse refreshToken(String token, RefreshTokenRequest request, HttpServletResponse response) {
+
+        if ( token==null || token.isEmpty()){
+            throw new UserValidate("Refresh token not found");
+        }
+
+        if (!jwtService.validateToken(token)){
+            throw new UserValidate("Invalid or expired refresh token");
+        }
+
+        String email=jwtService.getUsernameFromToken(token);
+
+        System.out.println(email);
+        UserEntity dbUser=userRepository.findByEmail(email).get();
+
+        String newAccessToken=jwtService.generateToken(dbUser.getEmail(),true);
+
+        String newRefreshToken=jwtService.generateToken(dbUser.getEmail(),false);
+
+        Cookie refreshCookie=new Cookie("refreshCookie",newRefreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setSecure(true);
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(7*24*60*60);
+        response.addCookie(refreshCookie);
+
+        UserLogInResponse loginResponse=new UserLogInResponse();
+        loginResponse.setAccessToken(newAccessToken);
+        loginResponse.setEmail(dbUser.getEmail());
+        loginResponse.setExpiresIn(1200);
+        loginResponse.setMessage("Welcome "+dbUser.getEmail());
+
+        return loginResponse;
     }
 
     @Override
