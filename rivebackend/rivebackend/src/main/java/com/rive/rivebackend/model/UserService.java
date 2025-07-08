@@ -157,8 +157,6 @@ public class UserService implements UserModal{
         }
 
         String email=jwtService.getUsernameFromToken(token);
-
-        System.out.println(email);
         UserEntity dbUser=userRepository.findByEmail(email).get();
 
         String newAccessToken=jwtService.generateToken(dbUser.getEmail(),true);

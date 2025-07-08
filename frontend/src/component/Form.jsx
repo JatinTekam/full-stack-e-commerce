@@ -4,7 +4,7 @@ import loadingGif from "../assets/images/loading.gif";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { success, error } from "../allMessages/messages";
+import { success, errorMsg } from "../allMessages/messages";
 import { UserSignUp } from "../features/signup/SignupSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -33,17 +33,20 @@ const Form = () => {
   };
 
   useEffect(() => {
+    let timer;
     if (error) {
-       error(error.message);
+       errorMsg(error.message);
        return;
     }
     if (user) {
     success(user.message);
-    const timer = setTimeout(() => {
+     timer = setTimeout(() => {
       navigate("/login");
     }, 2000);
-    return () => clearTimeout(timer); 
     }
+    return () => {
+    if (timer) clearTimeout(timer);
+  };
   }, [error, user, navigate]);
 
   useEffect(() => {

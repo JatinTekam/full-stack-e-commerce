@@ -7,13 +7,22 @@ import Collection from "./Pages/Collection";
 import IndiviualPage from "./Pages/IndiviualPage";
 import { getIndiviualData } from "./Pages/getIndiviualData";
 import Login from "./Pages/Login";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthProvider } from "./authContext/AuthContext";
 import ProtectedRoutes from "./procetedroutes/ProtectedRoutes";
+import { refreshUser } from "./features/auth/AuthSlice";
+import { useEffect, useState } from "react";
 
 function App() {
-  const isAuthenticated = useSelector((state) => state.login.user !== null);
-  
+  let isAuthenticated=useSelector((state) => state.login.isLogedIn);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+    console.log(isAuthenticated);
+    
+  }, [dispatch]);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -28,7 +37,7 @@ function App() {
           element: <Contact />,
         },
         {
-          element: <ProtectedRoutes authenticated={isAuthenticated} />,
+          element: <ProtectedRoutes authenticated={!isAuthenticated} redirectPath="/login" />,
           children: [
             {
               path: "/collection",
@@ -45,12 +54,17 @@ function App() {
     },
 
     {
-      path: "/signup",
-      element: <Signup />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
+      element: <ProtectedRoutes authenticated={isAuthenticated} redirectPath="/" />,
+      children: [
+        {
+          path: "/signup",
+          element: <Signup />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+      ],
     },
   ]);
 

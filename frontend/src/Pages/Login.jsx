@@ -1,22 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
-import img1 from "../assets/images/img3.jpg";
 import loadingGif from "../assets/images/loading.gif";
 import SignupImg from "../component/SignupImg";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../features/login/login";
+import { loginUser } from "../features/login/loginSlice";
 import { ToastContainer } from "react-toastify";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  error,
+  errorMsg,
   success,
 } from "../allMessages/messages";
-import { AuthContext } from "../authContext/AuthContext";
 
 const Login = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
-  const { user, loading, error } = useSelector((state) => state.login);
+  const { user, loading, error, message} = useSelector((state) => state.login);
   const {
     register,
     handleSubmit,
@@ -27,7 +25,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {accessToken}=useContext(AuthContext);
+  //const{setAccessToken,setUser, accessToken}=useAuth();
 
   const onSubmit = (data) => {
     handleLogIn(data);
@@ -39,19 +37,21 @@ const Login = () => {
   };
 
   useEffect(() => {
+     let timer;
     if (error) {
-       error(error.message);
+       errorMsg(error.message);
        return;
     }
     if (user) {
-    success(user.message);
-    const timer = setTimeout(() => {
+    success(message);
+     timer = setTimeout(() => {
       navigate("/");
     }, 2000);
-    
-    return () => clearTimeout(timer);
     }
-  }, [error, user, navigate]);
+     return () => {
+    if (timer) clearTimeout(timer);
+  };
+  }, [error, user, navigate, success, errorMsg]);
 
   useEffect(() => {
     setTimeout(() => {

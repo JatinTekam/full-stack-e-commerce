@@ -7,7 +7,7 @@ import { Search } from '../ProductContext/ProductContext.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../features/product/ProductSlice.js';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import { error } from '../allMessages/messages.js';
+import { errorMsg } from '../allMessages/messages.js';
 import { ToastContainer } from 'react-toastify';
 
 const IndiviualPage = () => {
@@ -20,6 +20,9 @@ const IndiviualPage = () => {
     const{cartItem,setcartItem}=useContext(Search);
     const[cartItems,setCartItems]=useState([]);
     const[logIn,setLogIn]=useState(false);
+
+
+    const {isLogedIn} = useSelector((state) => state.login);
 
     const dispatch=useDispatch();
     const productsCart=useSelector((state)=>state.productReducer.products);
@@ -68,7 +71,7 @@ const IndiviualPage = () => {
 
    const handleAddToCart=(product)=>{
 
-    if(!logIn) return error("Please Login First")
+    if(!isLogedIn) return errorMsg("Please Login First")
      
     dispatch(addToCart({...product,quantity,size,color}))
     

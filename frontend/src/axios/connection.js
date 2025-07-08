@@ -35,3 +35,13 @@ export const userLogin = async (data) => {
   }
 
 };
+
+
+export const refreshAccessToken = async () => {
+ try {
+   const response = await api.post('/refresh-token', null, { withCredentials: true });
+  return response; 
+ } catch (error) {
+  throw error;
+ }
+};
