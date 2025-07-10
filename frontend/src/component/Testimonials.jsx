@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-// import test1 from "../assets/images/test1.jpg";
-// import test2 from "../assets/images/test2.jpg";
-
 import { testimonialsImg } from "../assets/image.js";
 
 const Testimonials = () => {

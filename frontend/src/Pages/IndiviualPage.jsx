@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { useEffect } from 'react';
 import { FiShoppingBag } from "react-icons/fi";
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import star from "../assets/images/star1.png"
-import { Search } from '../ProductContext/ProductContext.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../features/product/ProductSlice.js';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { errorMsg } from '../allMessages/messages.js';
 import { ToastContainer } from 'react-toastify';
+import { Search } from '../context/ProductContext/ProductContext.jsx';
 
 const IndiviualPage = () => {
   const products=useSelector((state)=>state.productReducer.productData);
@@ -22,11 +22,11 @@ const IndiviualPage = () => {
     const[logIn,setLogIn]=useState(false);
 
 
-    const {isLogedIn} = useSelector((state) => state.login);
+    const {isLoggedIn} = useSelector((state) => state.login);
 
     const dispatch=useDispatch();
     const productsCart=useSelector((state)=>state.productReducer.products);
-    const id= useLoaderData();
+     const {id} = useParams();
     const navigate = useNavigate();
     
 
@@ -34,6 +34,8 @@ const IndiviualPage = () => {
        const indProduct=products.filter(product=>product.id===Number(id));
        setQuantity(indProduct[0].quantity);
        setIndiviualProduct(indProduct);
+       console.log(id);
+       
     },[])
 
 
@@ -71,7 +73,7 @@ const IndiviualPage = () => {
 
    const handleAddToCart=(product)=>{
 
-    if(!isLogedIn) return errorMsg("Please Login First")
+    if(!isLoggedIn) return errorMsg("Please Login First")
      
     dispatch(addToCart({...product,quantity,size,color}))
     

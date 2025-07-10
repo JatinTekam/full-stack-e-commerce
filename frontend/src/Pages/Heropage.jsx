@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 //import imges from "../Heroimages.json";
 import {images} from "../assets/image.js"
 import "../All_CSS/Heropage.css";
-import { Search } from '../ProductContext/ProductContext.jsx';
 import BestSelling from '../component/BestSelling.jsx';
 import HeroPageImages from '../component/HeroPageImages.jsx';
 import FreshArrival from '../component/FreshArrival.jsx';
@@ -10,7 +9,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import Testimonials from '../component/Testimonials.jsx';
 import Service from '../component/Service.jsx';
-import { useSelector } from 'react-redux';
+import { Search } from '../context/ProductContext/ProductContext.jsx';
 
 const Heropage = () => {
 

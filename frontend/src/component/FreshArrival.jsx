@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Search } from "../ProductContext/ProductContext";
+import React, {useEffect, useState } from "react";
 import AllProduct from "./AllProduct";
 import { useSelector } from "react-redux";
 

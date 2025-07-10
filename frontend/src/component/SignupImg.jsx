@@ -9,7 +9,7 @@ const SignupImg = () => {
         <img src={img1} alt="" className=" w-60 h-130 object-cover" />
         <img src={img2} alt="" className="w-60 h-150 object-cover" />
         <img src={img3} alt="" className=" w-60 h-170 object-cover" />
-        <img src={img4} alt="" className=" w-60 h-190 object-cover" />
+        <img src={img4} alt="" className=" w-60 object-cover" />
       </div>
   )
 }

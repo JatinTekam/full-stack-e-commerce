@@ -8,11 +8,10 @@ const AllProduct = ({ product }) => {
   const { id, url, title, description, price } = product;
   const[isFav,setIsFav]=useState(false);
 
-  //const[heart,isHeart]=useState(false);
+
 
   const handleFavProduct=()=>{
     setIsFav(!isFav);
-    //isHeart(!heart);
   }
 
   return (

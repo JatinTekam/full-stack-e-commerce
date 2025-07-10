@@ -1,17 +1,15 @@
 package com.rive.rivebackend.model;
 
 
-import com.rive.rivebackend.Dto.RefreshTokenRequest;
+import com.rive.rivebackend.Dto.refreshTokenRequest.RefreshTokenRequest;
 import com.rive.rivebackend.Dto.user.UserLogInRequest;
 import com.rive.rivebackend.Dto.user.UserLogInResponse;
 import com.rive.rivebackend.Dto.user.UserSignUpRequest;
 import com.rive.rivebackend.Dto.user.UserSignUpResponse;
 import com.rive.rivebackend.entity.UserEntity;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserModal {
 

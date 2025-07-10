@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Search } from "../ProductContext/ProductContext";
 import { useSelector } from "react-redux";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import HeaderProfiles from "./HeaderProfiles";

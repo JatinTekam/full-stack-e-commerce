@@ -1,6 +1,6 @@
 package com.rive.rivebackend.model;
 
-import com.rive.rivebackend.Dto.RefreshTokenRequest;
+import com.rive.rivebackend.Dto.refreshTokenRequest.RefreshTokenRequest;
 import com.rive.rivebackend.Dto.user.UserLogInRequest;
 import com.rive.rivebackend.Dto.user.UserLogInResponse;
 import com.rive.rivebackend.Dto.user.UserSignUpRequest;
@@ -13,14 +13,10 @@ import com.rive.rivebackend.service.AuthService;
 import com.rive.rivebackend.service.JwtService;
 import com.rive.rivebackend.service.UserServices;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -90,29 +86,40 @@ public class UserService implements UserModal{
     @Override
     public UserLogInResponse loginUser(UserLogInRequest request, HttpServletResponse response) {
 
-            authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+            Optional<UserEntity> dbUser=userRepository.findByEmail(request.getEmail());
 
-            String accessToken=jwtService.generateToken(request.getEmail(),true);
+            if (dbUser.isEmpty()){
+                throw new UserValidate("Your "+request.getEmail()+" is not exists in our database please sign up");
+            }
 
-            String refreshToken=jwtService.generateToken(request.getEmail(),false);
+                try {
+                    authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                }catch (AuthenticationException e){
+                    throw new UserValidate("Invalid email ans password");
+                }
 
-            UserEntity dbUser=userRepository.findByEmail(request.getEmail()).get();
 
-            Cookie refreshCookie=new Cookie("refreshCookie",refreshToken);
-            refreshCookie.setHttpOnly(true);
-            refreshCookie.setSecure(true);
-            refreshCookie.setPath("/");
-            refreshCookie.setMaxAge(7*24*60*60);
-            response.addCookie(refreshCookie);
+             UserEntity user = dbUser.get();
 
-            UserLogInResponse loginResponse=new UserLogInResponse();
-            loginResponse.setAccessToken(accessToken);
-            loginResponse.setEmail(dbUser.getEmail());
-            loginResponse.setExpiresIn(1200);
-            loginResponse.setMessage("Welcome "+dbUser.getName());
+                String accessToken=jwtService.generateToken(request.getEmail(),true);
 
-            return loginResponse;
+                String refreshToken=jwtService.generateToken(request.getEmail(),false);
 
+                Cookie refreshCookie=new Cookie("refreshCookie",refreshToken);
+                refreshCookie.setHttpOnly(true);
+                refreshCookie.setSecure(true);
+                refreshCookie.setPath("/");
+                refreshCookie.setMaxAge(7*24*60*60);
+                response.addCookie(refreshCookie);
+
+                UserLogInResponse loginResponse=new UserLogInResponse();
+                loginResponse.setId(user.getId());
+                loginResponse.setAccessToken(accessToken);
+                loginResponse.setEmail(user.getEmail());
+                loginResponse.setExpiresIn(1200);
+                loginResponse.setMessage("Welcome "+user.getName());
+
+                return loginResponse;
 
     }
 
@@ -174,7 +181,7 @@ public class UserService implements UserModal{
         loginResponse.setAccessToken(newAccessToken);
         loginResponse.setEmail(dbUser.getEmail());
         loginResponse.setExpiresIn(1200);
-        loginResponse.setMessage("Welcome "+dbUser.getEmail());
+        //loginResponse.setMessage("Welcome "+dbUser.getEmail());
 
         return loginResponse;
     }

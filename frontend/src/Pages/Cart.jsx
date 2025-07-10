@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { Search } from "../ProductContext/ProductContext";
 import cartGif from "../assets/images/emptyCart.gif"
 import CartProduct from "../component/CartProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { totalCartPrice } from "../features/product/ProductSlice";
+import { Search } from "../context/ProductContext/ProductContext";
+
 
 const Cart = () => {
   const { showCart, setShowCart, cartItem } = useContext(Search);
@@ -20,9 +21,10 @@ const Cart = () => {
     dispatch(totalCartPrice());
   }, [products]);
 
+
   return (
     <div
-      className={`w-130 h-full overflow-scroll bg-white fixed top-0 mobile-width ${
+      className={`w-130 h-full overflow-scroll bg-white fixed z-10 top-0 mobile-width ${
         showCart ? "-right-130" : "-right-0"
       } duration-700`}
     >

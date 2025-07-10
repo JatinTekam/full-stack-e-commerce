@@ -8,9 +8,6 @@ export const MySearchContext=({children})=>{
   const[showCart,setShowCart]=useState(true);
   const[cartItem,setcartItem]=useState([]);
 
-  
-  
-  
 
     return <Search.Provider value={{search,setSearch,showCart,setShowCart,cartItem,setcartItem}}>{children}</Search.Provider>
 }

@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CiMenuBurger, CiSearch } from "react-icons/ci";
 import { FiShoppingBag } from "react-icons/fi";
 import { NavLink, Link } from "react-router-dom";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { LiaUserSolid } from "react-icons/lia";
-import { Search } from "../ProductContext/ProductContext";
+import { Search } from "../context/ProductContext/ProductContext";
 import { useSelector } from "react-redux";
 
 
@@ -14,7 +14,7 @@ const HeaderProfiles = () => {
     const product=useSelector((state)=>state.productReducer.products);
 
     const handleSearch = () => {
-        setSearch(!search)
+        setSearch(!search);
       };
 
 
@@ -58,14 +58,14 @@ const HeaderProfiles = () => {
         <CiSearch />
       </li>
       <li className="list-none p-2 text-xl border rounded-xl hover:cursor-pointer">
-        <NavLink className="relative" onClick={() => setShowCart(!showCart)}>
+        <div className="relative" onClick={() => setShowCart(!showCart)}>
           <FiShoppingBag />
           {product.length > 0 && (
-            <p className="absolute left-[20px] -top-[10px] border border-amber-50 rounded-3xl px-1 bg-black text-sm">
+            <p className="absolute z-10 left-[20px] -top-[10px] border border-amber-50 rounded-3xl px-1 bg-black text-sm">
               {product.length}
             </p>
           )}
-        </NavLink>
+        </div>
       </li>
       <li
         className="list-none p-2 text-xl border rounded-xl hover:cursor-pointer lg:hidden"

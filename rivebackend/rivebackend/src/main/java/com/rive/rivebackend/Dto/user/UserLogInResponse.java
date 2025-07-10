@@ -2,12 +2,20 @@ package com.rive.rivebackend.Dto.user;
 
 public class UserLogInResponse {
 
+    private long id;
     private String accessToken;
     private String email;
     private long expiresIn;
     private String tokenType;
     private String message;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public UserLogInResponse(){
         this.tokenType="Bearer";
