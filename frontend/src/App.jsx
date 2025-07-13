@@ -5,12 +5,10 @@ import Signup from "./Pages/Signup";
 import Contact from "./Pages/Contact";
 import Collection from "./Pages/Collection";
 import IndiviualPage from "./Pages/IndiviualPage";
-import { getIndiviualData } from "./Pages/getIndiviualData";
 import Login from "./Pages/Login";
 import { useDispatch, useSelector } from "react-redux";
-import { AuthProvider } from "./authContext/AuthContext";
-import  {PublicOnlyRoute } from "./procetedroutes/ProtectedRoutes";
-import { refreshUser } from "./features/login/loginSlice";
+import { AuthProvider, useAuth } from "./authContext/AuthContext";
+import {refreshUser } from "./features/login/loginSlice";
 import { useEffect, useState } from "react";
 import ProtectedRoutes  from "./procetedroutes/ProtectedRoutes";
 import NotFound from "./Pages/NotFound";
@@ -20,8 +18,9 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(refreshUser());   
+      dispatch(refreshUser());     
   }, [dispatch]);
+
 
   return (
     <AuthProvider>

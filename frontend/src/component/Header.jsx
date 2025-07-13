@@ -4,11 +4,21 @@ import { useSelector } from "react-redux";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import HeaderProfiles from "./HeaderProfiles";
 import Register from "./Register";
+import { useAuth } from "../authContext/AuthContext";
 
 const Header = () => {
   const[isLogined,setIsLogined]=useState(false);
   const[visible,setVisible]=useState(false);
-  const { user } = useSelector((state) => state.login);
+   const[userIsLoggedIn,setUserLoggedIn]=useState("");
+  const { email } = useSelector((state) => state.login);
+  const{userAccessToken}=useAuth();
+
+  useEffect(()=>{
+    setUserLoggedIn(localStorage.getItem("accessToken"));  
+  },[])
+
+
+
   return (
     <div className="bg-black phone sm:px-10 md:px-20 lg:bg-black text-white py-8 flex justify-between items-center px-45 h-25">
       <h2 className="text-3xl">
@@ -27,7 +37,7 @@ const Header = () => {
         </li>
       </ul>
      {
-      user ? <HeaderProfiles/> : <Register/>
+      email ? <HeaderProfiles/> : <Register/>
      }
 
      {/* Side Menu Bar For Mobile Screen */}

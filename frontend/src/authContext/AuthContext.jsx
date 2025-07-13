@@ -1,16 +1,17 @@
 import { createContext, useContext, useState } from "react";
 
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
 
-    const[accessToken,setAccessToken]=useState(null);
+    const[userAccessToken,setUserAccessToken]=useState(null);
     const[user,setUser]=useState(null);
     const[authenticated,setAuthenticated]=useState(null);
 
     const contextData={
-        accessToken,
-        setAccessToken,
+        userAccessToken,
+        setUserAccessToken,
         user,
         setUser,
         authenticated,

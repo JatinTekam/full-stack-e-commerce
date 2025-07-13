@@ -3,11 +3,20 @@ package com.rive.rivebackend.Dto.user;
 public class UserLogInResponse {
 
     private long id;
+    private String user;
     private String accessToken;
     private String email;
     private long expiresIn;
     private String tokenType;
     private String message;
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     public long getId() {
         return id;

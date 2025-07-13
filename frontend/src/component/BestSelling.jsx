@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import AllProduct from '../component/AllProduct.jsx';
 import { useSelector } from "react-redux";
+import { useAuth } from "../authContext/AuthContext.jsx";
 
 
  const BestSelling = () => {
 
   const[bestProduct,setBestProduct]=useState([]);
+
+    const{newAccessToken,setNewAccessToken}=useAuth();
   
   const product=useSelector((state)=>state.productReducer.productData);
  
@@ -13,6 +16,7 @@ import { useSelector } from "react-redux";
 
   useEffect(()=>{
     setBestProduct(product.slice(0,4))
+    console.log(newAccessToken);
     
   },[])
  

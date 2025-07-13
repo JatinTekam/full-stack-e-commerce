@@ -1,20 +1,17 @@
 package com.rive.rivebackend.controller;
+import com.rive.rivebackend.Dto.jwtToken.RefreshTokenResponse;
 import com.rive.rivebackend.Dto.user.UserLogInRequest;
 import com.rive.rivebackend.Dto.user.UserLogInResponse;
-import com.rive.rivebackend.Dto.refreshTokenRequest.RefreshTokenRequest;
+import com.rive.rivebackend.Dto.jwtToken.RefreshTokenRequest;
 import com.rive.rivebackend.Dto.user.UserSignUpRequest;
 import com.rive.rivebackend.Dto.user.UserSignUpResponse;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.errors.UserAlreadyExistsException;
 import com.rive.rivebackend.errors.UserValidate;
 import com.rive.rivebackend.model.UserModal;
-import com.rive.rivebackend.repository.UserRepository;
-import com.rive.rivebackend.service.AuthService;
-import com.rive.rivebackend.service.JwtService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,25 +25,14 @@ public class UserController {
 
     private final UserModal userModal;
 
-    private final AuthenticationManager authManager;
 
-    private final JwtService jwtService;
-
-    private final UserRepository userRepository;
-
-    private final AuthService service;
-
-    public UserController(UserModal userModal, AuthenticationManager authManager, JwtService jwtService, UserRepository userRepository,AuthService service) {
+    public UserController(UserModal userModal) {
         this.userModal = userModal;
-        this.authManager = authManager;
-        this.jwtService = jwtService;
-        this.userRepository = userRepository;
-        this.service=service;
     }
 
 
     @PostMapping("/signup")
-    public ResponseEntity<?> userSignUp(@RequestBody UserSignUpRequest user) {
+    public ResponseEntity<?> userSignUp(@RequestBody UserSignUpRequest user){
         Map<String,Object> errMsg=new HashMap<>();
         try{
             UserSignUpResponse userSignUpResponse = userModal.saveNewUser(user);
@@ -86,9 +72,10 @@ public class UserController {
 
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(@CookieValue(name = "refreshCookie",required = false) String refreshCookie,RefreshTokenRequest request,HttpServletResponse response) {
+
         try {
-            UserLogInResponse userLogInResponse = userModal.refreshToken(refreshCookie, request, response);
-            return ResponseEntity.status(HttpStatus.OK).body(userLogInResponse);
+            RefreshTokenResponse refreshToken  = userModal.refreshToken(refreshCookie, request, response);
+            return ResponseEntity.status(HttpStatus.OK).body(refreshToken);
         }catch (UserValidate e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }

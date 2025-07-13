@@ -7,14 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/login/loginSlice";
 import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
-import {
-  errorMsg,
-  success,
-} from "../allMessages/messages";
+import { errorMsg, successMsg } from "../utils/messages";
+import { useAuth } from "../authContext/AuthContext";
+
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
-  const { user, loading, error, message} = useSelector((state) => state.login);
+  const { email, loading, error, message, accessToken } = useSelector(
+    (state) => state.login
+  );
   const {
     register,
     handleSubmit,
@@ -24,8 +26,6 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  //const{setAccessToken,setUser, accessToken}=useAuth();
 
   const onSubmit = (data) => {
     handleLogIn(data);
@@ -37,21 +37,22 @@ const Login = () => {
   };
 
   useEffect(() => {
-     let timer;
+    let timer;
     if (error) {
-       errorMsg(error.message);
-       return;
+      errorMsg(error.message);
+      return;
     }
-    if (user) {
-    success(message);
-     timer = setTimeout(() => {
-      navigate("/");
-    }, 2000);
+    if (email) {
+      successMsg(message);
+      timer = setTimeout(() => {
+        navigate("/");
+      }, 2000);
     }
-     return () => {
-    if (timer) clearTimeout(timer);
-  };
-  }, [error, user, navigate, success, errorMsg]);
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [error, email, navigate, successMsg, errorMsg, accessToken]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -62,7 +63,9 @@ const Login = () => {
     }, 2000);
   }, [isSubmitSuccessful, reset]);
 
-
+  useEffect(() => {
+    console.log(accessToken);
+  }, [accessToken]);
 
   return (
     <div className="w-full h-screen  flex  gap-15 items-center relative bg-black">

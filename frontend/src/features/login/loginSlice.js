@@ -1,6 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userLogin } from "../../axios/connection";
-import { refreshAccessToken } from "../../axios/connection";
+
+
+
+const initialState = {
+  user: null,
+  email: null,
+  loading: false,
+  error: null,
+  accessToken: null,
+  expiresIn: null,
+  message: null,
+  isLoggedIn: false,
+};
 
 
 export const loginUser = createAsyncThunk(
@@ -20,26 +32,14 @@ export const loginUser = createAsyncThunk(
 );
 
 
-const initialState = {
-  user: null,
-  loading: false,
-  error: null,
-  accessToken: null,
-  message: null,
-  isLoggedIn: false,
-  isSignUpAuth: true,
-};
-
-
 
 export const refreshUser = createAsyncThunk(
   "login/refreshSlice",
   async (_, { rejectWithValue }) => {
-    const accessToken=initialState.accessToken;
     try {
-      const response = await refreshAccessToken(accessToken);
+      const response = await refreshAccessToken();    
       return response.data;
-    } catch (error) {
+    } catch (error) {      
       return rejectWithValue({
         message: error.response?.data?.message || "Session expired",
         status: error.response?.status,
@@ -50,7 +50,7 @@ export const refreshUser = createAsyncThunk(
 
 
 const logInSlice = createSlice({
-  name: "logInSlice",
+  name: "authSlice",
   initialState,
 
  extraReducers: (builder) => {
@@ -59,20 +59,34 @@ const logInSlice = createSlice({
      state.error = null;
    });
    builder.addCase(loginUser.fulfilled, (state, action) => {
-     state.user = action.payload.email;
+     state.user=action.payload.user;
+     state.email = action.payload.email;
      state.loading = false;
      state.error = null;
      state.accessToken = action.payload.accessToken;
-     state.message=action.payload.message;
+     state.expiresIn = action.payload.expiresIn;
+     state.message= action.payload.message;
      state.isLoggedIn= true;
    });
    builder.addCase(loginUser.rejected, (state, action) => {
+    state.user= null;
      state.loading = false;
      state.error = action.payload;
      state.user = null;
      state.accessToken = null;
+      state.expiresIn = null;
      state.message=action.payload.message;
      state.isLoggedIn= false;
+   });
+
+    builder.addCase(refreshUser.fulfilled, (state, action) => {
+     state.user= action.payload.user;
+     state.loading = false;
+     state.error = null;
+     state.accessToken = action.payload.accessToken;
+      state.expiresIn = action.payload.expiresIn;
+     state.email= action.payload.email;
+     state.isLoggedIn= true;
    });
  }
 });

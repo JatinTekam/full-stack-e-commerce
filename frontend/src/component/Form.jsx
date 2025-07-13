@@ -4,10 +4,10 @@ import loadingGif from "../assets/images/loading.gif";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { success, errorMsg } from "../allMessages/messages";
 import { UserSignUp } from "../features/signup/SignupSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { errorMsg, successMsg } from "../utils/messages";
 
 
 const Form = () => {
@@ -24,6 +24,9 @@ const Form = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+   
+    e.preventDefault();
+    
     handleFormSubmit(data);
   };
 
@@ -39,7 +42,7 @@ const Form = () => {
        return;
     }
     if (user) {
-    success(user.message);
+    successMsg(user.message);
      timer = setTimeout(() => {
       navigate("/login");
     }, 2000);
@@ -47,7 +50,7 @@ const Form = () => {
     return () => {
     if (timer) clearTimeout(timer);
   };
-  }, [error, user, navigate]);
+  }, [error, user, navigate, successMsg, errorMsg]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -123,7 +126,7 @@ const Form = () => {
                 className={`w-70 outline-none ${
                   errors.username ? "border-b border-b-red-600" : "border-b"
                 } `}
-                {...register("userName", {
+                {...register("username", {
                   required: "Username is required",
                   pattern: {
                     value: 5,
@@ -168,9 +171,9 @@ const Form = () => {
               name="mobileNo"
               id="mobile"
               className={`w-full outline-none ${
-                errors.mobileNo ? "border-b border-b-red-600" : "border-b"
+                errors.phoneNumber ? "border-b border-b-red-600" : "border-b"
               } `}
-              {...register("mobileNo", {
+              {...register("phoneNumber", {
                 required: "Phone No is required",
                 minLength: {
                   value: 10,
@@ -182,9 +185,9 @@ const Form = () => {
                 },
               })}
             />
-            {errors.mobileNo && (
+            {errors.phoneNumber && (
               <p className="text-red-500 text-end text-sm w-full">
-                {errors.mobileNo.message} *
+                {errors.phoneNumber.message} *
               </p>
             )}
 
@@ -207,18 +210,7 @@ const Form = () => {
                       </p>
                     )}
                   </button>
-                  <ToastContainer
-                    position="top-center"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover={false}
-                    theme="dark"
-                  />
+                  <ToastContainer/>
                 </div>
               </div>
               

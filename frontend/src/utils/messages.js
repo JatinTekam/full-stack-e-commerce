@@ -14,7 +14,7 @@ export const errorMsg = (message) => {
   };
 
 
-  export const success = (message) => {
+  export const successMsg = (message) => {
     toast.success(`${message}`, {
       position: "top-center",
       autoClose: 5000,

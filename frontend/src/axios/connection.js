@@ -37,11 +37,11 @@ export const userLogin = async (data) => {
 };
 
 
-export const refreshAccessToken = async (accessToken) => {
+export const refreshAccessToken = async () => {
  try {
-   const response = await api.post('/refresh-token',{
+   const response = await api.post('/refresh-token',{},{
     headers:{
-       'Authorization': `Bearer ${accessToken}`
+        'Content-Type': 'application/json',
     },
      withCredentials: true,
     });

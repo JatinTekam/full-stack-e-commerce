@@ -16,7 +16,7 @@ const AllProduct = ({ product }) => {
 
   return (
     <div className="relative">
-      <div className={`w-[300px] pb-5 rounded-2xl`}>
+      <div className={`w-[300px] pb-5 rounded-2xl overflow-hidden`}>
         <figure className=" h-[320px] rounded-2xl overflow-hidden">
           <img src={url} alt="" className="imghover" />
         </figure>

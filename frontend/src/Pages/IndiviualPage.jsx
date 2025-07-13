@@ -6,7 +6,7 @@ import star from "../assets/images/star1.png"
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../features/product/ProductSlice.js';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import { errorMsg } from '../allMessages/messages.js';
+import { errorMsg } from "../utils/messages";
 import { ToastContainer } from 'react-toastify';
 import { Search } from '../context/ProductContext/ProductContext.jsx';
 
@@ -20,6 +20,14 @@ const IndiviualPage = () => {
     const{cartItem,setcartItem}=useContext(Search);
     const[cartItems,setCartItems]=useState([]);
     const[logIn,setLogIn]=useState(false);
+
+      const[userIsLoggedIn,setUserLoggedIn]=useState("");
+
+    
+      useEffect(()=>{
+        setUserLoggedIn(localStorage.getItem("accessToken"));  
+      },[])
+    
 
 
     const {isLoggedIn} = useSelector((state) => state.login);
@@ -73,7 +81,7 @@ const IndiviualPage = () => {
 
    const handleAddToCart=(product)=>{
 
-    if(!isLoggedIn) return errorMsg("Please Login First")
+    if(!userIsLoggedIn) return errorMsg("Please Login First")
      
     dispatch(addToCart({...product,quantity,size,color}))
     
