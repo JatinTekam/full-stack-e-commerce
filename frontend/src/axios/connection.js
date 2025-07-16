@@ -36,6 +36,23 @@ export const userLogin = async (data) => {
 
 };
 
+export const getUser = async (data) => {
+  
+ try {
+    const response = await api.post("/user",data, {
+      withCredentials:true,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      
+    });      
+    return response;
+  } catch (error) {
+    throw error; 
+  }
+
+};
+
 
 export const refreshAccessToken = async () => {
  try {

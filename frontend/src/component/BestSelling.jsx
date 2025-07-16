@@ -16,8 +16,6 @@ import { useAuth } from "../authContext/AuthContext.jsx";
 
   useEffect(()=>{
     setBestProduct(product.slice(0,4))
-    console.log(newAccessToken);
-    
   },[])
  
   return (

@@ -12,6 +12,7 @@ import {refreshUser } from "./features/login/loginSlice";
 import { useEffect, useState } from "react";
 import ProtectedRoutes  from "./procetedroutes/ProtectedRoutes";
 import NotFound from "./Pages/NotFound";
+import Profile from "./Pages/Profile";
 
 function App() {
   let isAuthenticated=useSelector((state) => state.login.isLoggedIn);
@@ -28,7 +29,7 @@ function App() {
       <Route path="/" element={<Applayout />}>
         <Route index element={<Heropage />} />
         <Route path="contact" element={<Contact />} />
-        
+        <Route path="profile" element={<Profile/>} />
   
         <Route element={<ProtectedRoutes authenticated={isAuthenticated} />}>
           <Route path="collection" element={<Collection />} />

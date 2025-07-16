@@ -81,7 +81,7 @@ const IndiviualPage = () => {
 
    const handleAddToCart=(product)=>{
 
-    if(!userIsLoggedIn) return errorMsg("Please Login First")
+    if(false) return errorMsg("Please Login First")
      
     dispatch(addToCart({...product,quantity,size,color}))
     

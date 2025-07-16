@@ -5,6 +5,7 @@ import CartProduct from "../component/CartProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { totalCartPrice } from "../features/product/ProductSlice";
 import { Search } from "../context/ProductContext/ProductContext";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 
 const Cart = () => {
@@ -47,7 +48,7 @@ const Cart = () => {
           <div className="mt-10 ml-10 flex justify-between">
             <p className="text-xl font-bold">Your Products</p>
             <p className="mr-10 ">
-              Total :
+              Total Amount :
               <span className="font-bold text-2xl">{cartTotalPrice}</span>
             </p>
           </div>
@@ -62,6 +63,9 @@ const Cart = () => {
                   />
                 );
               })}
+          </div>
+          <div className="flex justify-end mr-5">
+            <button className='border px-2 py-2 bg-blue-500 hover:shadow-xl text-white rounded-md cursor-pointer flex items-center gap-2' >Proceed to Buy <FaArrowRightLong/> </button>
           </div>
         </div>
       )}
