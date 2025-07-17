@@ -1,10 +1,8 @@
 package com.rive.rivebackend.controller;
 import com.rive.rivebackend.Dto.jwtToken.RefreshTokenResponse;
-import com.rive.rivebackend.Dto.user.UserLogInRequest;
-import com.rive.rivebackend.Dto.user.UserLogInResponse;
+
 import com.rive.rivebackend.Dto.jwtToken.RefreshTokenRequest;
-import com.rive.rivebackend.Dto.user.UserSignUpRequest;
-import com.rive.rivebackend.Dto.user.UserSignUpResponse;
+import com.rive.rivebackend.Dto.user.*;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.errors.UserAlreadyExistsException;
 import com.rive.rivebackend.errors.UserValidate;
@@ -65,6 +63,22 @@ public class UserController {
             errMsg.put("status",409);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(errMsg);
         }
+
+    }
+
+    @PostMapping("/user")
+    public ResponseEntity<?> getUser(@RequestBody GetUser user){
+        Map<String,Object> errMsg=new HashMap<>();
+        try{
+            SetUser logInUser= userModal.findByUser(user.getUsername());
+            return ResponseEntity.status(HttpStatus.OK).body(logInUser);
+        }catch (UserValidate e){
+            errMsg.put("message",e.getMessage());
+            errMsg.put("status",409);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errMsg);
+        }
+
+
 
     }
 

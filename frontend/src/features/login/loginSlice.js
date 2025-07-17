@@ -4,7 +4,7 @@ import { userLogin } from "../../axios/connection";
 
 
 const initialState = {
-  user: null,
+  username: null,
   email: null,
   loading: false,
   error: null,
@@ -59,7 +59,7 @@ const logInSlice = createSlice({
      state.error = null;
    });
    builder.addCase(loginUser.fulfilled, (state, action) => {
-     state.user=action.payload.user;
+     state.username=action.payload.username;
      state.email = action.payload.email;
      state.loading = false;
      state.error = null;
@@ -69,7 +69,7 @@ const logInSlice = createSlice({
      state.isLoggedIn= true;
    });
    builder.addCase(loginUser.rejected, (state, action) => {
-    state.user= null;
+    state.username= null;
      state.loading = false;
      state.error = action.payload;
      state.user = null;
@@ -80,7 +80,7 @@ const logInSlice = createSlice({
    });
 
     builder.addCase(refreshUser.fulfilled, (state, action) => {
-     state.user= action.payload.user;
+     state.username= action.payload.username;
      state.loading = false;
      state.error = null;
      state.accessToken = action.payload.accessToken;

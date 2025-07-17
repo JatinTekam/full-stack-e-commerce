@@ -2,13 +2,22 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getUser } from "../../axios/connection";
 
 
+
+
 export const userInfo = createAsyncThunk(
  "userSlice/User",
- async(user,{ rejectWithValue })=>{
+ async({username,accessToken},{ rejectWithValue })=>{
+
+  const userDetails={
+    username:username
+  }
+
    try {
-    console.log(user);
     
-      //const response = await getUser(user);     
+    
+      const response = await getUser(userDetails, accessToken);
+  
+           
       return response.data;
     } catch (error) {
       return rejectWithValue({
@@ -22,9 +31,9 @@ export const userInfo = createAsyncThunk(
 
 
 const initialState = {
-  user: null,
+  name: null,
   email: null,
-  phoneNo: null,
+  phoneNumber: null,
   username: null,
   address: null,
   error: null,
@@ -41,18 +50,18 @@ const userSlice = createSlice({
      state.error = null;
    });
    builder.addCase(userInfo.fulfilled, (state, action) => {
-     state.user=action.payload.user;
+     state.name=action.payload.name;
      state.email = action.payload.email;
      state.error = null;
-     state.phoneNo= action.payload.phoneNo;
+     state.phoneNumber= action.payload.phoneNumber;
      state.username= action.payload.username;
      state.address= action.payload.address;
    });
    builder.addCase(userInfo.rejected, (state, action) => {
-    state.user= null;
+    state.name= null;
      state.error = action.payload;
      state.email = null;
-      state.phoneNo=null;
+      state.phoneNumber=null;
      state.username= null;
      state.address=null;
    });

@@ -11,10 +11,11 @@ import { errorMsg, successMsg } from "../utils/messages";
 import { useAuth } from "../authContext/AuthContext";
 
 import { jwtDecode } from "jwt-decode";
+import { userInfo } from "../features/user/userSclice";
 
 const Login = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
-  const { email, loading, error, message, accessToken } = useSelector(
+  const { email, loading, error, message, accessToken , username} = useSelector(
     (state) => state.login
   );
   const {
@@ -48,7 +49,7 @@ const Login = () => {
         navigate("/");
       }, 2000);
     }
-
+    dispatch(userInfo({username,accessToken}));
     return () => {
       if (timer) clearTimeout(timer);
     };
@@ -63,9 +64,6 @@ const Login = () => {
     }, 2000);
   }, [isSubmitSuccessful, reset]);
 
-  useEffect(() => {
-    console.log(accessToken);
-  }, [accessToken]);
 
   return (
     <div className="w-full h-screen  flex  gap-15 items-center relative bg-black">

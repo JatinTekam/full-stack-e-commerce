@@ -3,10 +3,7 @@ package com.rive.rivebackend.model;
 
 import com.rive.rivebackend.Dto.jwtToken.RefreshTokenRequest;
 import com.rive.rivebackend.Dto.jwtToken.RefreshTokenResponse;
-import com.rive.rivebackend.Dto.user.UserLogInRequest;
-import com.rive.rivebackend.Dto.user.UserLogInResponse;
-import com.rive.rivebackend.Dto.user.UserSignUpRequest;
-import com.rive.rivebackend.Dto.user.UserSignUpResponse;
+import com.rive.rivebackend.Dto.user.*;
 import com.rive.rivebackend.entity.UserEntity;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -21,7 +18,7 @@ public interface UserModal {
     boolean findByMobileNo(String mobileNo);
     List<UserEntity> getAllUser();
     UserEntity getUserById(long id);
-    UserEntity findByUser(String username);
+    SetUser findByUser(String username);
     UserEntity updateUser(UserEntity user);
     RefreshTokenResponse refreshToken(String token, RefreshTokenRequest request, HttpServletResponse response);
 }

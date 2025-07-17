@@ -1,6 +1,6 @@
 import Applayout from "./component/Applayout";
 import Heropage from "./Pages/Heropage";
-import { createBrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, createBrowserRouter, Route, Routes } from "react-router-dom";
 import Signup from "./Pages/Signup";
 import Contact from "./Pages/Contact";
 import Collection from "./Pages/Collection";
@@ -24,26 +24,29 @@ function App() {
 
 
   return (
+    <BrowserRouter>
     <AuthProvider>
       <Routes>
       <Route path="/" element={<Applayout />}>
         <Route index element={<Heropage />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="profile" element={<Profile/>} />
+        <Route path="/contact" element={<Contact />} />
+        
   
         <Route element={<ProtectedRoutes authenticated={isAuthenticated} />}>
-          <Route path="collection" element={<Collection />} />
-          <Route path="product/:id" element={<IndiviualPage />} />
+        <Route path="/profile" element={<Profile/>} />  
+          <Route path="/collection" element={<Collection />} />
+          <Route path="/product/:id" element={<IndiviualPage />} />
         </Route>
       </Route>
 
-      <Route path="signup" element={<Signup />} />
-      <Route path="login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
 
       
       <Route path="*" element={<NotFound />} />
     </Routes>
     </AuthProvider>
+    </BrowserRouter>
   );
 }
 

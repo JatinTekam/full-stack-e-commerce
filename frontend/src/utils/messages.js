@@ -1,6 +1,8 @@
 import { toast } from "react-toastify"
 
 export const errorMsg = (message) => {
+  console.log(message);
+  
     toast.error(`${message}`, {
       position: "top-center",
       autoClose: 5000,

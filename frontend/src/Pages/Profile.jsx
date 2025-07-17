@@ -4,16 +4,20 @@ import { FiShoppingBag } from "react-icons/fi";
 import { SlLogout } from "react-icons/sl";
 import MyDetails from "../component/Mydetails";
 import MyOrders from "../component/Myorders";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userInfo } from "../features/user/userSclice";
+import { useEffect } from "react";
+import { errorMsg } from "../utils/messages";
+import { ToastContainer } from "react-toastify";
 
 const Profile = () => {
   const[isActive,setIsActive]=useState(true);
+  const{name,email,phoneNumber,username,address,error}=useSelector(state=>state.user);
 
   const dispatch=useDispatch();
 
   const handleGetUser=()=>{
-    dispatch(userInfo({username:"JatinTekam"}))
+    dispatch(userInfo({username:"Shubham"}))
   }
 
   const handleIsActive=()=>{
@@ -23,6 +27,15 @@ const Profile = () => {
   const handleIsInActive=()=>{
     setIsActive(false)
   }
+
+  useEffect(()=>{
+      if(error){
+        //console.log(error.data.message);
+        
+        errorMsg(error.data.message);
+        return;
+      }
+  },[name,email,phoneNumber,username,address,error])
 
  
   return (
@@ -34,12 +47,12 @@ const Profile = () => {
         <div>
           <div className="w-120 rounded-xl  mt-5 p-5 ml-10 flex bg-white items-center mb-5">
             <div className="w-20 h-20 border rounded-full flex justify-center items-center bg-[#2D2D2D] mr-2">
-              <p className="text-3xl text-white font-bold">JT</p>
+              <p className="text-3xl text-white font-bold">{name && name.split(" ")[0].charAt(0)}</p>
             </div>
             <div>
               <p>Hello</p>
               <h1 className="text-start mr-10 text-3xl font-bold">
-                Jatin Tekam
+                {name}
               </h1>
             </div>
           </div>
@@ -52,11 +65,12 @@ const Profile = () => {
       {/* --------------------------------- */}
        <div className='w-190 h-110 rounded-xl mt-5 p-3 ml-10 flex mb-10 bg-white overflow-y-scroll'>
           {
-            isActive ? <MyDetails />  : <MyOrders />
+            isActive && name ? <MyDetails name={name} email={email} phoneNumber={phoneNumber} username={username} address={address}/>  : <MyOrders />
           }
         </div>
 
   </div>
+  <ToastContainer/>
   </div>
 
   );

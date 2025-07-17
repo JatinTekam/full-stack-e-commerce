@@ -23,7 +23,7 @@ const Form = () => {
     formState: { errors, isSubmitSuccessful },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data,e) => {
    
     e.preventDefault();
     

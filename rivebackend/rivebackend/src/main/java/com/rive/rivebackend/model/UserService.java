@@ -2,10 +2,7 @@ package com.rive.rivebackend.model;
 
 import com.rive.rivebackend.Dto.jwtToken.RefreshTokenRequest;
 import com.rive.rivebackend.Dto.jwtToken.RefreshTokenResponse;
-import com.rive.rivebackend.Dto.user.UserLogInRequest;
-import com.rive.rivebackend.Dto.user.UserLogInResponse;
-import com.rive.rivebackend.Dto.user.UserSignUpRequest;
-import com.rive.rivebackend.Dto.user.UserSignUpResponse;
+import com.rive.rivebackend.Dto.user.*;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.errors.UserAlreadyExistsException;
 import com.rive.rivebackend.errors.UserValidate;
@@ -113,7 +110,7 @@ public class UserService implements UserModal{
 
                 UserLogInResponse loginResponse=new UserLogInResponse();
                 loginResponse.setId(user.getId());
-                loginResponse.setUser(user.getName());
+                loginResponse.setUsername(user.getUsername());
                 loginResponse.setAccessToken(accessToken);
                 loginResponse.setEmail(user.getEmail());
                 loginResponse.setExpiresIn(1200);
@@ -190,14 +187,20 @@ public class UserService implements UserModal{
     }
 
     @Override
-    public UserEntity findByUser(String userName){
-        UserEntity user = userRepository.findByUsername(userName);
-
-        if (user!=null){
-            return user;
+    public SetUser findByUser(String username){
+        UserEntity dbUser = userRepository.findByUsername(username);
+        if (dbUser==null){
+            throw new UserValidate("User not found");
         }
+        SetUser user=new SetUser();
+        user.setEmail(dbUser.getEmail());
+        user.setName(dbUser.getName());
+        //user.setAddress();
+        user.setUsername(dbUser.getUsername());
+        user.setPhoneNumber(dbUser.getPhoneNumber());
 
-        return null;
+
+        return user;
 
     }
 }

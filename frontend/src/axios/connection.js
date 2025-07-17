@@ -36,13 +36,14 @@ export const userLogin = async (data) => {
 
 };
 
-export const getUser = async (data) => {
+export const getUser = async (data,token) => {
   
  try {
     const response = await api.post("/user",data, {
       withCredentials:true,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       
     });      
