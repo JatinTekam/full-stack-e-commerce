@@ -68,3 +68,18 @@ export const refreshAccessToken = async () => {
   throw error;
  }
 };
+
+
+export const updateDetails=async (updatedData)=>{
+  try {
+   const response = await api.post('/update-user',updatedData,{
+    headers:{
+        'Content-Type': 'application/json',
+    },
+     //withCredentials: true,
+    });
+  return response; 
+ } catch (error) {
+  throw error;
+ }
+}

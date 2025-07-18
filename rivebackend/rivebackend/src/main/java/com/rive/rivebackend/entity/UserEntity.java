@@ -28,6 +28,9 @@ public class UserEntity {
     @Column(unique = true, nullable = false, length = 10)
     private String phoneNumber;
 
+    @Column
+    private String address;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -39,6 +42,13 @@ public class UserEntity {
     @Column
     private boolean userIsEnabled=true;
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

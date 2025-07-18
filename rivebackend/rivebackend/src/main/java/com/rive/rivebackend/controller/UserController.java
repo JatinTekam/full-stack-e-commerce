@@ -97,17 +97,18 @@ public class UserController {
 
 
 
-//    @PutMapping("/user")
-//    public ResponseEntity<?> getUser(@RequestBody UserEntity user){
-//        System.out.println("hello");
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String userName = authentication.getName();
-//        UserEntity dbUser=userModal.findByUser(userName);
-//        dbUser.setUserName(user.getUsername());
-//        dbUser.setPassword(user.getPassword());
-//        UserEntity saveUser = userModal.signUp(dbUser);
-//        return ResponseEntity.status(HttpStatus.OK).body(saveUser);
-//    }
+    @PutMapping("/update-user")
+    public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest request){
+        userModal.updateUserDetails(request);
+
+//        System.out.println(user.getUsername());
+//        System.out.println(user.getAddress());
+//        System.out.println(user.getName());
+//        System.out.println(user.getEmail());
+//        System.out.println(user.getPhoneNumber());
+
+        return ResponseEntity.ok(user);
+    }
 
 
     public String checkForExistingUser(UserEntity user) {

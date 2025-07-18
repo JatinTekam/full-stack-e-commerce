@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BiDetail } from "react-icons/bi";
 import { FiShoppingBag } from "react-icons/fi";
 import { SlLogout } from "react-icons/sl";
@@ -9,6 +9,8 @@ import { userInfo } from "../features/user/userSclice";
 import { useEffect } from "react";
 import { errorMsg } from "../utils/messages";
 import { ToastContainer } from "react-toastify";
+import { Search } from "../context/ProductContext/ProductContext";
+
 
 const Profile = () => {
   const[isActive,setIsActive]=useState(true);
@@ -29,9 +31,7 @@ const Profile = () => {
   }
 
   useEffect(()=>{
-      if(error){
-        //console.log(error.data.message);
-        
+      if(error){      
         errorMsg(error.data.message);
         return;
       }
@@ -39,7 +39,7 @@ const Profile = () => {
 
  
   return (
-    <div className="w-full h-full bg-[#EEEEEE]">
+    <div className="w-full h-full bg-[#EEEEEE] ">
       <div>
         <h1 className="font-extrabold text-3xl mt-2 ml-10">My Profile</h1>
       </div>

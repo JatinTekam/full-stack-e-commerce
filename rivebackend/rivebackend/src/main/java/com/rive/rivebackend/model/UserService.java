@@ -8,16 +8,21 @@ import com.rive.rivebackend.errors.UserAlreadyExistsException;
 import com.rive.rivebackend.errors.UserValidate;
 import com.rive.rivebackend.repository.UserRepository;
 import com.rive.rivebackend.service.AuthService;
+import com.rive.rivebackend.service.CustomUserDetails;
 import com.rive.rivebackend.service.JwtService;
-import com.rive.rivebackend.service.UserServices;
+import com.rive.rivebackend.service.UserDetail;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +38,9 @@ public class UserService implements UserModal{
     private final AuthenticationManager authManager;
 
     private final JwtService jwtService;
+
+    @Autowired
+    private UserDetail userDetail;
 
 
     public UserService(AuthService authService, UserRepository userRepository, AuthenticationManager authManager, JwtService jwtService) {
@@ -91,7 +99,7 @@ public class UserService implements UserModal{
                 try {
                     authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
                 }catch (AuthenticationException e){
-                    throw new UserValidate("Invalid email ans password");
+                    throw new UserValidate("Invalid email and password");
                 }
 
 
@@ -145,8 +153,27 @@ public class UserService implements UserModal{
     }
 
     @Override
-    public UserEntity updateUser(UserEntity user){
-       return userRepository.save(user);
+    public UpdateUserResponse updateUserDetails(UserUpdateRequest request){
+
+        Optional<UserEntity> dbUser = userRepository.findByEmail(request.getEmail());
+
+        UpdateUserResponse updateUserResponse=new UpdateUserResponse();
+
+        if(dbUser.isPresent()){
+            UserEntity user = dbUser.get();
+            user.setUsername(request.getUsername());
+            user.setAddress(request.getAddress());
+            user.setEmail(request.getEmail());
+            user.setPhoneNumber(request.getPhoneNumber());
+            user.setName(request.getName());
+            user.setUpdatedAt(LocalDateTime.now());
+
+            userRepository.save(user);
+            updateUserResponse.setMessage("Data Update Successfully");
+            updateUserResponse.setError(null);
+            return updateUserResponse;
+        }
+          throw new UserValidate("User Not Found");
     }
 
     @Override

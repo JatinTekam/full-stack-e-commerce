@@ -1,6 +1,10 @@
-import emapty from "../assets/images/right-green.png";
+import { useContext, useState } from "react";
+import UpdateDetail from "./UpdateDetail";
+import { Search } from "../context/ProductContext/ProductContext";
+
 
 const MyDetails = ({ name, email, phoneNumber, username, address }) => {
+  const{updateData,setUpdateData}=useContext(Search);
   return (
     <div className="w-full p-5">
       <div>
@@ -30,10 +34,15 @@ const MyDetails = ({ name, email, phoneNumber, username, address }) => {
         </p>
       </div>
       <div className="flex justify-end mr-5 mt-8">
-        <button className="border px-2 py-2 bg-blue-500 hover:shadow-xl text-white rounded-md cursor-pointer flex items-center gap-2">
-          Add / Update{" "}
+        <button className="border px-2 py-2 bg-blue-500 hover:shadow-xl text-white rounded-md cursor-pointer flex items-center gap-2"
+        onClick={()=>setUpdateData(!updateData)}
+        >
+          Add / Update
         </button>
       </div>
+     {
+      updateData ?  <UpdateDetail name={name} username={username} phoneNumber={phoneNumber} email={email} address={address} /> : "" 
+     }
     </div>
   );
 };

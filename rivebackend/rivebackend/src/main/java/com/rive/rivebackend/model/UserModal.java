@@ -19,6 +19,6 @@ public interface UserModal {
     List<UserEntity> getAllUser();
     UserEntity getUserById(long id);
     SetUser findByUser(String username);
-    UserEntity updateUser(UserEntity user);
+    UpdateUserResponse updateUserDetails(UserUpdateRequest request);
     RefreshTokenResponse refreshToken(String token, RefreshTokenRequest request, HttpServletResponse response);
 }
