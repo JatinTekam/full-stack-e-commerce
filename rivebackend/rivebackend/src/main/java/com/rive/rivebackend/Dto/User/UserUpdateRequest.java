@@ -1,19 +1,11 @@
-package com.rive.rivebackend.Dto.user;
+package com.rive.rivebackend.Dto.User;
 
-public class SetUser {
-    private String username;
+public class UserUpdateRequest {
     private String name;
-    private String address;
+    private String username;
     private String phoneNumber;
     private String email;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    private String address;
 
     public String getName() {
         return name;
@@ -23,12 +15,12 @@ public class SetUser {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPhoneNumber() {
@@ -46,4 +38,14 @@ public class SetUser {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
+
+

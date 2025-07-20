@@ -1,8 +1,17 @@
-package com.rive.rivebackend.Dto.user;
+package com.rive.rivebackend.Dto.User;
 
 public class UpdateUserResponse {
     private String message;
     private String error;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getMessage() {
         return message;

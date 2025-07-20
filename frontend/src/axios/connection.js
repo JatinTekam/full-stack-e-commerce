@@ -70,16 +70,20 @@ export const refreshAccessToken = async () => {
 };
 
 
-export const updateDetails=async (updatedData)=>{
+export const updateDetails=async (updatedData,token)=>{
   try {
-   const response = await api.post('/update-user',updatedData,{
+   const response = await api.put('/update-user',updatedData,{
     headers:{
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
     },
      //withCredentials: true,
     });
   return response; 
  } catch (error) {
+
+  //console.log(error);
+  
   throw error;
  }
 }

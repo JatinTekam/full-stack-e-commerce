@@ -1,10 +1,7 @@
 package com.rive.rivebackend.service;
 
-import com.rive.rivebackend.Dto.user.UserSignUpRequest;
-import com.rive.rivebackend.entity.UserEntity;
+import com.rive.rivebackend.Dto.User.UserSignUpRequest;
 import com.rive.rivebackend.errors.UserValidate;
-import com.rive.rivebackend.model.UserModal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

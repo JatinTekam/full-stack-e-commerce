@@ -1,4 +1,4 @@
-package com.rive.rivebackend.Dto.user;
+package com.rive.rivebackend.Dto.User;
 
 public class UserLogInResponse {
 
@@ -9,6 +9,15 @@ public class UserLogInResponse {
     private long expiresIn;
     private String tokenType;
     private String message;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getUsername() {
         return username;

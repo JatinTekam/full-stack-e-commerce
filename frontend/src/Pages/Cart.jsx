@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { totalCartPrice } from "../features/product/ProductSlice";
 import { Search } from "../context/ProductContext/ProductContext";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { orderProduct } from "../features/order/orderSclice";
 
 
 const Cart = () => {
@@ -16,11 +17,19 @@ const Cart = () => {
     (state) => state.productReducer
   );
 
+  const{email}=useSelector(state=>state.login);
+
   const dispatch = useDispatch();
 
+
+  const handleCartProduct=()=>{
+    dispatch(orderProduct({products,email}))
+  }
+
+
   useEffect(() => {
-    dispatch(totalCartPrice());
-  }, [products]);
+    dispatch(totalCartPrice());  
+  }, [products,dispatch]);
 
 
   return (
@@ -49,7 +58,7 @@ const Cart = () => {
             <p className="text-xl font-bold">Your Products</p>
             <p className="mr-10 ">
               Total Amount :
-              <span className="font-bold text-2xl">{cartTotalPrice}</span>
+              <span className="font-bold text-2xl"> {cartTotalPrice}</span>
             </p>
           </div>
           <div className=" mt-3 px-3 py-3">
@@ -65,7 +74,7 @@ const Cart = () => {
               })}
           </div>
           <div className="flex justify-end mr-5">
-            <button className='border px-2 py-2 bg-blue-500 hover:shadow-xl text-white rounded-md cursor-pointer flex items-center gap-2' >Proceed to Buy <FaArrowRightLong/> </button>
+            <button className='border px-2 py-2 bg-blue-500 hover:shadow-xl text-white rounded-md cursor-pointer flex items-center gap-2' onClick={handleCartProduct}>Proceed to Buy <FaArrowRightLong/> </button>
           </div>
         </div>
       )}

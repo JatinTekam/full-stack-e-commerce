@@ -22,14 +22,6 @@ const IndiviualPage = () => {
     const[logIn,setLogIn]=useState(false);
 
       const[userIsLoggedIn,setUserLoggedIn]=useState("");
-
-    
-      useEffect(()=>{
-        setUserLoggedIn(localStorage.getItem("accessToken"));  
-      },[])
-    
-
-
     const {isLoggedIn} = useSelector((state) => state.login);
 
     const dispatch=useDispatch();
@@ -41,15 +33,12 @@ const IndiviualPage = () => {
     useEffect( ()=>{
        const indProduct=products.filter(product=>product.id===Number(id));
        setQuantity(indProduct[0].quantity);
-       setIndiviualProduct(indProduct);
-       console.log(id);
-       
+       setIndiviualProduct(indProduct);     
     },[])
 
 
     useEffect(()=>{
       setCartItems([...cartItems,...productsCart])
-     
     },[])
 
 

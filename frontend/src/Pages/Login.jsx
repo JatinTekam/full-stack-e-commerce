@@ -15,7 +15,7 @@ import { userInfo } from "../features/user/userSclice";
 
 const Login = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
-  const { email, loading, error, message, accessToken , username} = useSelector(
+  const { email, loading, error, message, accessToken , username, status} = useSelector(
     (state) => state.login
   );
   const {
@@ -43,7 +43,7 @@ const Login = () => {
       errorMsg(error.message);
       return;
     }
-    if (email) {
+    if (status===200) {
       successMsg(message);
       timer = setTimeout(() => {
         navigate("/");
@@ -124,8 +124,8 @@ const Login = () => {
             </p>
           )}
 
-          <div class=" w-full flex justify-center items-center gap-12 mt-2 ">
-            <div class="w-full rounded-[16px]">
+          <div className=" w-full flex justify-center items-center gap-12 mt-2 ">
+            <div className="w-full rounded-[16px]">
               <button
                 className=" w-full bg-blue-500 p-2 text-white cursor-pointer rounded-[12px] hover:shadow-black flex items-center gap-2 justify-center"
                 disabled={isSubmitting}

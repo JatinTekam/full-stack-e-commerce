@@ -1,7 +1,7 @@
 package com.rive.rivebackend.config;
 
 import com.rive.rivebackend.service.JwtService;
-import com.rive.rivebackend.service.UserServices;
+import com.rive.rivebackend.service.UserDetail;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,9 +22,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
 
-    private final UserServices userService;
+    private final UserDetail userService;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserServices userService) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetail userService) {
         this.jwtService = jwtService;
         this.userService = userService;
     }

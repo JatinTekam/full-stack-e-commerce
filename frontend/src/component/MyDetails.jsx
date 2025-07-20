@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UpdateDetail from "./UpdateDetail";
 import { Search } from "../context/ProductContext/ProductContext";
 
 
 const MyDetails = ({ name, email, phoneNumber, username, address }) => {
   const{updateData,setUpdateData}=useContext(Search);
+
   return (
     <div className="w-full p-5">
       <div>
@@ -25,8 +26,8 @@ const MyDetails = ({ name, email, phoneNumber, username, address }) => {
         <p className="text-2xl p-3">
           Address:-{" "}
           <span
-            className={`p-2 text-2xl text-gray-700 ${
-              address ? "text-green-400" : "text-red-500"
+            className={`p-2 text-2xl ${
+              address ? "text-gray-700" : "text-red-500"
             }`}
           >
             {address ? address : "Address Should't Empty"}{" "}

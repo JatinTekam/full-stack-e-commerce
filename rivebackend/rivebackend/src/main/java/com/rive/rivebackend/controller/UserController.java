@@ -1,12 +1,12 @@
 package com.rive.rivebackend.controller;
-import com.rive.rivebackend.Dto.jwtToken.RefreshTokenResponse;
+import com.rive.rivebackend.Dto.JwtToken.RefreshTokenResponse;
 
-import com.rive.rivebackend.Dto.jwtToken.RefreshTokenRequest;
-import com.rive.rivebackend.Dto.user.*;
+import com.rive.rivebackend.Dto.JwtToken.RefreshTokenRequest;
+import com.rive.rivebackend.Dto.User.*;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.errors.UserAlreadyExistsException;
 import com.rive.rivebackend.errors.UserValidate;
-import com.rive.rivebackend.model.UserModal;
+import com.rive.rivebackend.model.UserModel;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +21,10 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class UserController {
 
-    private final UserModal userModal;
+    private final UserModel userModal;
 
 
-    public UserController(UserModal userModal) {
+    public UserController(UserModel userModal) {
         this.userModal = userModal;
     }
 
@@ -60,8 +60,8 @@ public class UserController {
 
         }catch (UserValidate e){
             errMsg.put("message",e.getMessage());
-            errMsg.put("status",409);
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(errMsg);
+            errMsg.put("status",404);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errMsg);
         }
 
     }
@@ -99,15 +99,16 @@ public class UserController {
 
     @PutMapping("/update-user")
     public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest request){
-        userModal.updateUserDetails(request);
+        Map<String,Object> errMsg=new HashMap<>();
+        try{
+            UpdateUserResponse updateUserResponse = userModal.updateUserDetails(request);
+            return ResponseEntity.status(HttpStatus.OK).body(updateUserResponse);
+        }catch (UserValidate e){
+            errMsg.put("error",e.getMessage());
+            errMsg.put("status",404);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errMsg);
+        }
 
-//        System.out.println(user.getUsername());
-//        System.out.println(user.getAddress());
-//        System.out.println(user.getName());
-//        System.out.println(user.getEmail());
-//        System.out.println(user.getPhoneNumber());
-
-        return ResponseEntity.ok(user);
     }
 
 

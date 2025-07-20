@@ -1,4 +1,4 @@
-package com.rive.rivebackend.Dto.user;
+package com.rive.rivebackend.Dto.User;
 
 public class UserSignUpRequest {
 

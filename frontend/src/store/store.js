@@ -4,6 +4,7 @@ import signUpReducer from "../features/signup/SignupSlice";
 import logInReducer from "../features/login/loginSlice";
 import userReducer from "../features/user/userSclice"
 import updateUserReducer from "../features/updateUser/updateUser"
+import orderReducer from "../features/order/orderSclice"
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: signUpReducer,
     login: logInReducer,
     user : userReducer,
-    updateUser: updateUserReducer
+    updateUser: updateUserReducer,
+    order: orderReducer
   },
 });

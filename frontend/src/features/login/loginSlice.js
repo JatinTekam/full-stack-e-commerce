@@ -11,6 +11,7 @@ const initialState = {
   accessToken: null,
   expiresIn: null,
   message: null,
+  status: null,
   isLoggedIn: false,
 };
 
@@ -66,6 +67,7 @@ const logInSlice = createSlice({
      state.accessToken = action.payload.accessToken;
      state.expiresIn = action.payload.expiresIn;
      state.message= action.payload.message;
+     state.status=action.payload.status;
      state.isLoggedIn= true;
    });
    builder.addCase(loginUser.rejected, (state, action) => {
@@ -77,6 +79,7 @@ const logInSlice = createSlice({
       state.expiresIn = null;
      state.message=action.payload.message;
      state.isLoggedIn= false;
+      state.status=null;
    });
 
     builder.addCase(refreshUser.fulfilled, (state, action) => {

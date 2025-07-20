@@ -1,4 +1,4 @@
-package com.rive.rivebackend.Dto.jwtToken;
+package com.rive.rivebackend.Dto.JwtToken;
 
 public class RefreshTokenResponse {
     private String user;

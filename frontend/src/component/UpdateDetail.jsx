@@ -1,11 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Search } from "../context/ProductContext/ProductContext";
-import { useDispatch } from "react-redux";
-import { updateUserDetails } from "../features/updateUser/updateUser";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUserUpdate, updateUserDetails } from "../features/updateUser/updateUser";
+import { errorMsg, successMsg } from "../utils/messages";
+import loadingGif from "../assets/images/loading.gif";
+import { userInfo } from "../features/user/userSclice";
 
 const UpdateDetail = ({name, username, phoneNumber, email, address}) => {
+
     const{updateData,setUpdateData}=useContext(Search);
     const dispatch=useDispatch();
+
+    const{message, loading, errorMessage, status}=useSelector(state=>state.updateUser);
+
+    const { accessToken } = useSelector(
+    (state) => state.login
+  );
+
     const[userUpdateData,setUserUpdateData]=useState({
         name:name,
         username:username,
@@ -25,9 +36,27 @@ const UpdateDetail = ({name, username, phoneNumber, email, address}) => {
 
     const handleUpadteData=(e)=>{
         e.preventDefault();
-        dispatch(updateUserDetails(userUpdateData))
-        
+        dispatch(updateUserDetails({userUpdateData,accessToken}))
     }
+
+
+    useEffect(()=>{
+
+      if(status===200){
+        successMsg(message);
+        setUpdateData(!updateData);
+         dispatch(userInfo({username,accessToken}));
+         dispatch(clearUserUpdate())
+        return;
+      }
+
+      if (errorMessage) {
+        errorMsg(errorMessage);
+        dispatch(clearUserUpdate())
+        return;
+      }
+
+    },[message, loading, errorMessage, address, name, username, phoneNumber, email])
 
 
 
@@ -79,6 +108,7 @@ const UpdateDetail = ({name, username, phoneNumber, email, address}) => {
             <input
               type="text"
               name="email"
+              readOnly
               value={userUpdateData.email}
               className="w-60 border p-2 rounded-sm outline-none"
              onChange={handleUserUpdate}
@@ -95,7 +125,10 @@ const UpdateDetail = ({name, username, phoneNumber, email, address}) => {
             <button className="border px-2 py-2 bg-blue-500 hover:shadow-xl text-white rounded-md cursor-pointer flex items-center gap-2"
             type="submit"
             >
-              Sunbmit
+              {
+                loading ?  <img src={loadingGif} alt="" className="w-5" /> :  "Submit"
+            }
+             
             </button>
             <button className="border px-2 py-2 bg-red-500 hover:shadow-xl text-white rounded-md cursor-pointer flex items-center gap-2"
             onClick={()=>setUpdateData(!updateData)}

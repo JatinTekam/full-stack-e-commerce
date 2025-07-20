@@ -16,11 +16,6 @@ const Profile = () => {
   const[isActive,setIsActive]=useState(true);
   const{name,email,phoneNumber,username,address,error}=useSelector(state=>state.user);
 
-  const dispatch=useDispatch();
-
-  const handleGetUser=()=>{
-    dispatch(userInfo({username:"Shubham"}))
-  }
 
   const handleIsActive=()=>{
     setIsActive(true)
@@ -58,7 +53,7 @@ const Profile = () => {
           </div>
         <div className=" ml-10 flex items-center gap-4 text-xl p-5 mb-2 bg-white cursor-pointer hover:border hover:border-r-0 hover:border-b-0 hover:border-t-0 hover:border-l-4 hover:border-l-blue-500 hover:bg-gray-100" onClick={handleIsActive}><BiDetail/> My details</div>
         <div className=" ml-10 flex items-center gap-4 text-xl p-5 mb-2 bg-white hover:border hover:border-r-0 hover:border-b-0 hover:border-t-0 hover:border-l-4 hover:border-l-blue-500 hover:bg-gray-100 cursor-pointer" onClick={handleIsInActive} ><FiShoppingBag/> My orders</div>
-        <div className=" ml-10 flex items-center gap-4 text-xl p-5 bg-white hover:border hover:border-r-0 hover:border-b-0 hover:border-t-0 hover:border-l-4 hover:border-l-blue-500 hover:bg-gray-100 cursor-pointer" onClick={handleGetUser}><SlLogout/>Log out</div>
+        <div className=" ml-10 flex items-center gap-4 text-xl p-5 bg-white hover:border hover:border-r-0 hover:border-b-0 hover:border-t-0 hover:border-l-4 hover:border-l-blue-500 hover:bg-gray-100 cursor-pointer"><SlLogout/>Log out</div>
         </div>
     
 

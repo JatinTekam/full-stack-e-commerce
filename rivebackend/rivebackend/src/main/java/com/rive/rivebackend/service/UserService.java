@@ -1,34 +1,28 @@
-package com.rive.rivebackend.model;
+package com.rive.rivebackend.service;
 
-import com.rive.rivebackend.Dto.jwtToken.RefreshTokenRequest;
-import com.rive.rivebackend.Dto.jwtToken.RefreshTokenResponse;
-import com.rive.rivebackend.Dto.user.*;
+import com.rive.rivebackend.Dto.JwtToken.RefreshTokenRequest;
+import com.rive.rivebackend.Dto.JwtToken.RefreshTokenResponse;
+import com.rive.rivebackend.Dto.User.*;
 import com.rive.rivebackend.entity.UserEntity;
 import com.rive.rivebackend.errors.UserAlreadyExistsException;
 import com.rive.rivebackend.errors.UserValidate;
+import com.rive.rivebackend.model.UserModel;
 import com.rive.rivebackend.repository.UserRepository;
-import com.rive.rivebackend.service.AuthService;
-import com.rive.rivebackend.service.CustomUserDetails;
-import com.rive.rivebackend.service.JwtService;
-import com.rive.rivebackend.service.UserDetail;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class UserService implements UserModal{
+public class UserService implements UserModel {
 
 
     private final AuthService authService;
@@ -122,6 +116,7 @@ public class UserService implements UserModal{
                 loginResponse.setAccessToken(accessToken);
                 loginResponse.setEmail(user.getEmail());
                 loginResponse.setExpiresIn(1200);
+                loginResponse.setStatus(200);
                 loginResponse.setMessage("Welcome "+user.getName());
 
                 return loginResponse;
@@ -170,6 +165,7 @@ public class UserService implements UserModal{
 
             userRepository.save(user);
             updateUserResponse.setMessage("Data Update Successfully");
+            updateUserResponse.setStatus(200);
             updateUserResponse.setError(null);
             return updateUserResponse;
         }
@@ -222,7 +218,7 @@ public class UserService implements UserModal{
         SetUser user=new SetUser();
         user.setEmail(dbUser.getEmail());
         user.setName(dbUser.getName());
-        //user.setAddress();
+        user.setAddress(dbUser.getAddress());
         user.setUsername(dbUser.getUsername());
         user.setPhoneNumber(dbUser.getPhoneNumber());
 

@@ -13,11 +13,7 @@ export const userInfo = createAsyncThunk(
   }
 
    try {
-    
-    
-      const response = await getUser(userDetails, accessToken);
-  
-           
+      const response = await getUser(userDetails, accessToken); 
       return response.data;
     } catch (error) {
       return rejectWithValue({
@@ -59,7 +55,7 @@ const userSlice = createSlice({
    });
    builder.addCase(userInfo.rejected, (state, action) => {
     state.name= null;
-     state.error = action.payload;
+     state.error = action.payload.error;
      state.email = null;
       state.phoneNumber=null;
      state.username= null;
