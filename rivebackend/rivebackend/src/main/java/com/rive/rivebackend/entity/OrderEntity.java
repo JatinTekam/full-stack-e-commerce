@@ -13,14 +13,77 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column
     private long userId;
+    @Column
     private String userAddress;
+    @Column
     private String phoneNumber;
+    @Column
     private String email;
-    private List<OrderedProduct> orderedProducts;
+    @Column
     private double amount;
-    private String status;
+    @Column
+    private String paymentStatus;
+    @Column
+    private String razorpaySignature;
+    @Column
     private String razorpayOrderId;
+
+    @Column
+    private String razorpayPaymentId;
+
+    @Column
+    String orderStatus;
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    @ElementCollection
+    @CollectionTable(
+            name = "order_products",
+            joinColumns = @JoinColumn(name = "order_id")
+    )
+    private List<OrderedProduct> orderedProducts;
+
+    public OrderEntity() {}
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getRazorpayPaymentId() {
+        return razorpayPaymentId;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getRazorpaySignature() {
+        return razorpaySignature;
+    }
+
+    public void setRazorpaySignature(String razorpaySignature) {
+        this.razorpaySignature = razorpaySignature;
+    }
+
+    public void setRazorpayPaymentId(String razorpayPaymentId) {
+        this.razorpayPaymentId = razorpayPaymentId;
+    }
 
     public long getUserId() {
         return userId;
@@ -70,13 +133,7 @@ public class OrderEntity {
         this.amount = amount;
     }
 
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public String getRazorpayOrderId() {
         return razorpayOrderId;

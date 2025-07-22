@@ -1,6 +1,8 @@
 package com.rive.rivebackend.Dto.OrderedProducts;
 
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public class OrderedProduct {
     private int productId;
     private String url;
@@ -12,6 +14,21 @@ public class OrderedProduct {
     private Integer quantity;
     private Double rating;
     private String size;
+
+    public OrderedProduct(){}
+
+    public OrderedProduct(int productId, String url, String title, String category, String color, String description, Double price, Integer quantity, Double rating, String size) {
+        this.productId = productId;
+        this.url = url;
+        this.title = title;
+        this.category = category;
+        this.color = color;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.rating = rating;
+        this.size = size;
+    }
 
     public int getProductId() {
         return productId;
