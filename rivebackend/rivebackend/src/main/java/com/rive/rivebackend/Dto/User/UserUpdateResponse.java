@@ -1,6 +1,6 @@
 package com.rive.rivebackend.Dto.User;
 
-public class UpdateUserResponse {
+public class UserUpdateResponse {
     private String message;
     private String error;
     private int status;

@@ -24,6 +24,7 @@ public class OrderController {
     }
 
     @PostMapping("/place-order")
+    @ResponseStatus(HttpStatus.CREATED)
     public OrderResponse placeOrder(@RequestBody OrderRequest orderRequest) throws RazorpayException {
         return orderModel.createOrderWithPayment(orderRequest);
     }
@@ -39,11 +40,18 @@ public class OrderController {
         return orderModel.getUserOrders(userId);
     }
 
+
+    //admin
     @GetMapping("/all")
     public List<OrderResponse> allOrders(){
        return orderModel.getOrderOfAllUser();
     }
 
+    //admin
+    @PatchMapping("/status/{orderId}")
+    public void updateOrderStatus(@PathVariable long orderId,@RequestParam String status){
+        orderModel.updateOrderStatus(orderId,status);
+    }
 
 
 }

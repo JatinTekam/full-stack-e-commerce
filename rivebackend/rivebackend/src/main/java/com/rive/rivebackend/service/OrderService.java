@@ -79,7 +79,8 @@ public class OrderService implements OrderModel {
     public List<OrderResponse> getUserOrders(Long userId) {
         List<OrderEntity> byUserId = orderRepository.findByUserId(userId);
 
-       return byUserId.stream().map(entity->convertToResponse(entity))
+       return byUserId.stream()
+               .map(entity->convertToResponse(entity))
                 .collect(Collectors.toList());
     }
 
@@ -88,7 +89,8 @@ public class OrderService implements OrderModel {
         List<OrderEntity> allOrders = orderRepository.findAll();
 
        return allOrders.stream()
-                .map(entity->convertToResponse(entity)).collect(Collectors.toList());
+                .map(entity->convertToResponse(entity))
+               .collect(Collectors.toList());
     }
 
     @Override

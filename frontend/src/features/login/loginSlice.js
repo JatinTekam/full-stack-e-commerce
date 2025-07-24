@@ -54,6 +54,20 @@ const logInSlice = createSlice({
   name: "authSlice",
   initialState,
 
+  reducers:{
+    clearUserLogin:(state)=>{
+        state.username= null,
+        state.email=null,
+        state.loading=false,
+        state.error=null,
+        state.accessToken=null,
+        state.expiresIn=null,
+        state.message=null,
+        state.status=null,
+        state.isLoggedIn=false
+    }
+  },
+
  extraReducers: (builder) => {
   builder.addCase(loginUser.pending, (state) => {
      state.loading = true;
@@ -93,6 +107,8 @@ const logInSlice = createSlice({
    });
  }
 });
+
+export const {clearUserLogin}=logInSlice.actions;
 
 export default logInSlice.reducer;
 

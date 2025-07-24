@@ -35,10 +35,7 @@ public class SecurityConfig{
                 csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                .authorizeHttpRequests(auth->auth
-                       .requestMatchers(HttpMethod.POST, "/api/v1/signup").permitAll()
-                       .requestMatchers(HttpMethod.POST, "/api/v1/login").permitAll()
-                       .requestMatchers(HttpMethod.POST, "/api/v1/refresh-token").permitAll()
-                       //.requestMatchers(HttpMethod.POST,"/api/orders/place-order").permitAll()
+                       .requestMatchers( "/api/v1/signup","/api/v1/login","/api/v1/refresh-token","/api/v1/orders/all","/api/v1/orders/status/**").permitAll()
                        .requestMatchers("/user/**").permitAll()
                        .requestMatchers("/api/v1/**").authenticated()
                        .anyRequest().authenticated()

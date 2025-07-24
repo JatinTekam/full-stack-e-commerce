@@ -28,6 +28,7 @@ const Form = () => {
     e.preventDefault();
     
     handleFormSubmit(data);
+    
   };
 
   const handleFormSubmit = (data) => {
@@ -72,53 +73,58 @@ const Form = () => {
         >
           <div className="flex flex-wrap gap-5">
             <div className="flex flex-col">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="firstname" className="pb-2">First Name</label>
               <input
                 type="text"
-                id="name"
+                id="firstname"
                 className={`w-70 outline-none ${
-                  errors.name ? "border-b border-b-red-600" : "border-b"
+                  errors.firstName ? "border-b border-b-red-600" : "border-b"
                 } `}
-                {...register("name", {
-                  required: "Name Is required",
+                {...register("firstName", {
+                  required: "First Name Is required",
                   minLength: {
                     value: 5,
                     message: "Minimum 5 character required",
                   },
                 })}
               />
-              {errors.name && (
+              {errors.firstName && (
                 <p className="text-red-500 text-end text-sm">
-                  {errors.name.message} *
+                  {errors.firstName.message} *
                 </p>
               )}
             </div>
 
-            <div className="flex flex-col">
-              <label htmlFor="email">Email</label>
+             <div className="flex flex-col">
+              <label htmlFor="lastname" className="pb-2">Last Name</label>
               <input
-                type="email"
-                id="email"
+                type="text"
+                id="lastname"
                 className={`w-70 outline-none ${
-                  errors.email ? "border-b border-b-red-600" : "border-b"
+                  errors.lastName ? "border-b border-b-red-600" : "border-b"
                 } `}
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
+                {...register("lastName", {
+                  required: "Last Name Is required",
+                  minLength: {
+                    value: 5,
+                    message: "Minimum 5 character required",
                   },
                 })}
               />
-              {errors.email && (
+              {errors.lastName && (
                 <p className="text-red-500 text-end text-sm">
-                  {errors.email.message} *
+                  {errors.lastName.message} *
                 </p>
               )}
             </div>
 
+
+            
+
+           
+
             <div className="flex flex-col">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username" className="pb-2">Username</label>
               <input
                 type="text"
                 id="username"
@@ -142,7 +148,7 @@ const Form = () => {
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password" className="pb-2">Password</label>
               <input
                 type="text"
                 id="password"
@@ -164,6 +170,29 @@ const Form = () => {
                 </p>
               )}
             </div>
+
+           
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                className={`w-full outline-none ${
+                  errors.email ? "border-b border-b-red-600" : "border-b"
+                } `}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
+                  },
+                })}
+              />
+              {errors.email && (
+                <p className="text-red-500 w-full text-end text-sm">
+                  {errors.email.message} *
+                </p>
+              )}
+        
 
             <label htmlFor="mobile">Mobile no.</label>
             <input

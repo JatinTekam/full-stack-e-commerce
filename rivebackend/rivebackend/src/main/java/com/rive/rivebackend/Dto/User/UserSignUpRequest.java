@@ -2,7 +2,9 @@ package com.rive.rivebackend.Dto.User;
 
 public class UserSignUpRequest {
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
 
     private String email;
 
@@ -14,20 +16,29 @@ public class UserSignUpRequest {
 
     UserSignUpRequest(){};
 
-    public UserSignUpRequest(String name, String email, String password, String username, String phoneNumber) {
-        this.name = name;
+    public UserSignUpRequest(String firstName, String lastName, String email, String password, String username, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.username = username;
         this.phoneNumber = phoneNumber;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

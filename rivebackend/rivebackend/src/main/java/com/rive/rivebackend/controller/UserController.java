@@ -101,7 +101,7 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest request){
         Map<String,Object> errMsg=new HashMap<>();
         try{
-            UpdateUserResponse updateUserResponse = userModal.updateUserDetails(request);
+            UserUpdateResponse updateUserResponse = userModal.updateUserDetails(request);
             return ResponseEntity.status(HttpStatus.OK).body(updateUserResponse);
         }catch (UserValidate e){
             errMsg.put("error",e.getMessage());

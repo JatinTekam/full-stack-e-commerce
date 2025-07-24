@@ -1,13 +1,13 @@
 
 import Form from "../component/Form";
-import SignupImg from "../component/SignupImg";
+import Rive from "../component/Rive";
 import { Link } from "react-router-dom";
 const Signup = () => {
  
 
   return (
-    <div className="w-full h-screen flex  gap-2 items-center bg-black">
-     <SignupImg/>
+    <div className="w-full h-screen flex gap-2 items-center bg-black">
+      <Rive/>
       <div className="w-180 justify-around border p-5 rounded-2xl bg-white  opacity-70">
         <h1 className="text-center text-3xl mb-5">
           <i>Sign Up</i>

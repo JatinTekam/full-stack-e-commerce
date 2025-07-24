@@ -8,8 +8,6 @@ export const orderProduct = createAsyncThunk(
     console.log({...products,email});
     
      try {
-    // const response = await userRegister(user);
-    // return response.data;
   } catch (error) {
     return rejectWithValue({
       message: error.response?.data?.message || "Registration failed",

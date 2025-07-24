@@ -13,8 +13,12 @@ public class UserEntity {
     @Column
     private Long id;
 
-    @Column(nullable = false,length = 100)
-    private String name;
+    @Column(nullable = false,length = 25)
+    private String firstName;
+
+    @Column(nullable = false,length = 25)
+    private String lastName;
+
 
     @Column(unique = true, nullable = false, length = 30)
     private String username;
@@ -31,6 +35,15 @@ public class UserEntity {
     @Column
     private String address;
 
+    @Column
+    private String state;
+
+    @Column
+    private String city;
+
+    @Column
+    private int zipCode;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -41,6 +54,30 @@ public class UserEntity {
 
     @Column
     private boolean userIsEnabled=true;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
 
     public String getAddress() {
         return address;
@@ -74,8 +111,20 @@ public class UserEntity {
         this.userIsEnabled = userIsEnabled;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -84,10 +133,6 @@ public class UserEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUsername() {

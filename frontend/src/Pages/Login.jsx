@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 import loadingGif from "../assets/images/loading.gif";
-import SignupImg from "../component/SignupImg";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/login/loginSlice";
@@ -12,6 +11,7 @@ import { useAuth } from "../authContext/AuthContext";
 
 import { jwtDecode } from "jwt-decode";
 import { userInfo } from "../features/user/userSclice";
+import Rive from "../component/Rive";
 
 const Login = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
@@ -67,7 +67,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen  flex  gap-15 items-center relative bg-black">
-      <SignupImg />
+      <Rive/>
 
       <div className="w-160 flex flex-col items-center border  py-10 rounded-2xl bg-white opacity-70">
         <h1 className="text-center text-3xl mb-5">

@@ -65,7 +65,8 @@ public class UserService implements UserModel {
         user.setPhoneNumber(request.getPhoneNumber());
         user.setUserIsEnabled(true);
         user.setPassword(authService.encodePassword(request.getPassword()));
-        user.setName(request.getName());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
@@ -73,7 +74,6 @@ public class UserService implements UserModel {
         UserSignUpResponse response=new UserSignUpResponse();
         response.setId(user.getId());
         response.setUsername(user.getUsername());
-        response.setPhoneNumber(user.getPhoneNumber());
         response.setCreatedAt(user.getCreatedAt());
         response.setActive(user.getUserIsEnabled());
         response.setMessage("User registered successfully Please login to proceed");
@@ -117,7 +117,7 @@ public class UserService implements UserModel {
                 loginResponse.setEmail(user.getEmail());
                 loginResponse.setExpiresIn(1200);
                 loginResponse.setStatus(200);
-                loginResponse.setMessage("Welcome "+user.getName());
+                loginResponse.setMessage("Welcome "+user.getFirstName()+" "+user.getLastName());
 
                 return loginResponse;
 
@@ -148,11 +148,11 @@ public class UserService implements UserModel {
     }
 
     @Override
-    public UpdateUserResponse updateUserDetails(UserUpdateRequest request){
+    public UserUpdateResponse updateUserDetails(UserUpdateRequest request){
 
         Optional<UserEntity> dbUser = userRepository.findByEmail(request.getEmail());
 
-        UpdateUserResponse updateUserResponse=new UpdateUserResponse();
+        UserUpdateResponse updateUserResponse=new UserUpdateResponse();
 
         if(dbUser.isPresent()){
             UserEntity user = dbUser.get();
@@ -160,7 +160,11 @@ public class UserService implements UserModel {
             user.setAddress(request.getAddress());
             user.setEmail(request.getEmail());
             user.setPhoneNumber(request.getPhoneNumber());
-            user.setName(request.getName());
+            user.setFirstName(request.getFirstName());
+            user.setLastName(request.getLastName());
+            user.setCity(request.getCity());
+            user.setState(request.getState());
+            user.setZipCode(request.getZipCode());
             user.setUpdatedAt(LocalDateTime.now());
 
             userRepository.save(user);
@@ -200,7 +204,7 @@ public class UserService implements UserModel {
 
 
         RefreshTokenResponse refreshToken=new RefreshTokenResponse();
-        refreshToken.setUser(dbUser.getName());
+        refreshToken.setUser(dbUser.getUsername());
         refreshToken.setAccessToken(newAccessToken);
         refreshToken.setEmail(dbUser.getEmail());
         refreshToken.setExpiresIn(1200);
@@ -217,8 +221,12 @@ public class UserService implements UserModel {
         }
         SetUser user=new SetUser();
         user.setEmail(dbUser.getEmail());
-        user.setName(dbUser.getName());
+        user.setFirstName(dbUser.getFirstName());
+        user.setLastName(dbUser.getLastName());
         user.setAddress(dbUser.getAddress());
+        user.setCity(dbUser.getCity());
+        user.setState(dbUser.getState());
+        user.setZipCode(dbUser.getZipCode());
         user.setUsername(dbUser.getUsername());
         user.setPhoneNumber(dbUser.getPhoneNumber());
 

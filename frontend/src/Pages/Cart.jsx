@@ -10,6 +10,15 @@ import { orderProduct } from "../features/order/orderSclice";
 
 
 const Cart = () => {
+  useState({
+    name:"",
+    email:"",
+    phoneNumber:"",
+    address:"",
+    state:"",
+    city:"",
+    zipCode:""
+  })
   const { showCart, setShowCart, cartItem } = useContext(Search);
   const [totalPrice, setTotalPrice] = useState(0);
 

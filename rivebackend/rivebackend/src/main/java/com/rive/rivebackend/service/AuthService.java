@@ -33,8 +33,8 @@ public class AuthService {
             msg="Please provide a valid 10-digit phone number starting with 6-9";
          }
 
-        if (user.getName().length() < 3 || user.getName().length() > 100){
-             msg="Name must be between 3 and 100 characters";
+        if ((user.getFirstName().length() > 2 && user.getFirstName().length() > 50) || (user.getLastName().length() < 2 && user.getLastName().length() > 50)){
+             msg="Firstname and Lastname must be less then 50";
          }
           if (user.getPassword().length() < 8){
              msg="Password must be at least 8 characters long";

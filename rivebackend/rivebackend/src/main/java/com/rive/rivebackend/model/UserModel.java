@@ -19,6 +19,6 @@ public interface UserModel {
     List<UserEntity> getAllUser();
     UserEntity getUserById(long id);
     SetUser findByUser(String username);
-    UpdateUserResponse updateUserDetails(UserUpdateRequest request);
+    UserUpdateResponse updateUserDetails(UserUpdateRequest request);
     RefreshTokenResponse refreshToken(String token, RefreshTokenRequest request, HttpServletResponse response);
 }

@@ -27,7 +27,11 @@ export const userInfo = createAsyncThunk(
 
 
 const initialState = {
-  name: null,
+  firstName: null,
+  lastName:null,
+  zipCode:null,
+  state:null,
+  city:null,
   email: null,
   phoneNumber: null,
   username: null,
@@ -46,20 +50,28 @@ const userSlice = createSlice({
      state.error = null;
    });
    builder.addCase(userInfo.fulfilled, (state, action) => {
-     state.name=action.payload.name;
+     state.firstName=action.payload.firstName;
+     state.lastName=action.payload.lastName;
      state.email = action.payload.email;
      state.error = null;
      state.phoneNumber= action.payload.phoneNumber;
      state.username= action.payload.username;
      state.address= action.payload.address;
+     state.state=action.payload.state;
+     state.city=action.payload.city;
+     state.zipCode=action.payload.zipCode;
    });
    builder.addCase(userInfo.rejected, (state, action) => {
-    state.name= null;
+    state.firstName= null;
+    state.lastName=null;
      state.error = action.payload.error;
      state.email = null;
       state.phoneNumber=null;
      state.username= null;
      state.address=null;
+      state.state=null;
+     state.city=null;
+     state.zipCode=null;
    });
 
  }
