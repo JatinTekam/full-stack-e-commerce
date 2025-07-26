@@ -7,18 +7,13 @@ import { totalCartPrice } from "../features/product/ProductSlice";
 import { Search } from "../context/ProductContext/ProductContext";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { orderProduct } from "../features/order/orderSclice";
+import { useNavigate } from "react-router-dom";
+import { errorMsg } from "../utils/messages";
+import { ToastContainer } from "react-toastify";
 
 
 const Cart = () => {
-  useState({
-    name:"",
-    email:"",
-    phoneNumber:"",
-    address:"",
-    state:"",
-    city:"",
-    zipCode:""
-  })
+ 
   const { showCart, setShowCart, cartItem } = useContext(Search);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -26,13 +21,22 @@ const Cart = () => {
     (state) => state.productReducer
   );
 
+  const {address,zipCode,state,city}=useSelector(state=>state.user);
+
   const{email}=useSelector(state=>state.login);
 
   const dispatch = useDispatch();
 
+  const naviagate=useNavigate();
+
 
   const handleCartProduct=()=>{
-    dispatch(orderProduct({products,email}))
+
+    if (address == "" || zipCode == "" || state == "" || city == ""){
+      errorMsg("Address, Zipcode, State and City required ");
+      return;
+    }
+    naviagate("/checkout");
   }
 
 
@@ -89,6 +93,7 @@ const Cart = () => {
       )}
 
       {/* <p>{displayPrice}</p> */}
+      <ToastContainer/>
     </div>
   );
 };

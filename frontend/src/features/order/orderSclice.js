@@ -1,16 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { userRegister } from "../../axios/connection";
+import { placeOrder } from "../../axios/connection";
+
 
 export const orderProduct = createAsyncThunk(
   "order/orderProduct",
-  async ({products,email}, { rejectWithValue }) => {
-
-    console.log({...products,email});
-    
+  async ({userOrder,accessToken}, { rejectWithValue }) => {  
      try {
+
+    const response= await placeOrder(userOrder,accessToken)
+    //console.log(response.data);
+    
+    return response.data;
   } catch (error) {
     return rejectWithValue({
-      message: error.response?.data?.message || "Registration failed",
+      message: error.response?.data?.message || "Order failed",
       status: error.response?.status,
       data: error.response?.data
     });
@@ -19,7 +22,7 @@ export const orderProduct = createAsyncThunk(
 );
 
 const initialState = {
-  user: null,
+  userOrders: null,
   loading: false,
   error: null,
 };
@@ -28,22 +31,25 @@ const order = createSlice({
   name: "order",
   initialState,
 
-//   extraReducers: (builder) => {
-//     builder.addCase(UserSignUp.pending, (state) => {
-//       state.loading = true;
-//       state.error = null;
-//     });
+  extraReducers: (builder) => {
+    builder.addCase(orderProduct.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.userOrders=null;
+    });
 
-//     builder.addCase(UserSignUp.fulfilled, (state, action) => {
-//       state.loading = false;
-//       state.user = action.payload;
-//     });
+    builder.addCase(orderProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userOrders = action.payload; 
+      state.error=null;
+    });
 
-//     builder.addCase(UserSignUp.rejected, (state, action) => {
-//       state.loading = false;
-//       state.error = action.payload;
-//     });
-//   },
+    builder.addCase(orderProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+      state.userOrders=null
+    });
+  },
 });
 
 export default order.reducer;

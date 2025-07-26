@@ -77,13 +77,52 @@ export const updateDetails=async (updatedData,token)=>{
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
     },
-     //withCredentials: true,
     });
   return response; 
- } catch (error) {
-
-  //console.log(error);
-  
+ } catch (error) {  
   throw error;
+ }
+}
+
+export const placeOrder=async(userOrder,token)=>{
+ try{
+    const response = await api.post('/orders/place-order',userOrder,{
+    headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    },
+    });
+  return response; 
+ }catch(error){
+    throw error;
+ }
+}
+
+
+export const verifyUserPayment=async(paymentData,token)=>{
+ try{
+    const response = await api.post('/orders/verify',paymentData,{
+    headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    },
+    });
+  return response; 
+ }catch(error){
+    throw error;
+ }
+}
+
+export const deleteUserProduct=async(orderId,token)=>{
+ try{
+    const response = await api.delete(`/orders/order/${orderId}`,{},{
+    headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    },
+    });
+  return response; 
+ }catch(error){
+    throw error;
  }
 }

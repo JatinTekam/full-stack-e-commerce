@@ -5,6 +5,8 @@ import logInReducer from "../features/login/loginSlice";
 import userReducer from "../features/user/userSclice"
 import updateUserReducer from "../features/updateUser/updateUser"
 import orderReducer from "../features/order/orderSclice"
+import paymentReducer from "../features/verifyPayment/verifyPayment"
+import deleteOrder from "../features/deleteOrder/deleteOrder"
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +15,8 @@ export const store = configureStore({
     login: logInReducer,
     user : userReducer,
     updateUser: updateUserReducer,
-    order: orderReducer
+    order: orderReducer,
+    payment: paymentReducer,
+    deleteOrder: deleteOrder
   },
 });

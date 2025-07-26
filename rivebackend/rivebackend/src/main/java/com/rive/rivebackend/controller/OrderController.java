@@ -40,6 +40,12 @@ public class OrderController {
         return orderModel.getUserOrders(userId);
     }
 
+    @DeleteMapping("/order/{orderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUserOrder(@PathVariable long orderId){
+        orderModel.deleteOrder(orderId);
+    }
+
 
     //admin
     @GetMapping("/all")

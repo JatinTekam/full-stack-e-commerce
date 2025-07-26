@@ -45,7 +45,7 @@ public class OrderService implements OrderModel {
 
         RazorpayClient razorpayClient=new RazorpayClient(RAZORPAY_KEY,RAZORPAY_SECRET);
         JSONObject orderedRequest=new JSONObject();
-        orderedRequest.put("amount",newOrder.getAmount()*100);
+        orderedRequest.put("amount",newOrder.getAmount() * 100);
         orderedRequest.put("currency","INR");
         orderedRequest.put("payment_capture",1);
 
@@ -101,6 +101,11 @@ public class OrderService implements OrderModel {
         entity.setOrderStatus(status);
 
         orderRepository.save(entity);
+    }
+
+    @Override
+    public void deleteOrder(long orderId) {
+        orderRepository.deleteById(orderId);
     }
 
     private OrderResponse convertToResponse(OrderEntity newOrder) {

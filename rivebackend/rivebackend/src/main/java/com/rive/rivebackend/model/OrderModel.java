@@ -19,4 +19,6 @@ public interface OrderModel {
     List<OrderResponse> getOrderOfAllUser();
 
     void updateOrderStatus(long orderId,String status);
+
+    void deleteOrder(long orderId);
 }

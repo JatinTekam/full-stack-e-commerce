@@ -4,6 +4,7 @@ import { userLogin } from "../../axios/connection";
 
 
 const initialState = {
+  id: null,
   username: null,
   email: null,
   loading: false,
@@ -56,6 +57,7 @@ const logInSlice = createSlice({
 
   reducers:{
     clearUserLogin:(state)=>{
+        state.id=null,
         state.username= null,
         state.email=null,
         state.loading=false,
@@ -76,6 +78,7 @@ const logInSlice = createSlice({
    builder.addCase(loginUser.fulfilled, (state, action) => {
      state.username=action.payload.username;
      state.email = action.payload.email;
+     state.id=action.payload.id;
      state.loading = false;
      state.error = null;
      state.accessToken = action.payload.accessToken;
@@ -87,6 +90,7 @@ const logInSlice = createSlice({
    builder.addCase(loginUser.rejected, (state, action) => {
     state.username= null;
      state.loading = false;
+     state.id=null;
      state.error = action.payload;
      state.user = null;
      state.accessToken = null;
