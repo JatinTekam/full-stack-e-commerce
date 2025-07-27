@@ -6,12 +6,13 @@ import UserProduct from "../component/UserProduct";
 import { errorMsg, successMsg } from "../utils/messages";
 import { orderProduct } from "../features/order/orderSclice";
 import loadingGif from "../assets/images/loading.gif";
-import { Await, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+// import Razorpay from "razorpay";
 import {RAZORPAY_KEY} from "../utils/contants";
 import { verifyPayment } from "../features/verifyPayment/verifyPayment";
 import { clearCart } from "../features/product/ProductSlice";
 import { deleteProduct } from "../features/deleteOrder/deleteOrder";
+import { ToastContainer } from "react-toastify";
 
 const ProductBuy = () => {
   const {
@@ -39,7 +40,7 @@ const ProductBuy = () => {
     (state) => state.productReducer
   );
 
-  const { userOrders, error, loading } = useSelector((state) => state.order);
+  const {userOrders, error, loading } = useSelector((state) => state.order);
 
   const { status} = useSelector((state) => state.payment);
 
@@ -70,23 +71,32 @@ const ProductBuy = () => {
       orderStatus: "In proccess",
     };
 
-    dispatch(orderProduct({ userOrder, accessToken }));
-
-try {
+// try {
    
-    const result = await dispatch(orderProduct({ userOrder, accessToken })).unwrap();
+     dispatch(orderProduct({ userOrder, accessToken }));
     
-    if (result && result.razorpayOrderId) {
-      initiateRazorpayPayment(result);
-    } else {
-      errorMsg("Failed to create order");
-    }
-  } catch (error) {
-    console.error("Order placement failed:", error);
-    errorMsg(error);
-    navigate("/login");
-  }
+  //   if (result && result.razorpayOrderId) {
+  //     initiateRazorpayPayment(result);
+  //   } else {
+  //     errorMsg("Failed to create order");
+  //   }
+  // } catch (error) {
+  //   errorMsg(error);
+  //   navigate("/login");
+  // }
   };
+
+
+  useEffect(()=>{
+    try{
+      if(userOrders && userOrders.razorpayOrderId){
+        initiateRazorpayPayment(userOrders);
+      }
+    }catch(error){
+        errorMsg(error)
+    }
+    
+  },[userOrders])
 
 
   const initiateRazorpayPayment=(order)=>{
@@ -107,9 +117,22 @@ try {
             },
             theme: {color:"#3399cc"},
             modal: {
-                ondismiss: async function(){
-                    errorMsg("Payment cancelled");
-                   await deleteOrder(order.id);
+                ondismiss: function(){
+                    try {
+                errorMsg("Payment cancelled");
+                
+                deleteOrder(order.id)
+                    .then(() => {
+                        console.log("Order deleted successfully");
+                    })
+                    .catch((error) => {
+                        console.error("Failed to delete order:", error);
+                        errorMsg("Failed to cleanup cancelled order");
+                    });
+                    
+            } catch (error) {
+                console.error("Error in ondismiss:", error);
+            }
                 },
             },
         };
@@ -141,9 +164,11 @@ try {
 
   const deleteOrder=async (orderId)=>{
 
-    dispatch(deleteProduct({orderId,accessToken}))
+    const result=await dispatch(deleteProduct({orderId,accessToken})).unwrap();
+    console.log(result);
+    
 
-    if(deleteStatus==404){
+    if(deleteStatus!=204){
         errorMsg("Something went wrong. contact rive@support.com");
         navigate("/");
         return;
@@ -271,6 +296,7 @@ try {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

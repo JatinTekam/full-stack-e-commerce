@@ -12,7 +12,7 @@ export const deleteProduct = createAsyncThunk(
       return response;
     } catch (error) {
       return rejectWithValue({
-        message: error.response?.data?.message || "Payment failed",
+        message: error.response?.data?.message || "Product Deleted",
         status: error.response?.status,
         data: error.response?.data
       });
@@ -37,12 +37,12 @@ const deleteOrder = createSlice({
 
     builder.addCase(deleteProduct.fulfilled, (state, action) => {
       state.loading = false;
-      state.deleteStatus = 200;
+      state.deleteStatus = response.status;
     });
 
     builder.addCase(deleteProduct.rejected, (state, action) => {
       state.loading = false;
-      state.deleteStatus = 404;
+      state.deleteStatus = response?.status || 500;
     });
   },
 });

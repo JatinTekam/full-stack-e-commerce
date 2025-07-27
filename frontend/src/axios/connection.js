@@ -113,9 +113,9 @@ export const verifyUserPayment=async(paymentData,token)=>{
  }
 }
 
-export const deleteUserProduct=async(orderId,token)=>{
+export const deleteUserProduct=async(id,token)=>{ 
  try{
-    const response = await api.delete(`/orders/order/${orderId}`,{},{
+    const response = await api.delete(`/orders/${id}`,{
     headers:{
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
