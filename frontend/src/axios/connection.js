@@ -117,7 +117,20 @@ export const deleteUserProduct=async(id,token)=>{
  try{
     const response = await api.delete(`/orders/${id}`,{
     headers:{
-        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    },
+    });
+  return response; 
+ }catch(error){
+    throw error;
+ }
+}
+
+
+export const userProduct=async(id,token)=>{ 
+ try{
+    const response = await api.get(`/orders/order/${id}`,{
+    headers:{
         'Authorization': `Bearer ${token}`
     },
     });

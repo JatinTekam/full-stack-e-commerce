@@ -8,7 +8,7 @@ export const verifyPayment = createAsyncThunk(
 
    try {
       const response = await verifyUserPayment(paymentData, accessToken); 
-      return response;
+      return response.status;
     } catch (error) {
       return rejectWithValue({
         message: error.response?.data?.message || "Payment failed",
@@ -25,7 +25,7 @@ const initialState = {
 };
 
 const userPayment = createSlice({
-  name: "auth",
+  name: "verifyPayment",
   initialState,
 
   extraReducers: (builder) => {
@@ -36,12 +36,12 @@ const userPayment = createSlice({
 
     builder.addCase(verifyPayment.fulfilled, (state, action) => {
       state.loading = false;
-      state.state = 200;
+      state.state = action.payload || 200;
     });
 
     builder.addCase(verifyPayment.rejected, (state, action) => {
       state.loading = false;
-      state.status = 404;
+      state.status = action.payload?.state || 404;
     });
   },
 });

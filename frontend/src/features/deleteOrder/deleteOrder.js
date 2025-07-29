@@ -9,10 +9,10 @@ export const deleteProduct = createAsyncThunk(
 
    try {
       const response = await deleteUserProduct(orderId, accessToken); 
-      return response;
+      return response.status;
     } catch (error) {
       return rejectWithValue({
-        message: error.response?.data?.message || "Product Deleted",
+        message: error.response?.data?.message || "Product Not Deleted Please Try Again",
         status: error.response?.status,
         data: error.response?.data
       });
@@ -26,7 +26,7 @@ const initialState = {
 };
 
 const deleteOrder = createSlice({
-  name: "auth",
+  name: "orderDelete",
   initialState,
 
   extraReducers: (builder) => {
@@ -37,12 +37,12 @@ const deleteOrder = createSlice({
 
     builder.addCase(deleteProduct.fulfilled, (state, action) => {
       state.loading = false;
-      state.deleteStatus = response.status;
+      state.deleteStatus = action.payload || 204;
     });
 
     builder.addCase(deleteProduct.rejected, (state, action) => {
       state.loading = false;
-      state.deleteStatus = response?.status || 500;
+      state.deleteStatus = action.payload?.status || 500;
     });
   },
 });

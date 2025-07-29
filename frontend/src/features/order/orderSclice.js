@@ -7,8 +7,12 @@ export const orderProduct = createAsyncThunk(
   async ({userOrder,accessToken}, { rejectWithValue }) => {  
      try {
 
-    const response= await placeOrder(userOrder,accessToken)
-    return response.data;
+    const response= await placeOrder(userOrder,accessToken);
+
+    return {
+        ...response.data,
+        status: response.status
+      };
   } catch (error) {    
     return rejectWithValue({
       message: error.response?.data?.message || "Order failed",
@@ -20,9 +24,10 @@ export const orderProduct = createAsyncThunk(
 );
 
 const initialState = {
-  userOrders: {},
+  userOrders: null,
   loading: false,
   error: null,
+  orderStatus:null
 };
 
 const order = createSlice({
@@ -34,18 +39,21 @@ const order = createSlice({
       state.loading = true;
       state.error = null;
       state.userOrders=null;
+      state.orderStatus="pending"
     });
 
     builder.addCase(orderProduct.fulfilled, (state, action) => {
       state.loading = false; 
       state.error=null;
      state.userOrders=action.payload;
+     state.orderStatus="success"
     });
 
     builder.addCase(orderProduct.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
-      state.userOrders=null
+        state.error = action.payload;
+        state.userOrders = null;
+        state.orderStatus = 'failed';
     });
   },
 });

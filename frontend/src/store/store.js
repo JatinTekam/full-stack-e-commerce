@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import productReducer from "../features/product/ProductSlice";
 import signUpReducer from "../features/signup/SignupSlice";
 import logInReducer from "../features/login/loginSlice";
-import userReducer from "../features/user/userSclice"
-import updateUserReducer from "../features/updateUser/updateUser"
-import orderReducer from "../features/order/orderSclice"
-import paymentReducer from "../features/verifyPayment/verifyPayment"
-import deleteOrder from "../features/deleteOrder/deleteOrder"
+import userReducer from "../features/user/userSclice";
+import updateUserReducer from "../features/updateUser/updateUser";
+import orderReducer from "../features/order/orderSclice";
+import paymentReducer from "../features/verifyPayment/verifyPayment";
+import deleteOrder from "../features/deleteOrder/deleteOrder";
+import userOrder from "../features/userOrders/userOrders";
+
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +19,7 @@ export const store = configureStore({
     updateUser: updateUserReducer,
     order: orderReducer,
     payment: paymentReducer,
-    deleteOrder: deleteOrder
+    deleteOrder: deleteOrder,
+    userOrder: userOrder
   },
 });

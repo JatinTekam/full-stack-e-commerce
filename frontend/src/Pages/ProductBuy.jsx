@@ -8,11 +8,12 @@ import { orderProduct } from "../features/order/orderSclice";
 import loadingGif from "../assets/images/loading.gif";
 import { useNavigate } from "react-router-dom";
 // import Razorpay from "razorpay";
-import {RAZORPAY_KEY} from "../utils/contants";
+import { RAZORPAY_KEY } from "../utils/contants";
 import { verifyPayment } from "../features/verifyPayment/verifyPayment";
 import { clearCart } from "../features/product/ProductSlice";
 import { deleteProduct } from "../features/deleteOrder/deleteOrder";
 import { ToastContainer } from "react-toastify";
+import { getUserOrders } from "../features/userOrders/userOrders";
 
 const ProductBuy = () => {
   const {
@@ -40,17 +41,16 @@ const ProductBuy = () => {
     (state) => state.productReducer
   );
 
-  const {userOrders, error, loading } = useSelector((state) => state.order);
+  const { userOrders, error, loading, orderStatus } = useSelector(
+    (state) => state.order
+  );
 
-  const { status} = useSelector((state) => state.payment);
-
-  const {deleteStatus}= useSelector(state=>state.deleteOrder);
 
   const dispatch = useDispatch();
-  const navigate= useNavigate();
+  const navigate = useNavigate();
+
 
   const handleUserOrder = async () => {
-
     const userOrder = {
       userId: id,
       userAddress: `${firstName} ${lastName}, ${address}, ${city} ${state}, ${zipCode}`,
@@ -68,112 +68,106 @@ const ProductBuy = () => {
         color: product.color,
       })),
       amount: cartTotalPrice,
-      orderStatus: "In proccess",
+      orderStatus: "In process",
     };
 
-// try {
-   
-     dispatch(orderProduct({ userOrder, accessToken }));
-    
-  //   if (result && result.razorpayOrderId) {
-  //     initiateRazorpayPayment(result);
-  //   } else {
-  //     errorMsg("Failed to create order");
-  //   }
-  // } catch (error) {
-  //   errorMsg(error);
-  //   navigate("/login");
-  // }
-  };
+    try {
+      const result = await dispatch(
+        orderProduct({ userOrder, accessToken })
+      ).unwrap();
 
-
-  useEffect(()=>{
-    try{
-      if(userOrders && userOrders.razorpayOrderId){
-        initiateRazorpayPayment(userOrders);
+      if (result?.razorpayOrderId) {
+        initiateRazorpayPayment(result);
+      } else {
+        errorMsg("Failed to create order - No payment ID received");
       }
-    }catch(error){
-        errorMsg(error)
+    } catch (error) {
+      if (
+        error.status === 401 ||
+        error.message?.toLowerCase().includes("unauthorized")
+      ) {
+        errorMsg("Session expired. Please login again.");
+        navigate("/login");
+      } else if (error.status === 400) {
+        errorMsg(
+          error.message || "Invalid order data. Please check your information."
+        );
+      } else if (error.status >= 500) {
+        errorMsg("Server error. Please try again later.");
+      } else {
+        errorMsg(error.message || "Failed to create order. Please try again.");
+      }
     }
-    
-  },[userOrders])
-
-
-  const initiateRazorpayPayment=(order)=>{
-        const options={
-            key: RAZORPAY_KEY,
-            amount: order.amount,
-            currency: "INR",
-            name: "Rive",
-            description: "Cloths Order Payment",
-            order_id: order.razorpayOrderId,
-            handler: function(razorpayResponse){
-                verifyPayemnt(razorpayResponse);
-            },
-            prefill:{
-                name: `${firstName} ${lastName}`,
-                email: email,
-                contact: phoneNumber,
-            },
-            theme: {color:"#3399cc"},
-            modal: {
-                ondismiss: function(){
-                    try {
-                errorMsg("Payment cancelled");
-                
-                deleteOrder(order.id)
-                    .then(() => {
-                        console.log("Order deleted successfully");
-                    })
-                    .catch((error) => {
-                        console.error("Failed to delete order:", error);
-                        errorMsg("Failed to cleanup cancelled order");
-                    });
-                    
-            } catch (error) {
-                console.error("Error in ondismiss:", error);
-            }
-                },
-            },
-        };
-
-        const razorPay=new window.Razorpay(options);
-
-        razorPay.open();
   };
 
-  const verifyPayemnt= (razorpayResponse)=>{
-
-    const paymentData={
-        razorpay_payment_id: razorpayResponse.razorpay_payment_id,
-        razorpay_order_id: razorpayResponse.razorpay_order_id,
-        razorpay_signature: razorpayResponse.razorpay_signature
+  const initiateRazorpayPayment = (order) => {
+    const options = {
+      key: RAZORPAY_KEY,
+      amount: order.amount,
+      currency: "INR",
+      name: "Rive",
+      description: "Cloths Order Payment",
+      order_id: order.razorpayOrderId,
+      handler: async function (razorpayResponse) {
+        await verifyPayemnt(razorpayResponse);
+      },
+      prefill: {
+        name: `${firstName} ${lastName}`,
+        email: email,
+        contact: phoneNumber,
+      },
+      theme: { color: "#3399cc" },
+      modal: {
+        ondismiss: async function () {
+          try {
+            errorMsg("Payment cancelled");
+            await deleteOrder(order.id);
+          } catch (error) {
+            console.error("Error in ondismiss:", error);
+            errorMsg("Something went wrong while cancelling the order.");
+          }
+        },
+      },
     };
 
-    dispatch(verifyPayment({paymentData,accessToken}));
+    const razorPay = new window.Razorpay(options);
+    razorPay.open();
+  };
 
-    if(state===200){
-        successMsg("Payment successful");
+  const verifyPayemnt = async (razorpayResponse) => {
+    const paymentData = {
+      razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+      razorpay_order_id: razorpayResponse.razorpay_order_id,
+      razorpay_signature: razorpayResponse.razorpay_signature,
+    };
+
+    const res=await dispatch(verifyPayment({ paymentData, accessToken })).unwrap();
+
+    if (res === 200) {
+      successMsg("Payment successful");
+       dispatch(getUserOrders({id,accessToken}));
+      setTimeout(()=>{
         dispatch(clearCart());
         navigate("/profile");
-    }else{
-        errorMsg("Payment failed. Please try again");
-        navigate("/");
+      },3000)
+      
+    } else {
+      errorMsg("Payment failed. Please try again");
+      navigate("/");
     }
-  }
+  };
 
-  const deleteOrder=async (orderId)=>{
-
-    const result=await dispatch(deleteProduct({orderId,accessToken})).unwrap();
-    console.log(result);
-    
-
-    if(deleteStatus!=204){
-        errorMsg("Something went wrong. contact rive@support.com");
-        navigate("/");
-        return;
+const deleteOrder = async (orderId) => {
+  try {
+    const result = await dispatch(deleteProduct({ orderId, accessToken })).unwrap();
+    if (result !== 204) {
+      errorMsg("Something went wrong. contact rive@support.com");
     }
+  } catch (error) {
+    errorMsg(error.message || "Order deletion failed. Try again.");
+    navigate("/checkout");
   }
+};
 
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-[#eeeeee] ">
@@ -288,18 +282,15 @@ const ProductBuy = () => {
                   Please Wait <img src={loadingGif} alt="" className="w-5" />
                 </p>
               ) : (
-                <p className="text-center">
-                  Pay Now ₹ {cartTotalPrice}
-                </p>
+                <p className="text-center">Pay Now ₹ {cartTotalPrice}</p>
               )}
             </button>
           </div>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };
-
 
 export default ProductBuy;

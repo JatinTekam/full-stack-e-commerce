@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
@@ -30,21 +29,23 @@ public class OrderController {
     }
 
     @PostMapping("/verify")
+    @ResponseStatus(HttpStatus.OK)
     public void verifyPayment(@RequestBody Map<String,String> paymentData){
         orderModel.verifyPayment(paymentData,"Paid");
     }
 
 
     @GetMapping("/order/{userId}")
-    public List<OrderResponse> getOrders(@PathVariable Long userId){
+    public List<OrderResponse> getOrders(@PathVariable long userId){
         return orderModel.getUserOrders(userId);
     }
 
-    @DeleteMapping("/order/{orderId}")
+    @DeleteMapping("/{orderId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserOrder(@PathVariable long orderId){
         orderModel.deleteOrder(orderId);
     }
+
 
 
     //admin

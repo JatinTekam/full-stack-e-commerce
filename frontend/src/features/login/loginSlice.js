@@ -108,6 +108,7 @@ const logInSlice = createSlice({
       state.expiresIn = action.payload.expiresIn;
      state.email= action.payload.email;
      state.isLoggedIn= true;
+     state.id=null;
    });
  }
 });

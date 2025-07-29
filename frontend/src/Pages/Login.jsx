@@ -12,10 +12,11 @@ import { useAuth } from "../authContext/AuthContext";
 import { jwtDecode } from "jwt-decode";
 import { userInfo } from "../features/user/userSclice";
 import Rive from "../component/Rive";
+import { getUserOrders } from "../features/userOrders/userOrders";
 
 const Login = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
-  const { email, loading, error, message, accessToken , username, status} = useSelector(
+  const { email, loading, error, message, accessToken , username, status, id} = useSelector(
     (state) => state.login
   );
   const {
@@ -45,11 +46,12 @@ const Login = () => {
     }
     if (status===200) {
       successMsg(message);
+      dispatch(userInfo({username,accessToken}));
+      dispatch(getUserOrders({id,accessToken}));
       timer = setTimeout(() => {
         navigate("/");
       }, 2000);
     }
-    dispatch(userInfo({username,accessToken}));
     return () => {
       if (timer) clearTimeout(timer);
     };
