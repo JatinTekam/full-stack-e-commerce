@@ -7,7 +7,7 @@ const Register = () => {
       <div>
         <div className=" rounded-[16px]">
           <button className="group p-[4px] cursor-pointer ">
-            <div className=" border bg-amber-50 rounded-[8px] px-2 py-2 text-black">
+            <div className=" border-1 rounded-[8px] px-3 py-2  text-black border-white bg-white">
              <Link to="/login">
              <div className="">
                 <span className="font-semibold ">Log in</span>
@@ -21,7 +21,7 @@ const Register = () => {
       <div>
         <div className=" rounded-[16px]">
           <button className="group p-[4px] cursor-pointer rounded-[12px]  ">
-            <div className="bg-transparent rounded-[8px] px-2 py-2 border text-white">
+            <div className="rounded-[8px] px-2 py-2 border-1   text-white border-white">
               <Link to="/signup">
               <div>
                 <span className="font-semibold">Sign up</span>

@@ -8,8 +8,6 @@ import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import { errorMsg, successMsg } from "../utils/messages";
 import { useAuth } from "../authContext/AuthContext";
-
-import { jwtDecode } from "jwt-decode";
 import { userInfo } from "../features/user/userSclice";
 import Rive from "../component/Rive";
 import { getUserOrders } from "../features/userOrders/userOrders";

@@ -6,7 +6,6 @@ export const UserSignUp = createAsyncThunk(
   async (user, { rejectWithValue }) => {
      try {
     const response = await userRegister(user);
-    console.log(response.data);
     
     return response.data;
   } catch (error) {
@@ -29,6 +28,14 @@ const signUpSlice = createSlice({
   name: "auth",
   initialState,
 
+  reducers:{
+    clearUserSignUp:(state)=>{
+        state.user=null
+        state.loading=false,
+        state.error=null
+    }
+  },
+
   extraReducers: (builder) => {
     builder.addCase(UserSignUp.pending, (state) => {
       state.loading = true;
@@ -46,5 +53,7 @@ const signUpSlice = createSlice({
     });
   },
 });
+
+export const {clearUserSignUp}=signUpSlice.actions;
 
 export default signUpSlice.reducer;

@@ -1,4 +1,4 @@
-import { allProduct } from "../../assets/image";
+import { allProduct } from "../../assets/products.js";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

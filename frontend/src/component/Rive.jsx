@@ -18,8 +18,8 @@ const Rive = () => {
         <img src={img2} alt="" />
       </div>
       <div className="flex mt-7 justify-center gap-3 text-2xl text-center mb-2 ">
-        <FaFacebookSquare className="hover:cursor-pointer"/>
-        <IoLogoInstagram className="hover:cursor-pointer"/>
+        <FaFacebookSquare className="hover:cursor-pointer hover:text-blue-700"/>
+        <IoLogoInstagram className="hover:cursor-pointer hover:text-red-500"/>
       </div>
       <i><p className="text-white mt-20 text-start ml-9 text-3xl">"Beyond the trend, beyond the ordinary”</p></i>
     </div>

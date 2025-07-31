@@ -1,6 +1,6 @@
 import Applayout from "./component/Applayout";
 import Heropage from "./Pages/Heropage";
-import { BrowserRouter, createBrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, createBrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Signup from "./Pages/Signup";
 import Contact from "./Pages/Contact";
 import Collection from "./Pages/Collection";
@@ -15,13 +15,9 @@ import NotFound from "./Pages/NotFound";
 import Profile from "./Pages/Profile";
 import ProductBuy from "./Pages/ProductBuy";
 
-function App() {
-  let isAuthenticated=useSelector((state) => state.login.isLoggedIn);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-      dispatch(refreshUser());     
-  }, [dispatch]);
+function App() {
+  const{accessToken,isLoggedIn}=useSelector((state) => state.login);
 
 
   return (
@@ -33,7 +29,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         
   
-        <Route element={<ProtectedRoutes authenticated={isAuthenticated} />}>
+        <Route element={<ProtectedRoutes authenticated={isLoggedIn} />}>
         <Route path="/profile" element={<Profile/>} />  
           <Route path="/collection" element={<Collection />} />
           <Route path="/product/:id" element={<IndiviualPage />} />
@@ -41,10 +37,12 @@ function App() {
           
       </Route>
 
+
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       
-      <Route element={<ProtectedRoutes authenticated={isAuthenticated} />}>
+      
+      <Route element={<ProtectedRoutes authenticated={isLoggedIn} />}>
         <Route path="/checkout" element={<ProductBuy />} />
       </Route>
 

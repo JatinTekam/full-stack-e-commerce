@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: `${import.meta.env.VITE_REACT_APP_API_URL}`
 });
 
 export const userRegister = async (data) => {
@@ -23,7 +23,7 @@ export const userLogin = async (data) => {
   
  try {
     const response = await api.post("/login",data, {
-      withCredentials:true,
+      // withCredentials:true,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -55,19 +55,19 @@ export const getUser = async (data,token) => {
 };
 
 
-export const refreshAccessToken = async () => {
- try {
-   const response = await api.post('/refresh-token',{},{
-    headers:{
-        'Content-Type': 'application/json',
-    },
-     withCredentials: true,
-    });
-  return response; 
- } catch (error) {
-  throw error;
- }
-};
+// export const refreshAccessToken = async () => {
+//  try {
+//    const response = await api.post('/refresh-token',{},{
+//     headers:{
+//         'Content-Type': 'application/json',
+//     },
+//      withCredentials: true,
+//     });
+//   return response; 
+//  } catch (error) {
+//   throw error;
+//  }
+// };
 
 
 export const updateDetails=async (updatedData,token)=>{

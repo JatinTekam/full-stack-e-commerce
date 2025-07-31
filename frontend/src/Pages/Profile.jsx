@@ -11,6 +11,9 @@ import { errorMsg } from "../utils/messages";
 import { ToastContainer } from "react-toastify";
 import { clearUserLogin } from "../features/login/loginSlice";
 import { useNavigate } from "react-router-dom";
+import { clearUserOrder } from "../features/userOrders/userOrders";
+import { clearUser } from "../features/user/userSclice";
+import { clearUserSignUp } from "../features/signup/SignupSlice";
 
 
 
@@ -32,6 +35,9 @@ const Profile = () => {
 
   const handleUserLogout=()=>{
       dispatch(clearUserLogin())
+      dispatch(clearUserOrder());
+      dispatch(clearUserSignUp());
+      dispatch(clearUser());
       navigate("/");
   }
 

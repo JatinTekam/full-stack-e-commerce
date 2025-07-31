@@ -45,6 +45,22 @@ const userSlice = createSlice({
   name: "user",
   initialState,
 
+
+   reducers:{
+    clearUser:(state)=>{
+        state.firstName=null,
+        state.lastName= null,
+        state.zipCode=null,
+        state.state=null,
+        state.city=null,
+        state.email=null,
+        state.phoneNumber=null,
+        state.username=null,
+        state.address=null,
+        state.error=null
+    }
+  },
+
  extraReducers: (builder) => {
   builder.addCase(userInfo.pending, (state) => {
      state.error = null;
@@ -76,5 +92,7 @@ const userSlice = createSlice({
 
  }
 });
+
+export const {clearUser}=userSlice.actions;
 
 export default userSlice.reducer;

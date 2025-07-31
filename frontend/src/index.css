@@ -9,6 +9,11 @@ html,body{
     height: 100vh;
 }
 
+.bg-img{
+    width: 100vw;
+    background-image: url("images/Mens_Hero-1260x709-1.jpeg");
+}
+
 .active{
     width: 3px;
     color: rgba(255, 255, 255, 0.692);

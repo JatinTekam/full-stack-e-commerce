@@ -5,23 +5,32 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { LiaUserSolid } from "react-icons/lia";
 import { Search } from "../context/ProductContext/ProductContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUserLogin } from "../features/login/loginSlice";
+import { clearUserOrder } from "../features/userOrders/userOrders";
+import { clearUserSignUp } from "../features/signup/SignupSlice";
+import { clearUser } from "../features/user/userSclice";
 
 
 const HeaderProfiles = () => {
 
-    const{search,setSearch,showCart,setShowCart,cartItem,setcartItem}=useContext(Search);
+    const{showCart,setShowCart,cartItem,setcartItem}=useContext(Search);
     const product=useSelector((state)=>state.productReducer.products);
 
     const navigate=useNavigate();
-
-    const handleSearch = () => {
-        setSearch(!search);
-      };
+    const dispatch=useDispatch();
 
      const handleRedirect=()=>{
         navigate("/profile");
       }
+
+       const handleUserLogout=()=>{
+            dispatch(clearUserLogin())
+            dispatch(clearUserOrder());
+            dispatch(clearUserSignUp());
+            dispatch(clearUser());
+            navigate("/");
+        }
 
 
   return (
@@ -46,23 +55,16 @@ const HeaderProfiles = () => {
               </div>
             </MenuItem>
             <MenuItem>
-              <Link
-                to="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+              <div
+                onClick={handleUserLogout}
+                className="block px-4 py-2 cursor-pointer text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
               >
                 Log Out
-              </Link>
+              </div>
             </MenuItem>
           </MenuItems>
         </Menu>
       </div>
-
-      <li
-        className="list-none p-2 text-xl border rounded-xl hover:cursor-pointer"
-        onClick={handleSearch}
-      >
-        <CiSearch />
-      </li>
       <li className="list-none p-2 text-xl border rounded-xl hover:cursor-pointer">
         <div className="relative" onClick={() => setShowCart(!showCart)}>
           <FiShoppingBag />

@@ -9,18 +9,14 @@ import { useAuth } from "../authContext/AuthContext";
 const Header = () => {
   const[isLogined,setIsLogined]=useState(false);
   const[visible,setVisible]=useState(false);
-   const[userIsLoggedIn,setUserLoggedIn]=useState("");
-  const { email } = useSelector((state) => state.login);
+  const { accessToken } = useSelector((state) => state.login);
   const{userAccessToken}=useAuth();
 
-  useEffect(()=>{
-    setUserLoggedIn(localStorage.getItem("accessToken"));  
-  },[])
 
 
 
   return (
-    <div className="bg-black phone sm:px-10 md:px-20 lg:bg-black text-white py-8 flex justify-between items-center px-45 h-25">
+    <div className=" phone  sm:px-10 md:px-20 bg-black text-white py-8 flex justify-between items-center px-45 h-25">
       <h2 className="text-3xl">
         <i>Rive</i>
       </h2>
@@ -37,7 +33,7 @@ const Header = () => {
         </li>
       </ul>
      {
-      email ? <HeaderProfiles/> : <Register/>
+      accessToken ? <HeaderProfiles/> : <Register/>
      }
 
      {/* Side Menu Bar For Mobile Screen */}

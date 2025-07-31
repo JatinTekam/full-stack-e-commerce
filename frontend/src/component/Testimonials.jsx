@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { testimonialsImg } from "../assets/image.js";
+import { testimonialsImg } from "../assets/products.js";
 
 const Testimonials = () => {
   const [testimg1, setTestImg1] = useState(0);

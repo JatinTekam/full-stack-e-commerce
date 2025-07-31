@@ -8,7 +8,9 @@ export const getUserOrders = createAsyncThunk(
 
    try {
       const response = await userProduct(id, accessToken); 
-      return response.data;
+      return {
+        ...response.data
+      };
     } catch (error) {
       return rejectWithValue({
         message: error.response?.data?.message || "Cant't fetch data due to error",
@@ -20,12 +22,18 @@ export const getUserOrders = createAsyncThunk(
 );
 
 const initialState = {
-  orders:null,
+  orders:[],
 };
 
 const userOrders = createSlice({
   name: "userOrders",
   initialState,
+
+  reducers:{
+    clearUserOrder:(state)=>{
+        state.orders=[]
+    }
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getUserOrders.pending, (state) => {
@@ -41,6 +49,9 @@ const userOrders = createSlice({
     });
   },
 });
+
+
+export const {clearUserOrder}=userOrders.actions;
 
 export default userOrders.reducer;
 
