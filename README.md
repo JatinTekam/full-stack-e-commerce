@@ -58,4 +58,18 @@ This project is built with <strong>React</strong> for the frontend, <strong>Java
 
 ✅ **Payment Gateway Integration:** Razorpay API.
 
+## DevOps: 📌
+
+✅ Docker - Containerization(backend)
+
+✅ Netlify - Frontend deployment
+
+✅ Render - Backend deployment
+
+
+```diff
+git clone https://github.com/yourusername/fullstack-ecommerce.git
+cd fullstack-ecommerce
+
+```
 
