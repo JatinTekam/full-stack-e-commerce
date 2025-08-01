@@ -316,3 +316,75 @@ The backend API is available at http://localhost:3000/api/v1
 ]
 
 ```
+
+
+### Get all orders (admin view)
+
+```ruby
+[
+    {
+        "id": 1,
+        "userId": 1,
+        "userAddress": "Jatin Tekam, Mahal, Nagpur Maharshtra, 440032",
+        "phoneNumber": "97XXX56XX",
+        "email": "tekamjatin@gmail.com",
+        "amount": 1200.0,
+        "paymentStatus": "Paid",
+        "razorpayOrderId": "order_QzvGedZsf9iURB",
+        "orderStatus": "In process",
+        "orderedProducts": [
+            {
+                "productId": 5,
+                "url": "",
+                "title": "Velvet Ember Jacket",
+                "category": "Men",
+                "color": "Oval Black",
+                "description": null,
+                "price": 700.0,
+                "quantity": 1,
+                "rating": 4.0,
+                "size": "M"
+            },
+            {
+                "productId": 8,
+                "url": "",
+                "title": "Ivory Drift Tee",
+                "category": "Men",
+                "color": "Oval Black",
+                "description": null,
+                "price": 500.0,
+                "quantity": 1,
+                "rating": 3.5,
+                "size": "M"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "userId": 2,
+        "userAddress": "Harsh Sharma, Civil Line, Pune Maharashtra, 440012",
+        "phoneNumber": "67XX65X147",
+        "email": "Harsh@gmail.com",
+        "amount": 700.0,
+        "paymentStatus": "Paid",
+        "razorpayOrderId": "order_Qzy6cjt6cjjeRw",
+        "orderStatus": "In process",
+        "orderedProducts": [
+            {
+                "productId": 3,
+                "url": "",
+                "title": "Urban Moss",
+                "category": "Men",
+                "color": "Oval Black",
+                "description": null,
+                "price": 700.0,
+                "quantity": 1,
+                "rating": 4.2,
+                "size": "M"
+            }
+        ]
+    }
+]
+
+
+```
