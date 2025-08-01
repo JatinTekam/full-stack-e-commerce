@@ -73,3 +73,22 @@ cd fullstack-ecommerce
 
 ```
 
+
+```diff
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+
+```
+
+
+## 🌐 API Endpoints
+The backend API is available at http://localhost:3000/api/v1
+
+### Authentication Endpoints
+
