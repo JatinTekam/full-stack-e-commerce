@@ -30,6 +30,8 @@ This project is built with <strong>React</strong> for the frontend, <strong>Java
 
 ✅ **React Router DOM:** For declarative routing in React applications.
 
+✅ **React Redux:** Implemented Redux for state management.
+
 ✅ **Axios:** A promise-based HTTP client for making API requests.
 
 ✅ **Tailwind CSS:** A utility-first CSS framework for rapidly building custom designs.
