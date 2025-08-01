@@ -11,9 +11,11 @@ import { useAuth } from "../authContext/AuthContext";
 import { userInfo } from "../features/user/userSclice";
 import Rive from "../component/Rive";
 import { getUserOrders } from "../features/userOrders/userOrders";
+import { FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
+  const[showPassword,setShowPassword]=useState(true);
   const { email, loading, error, message, accessToken , username, status, id} = useSelector(
     (state) => state.login
   );
@@ -103,11 +105,13 @@ const Login = () => {
           </div>
 
           <label htmlFor="password">Password</label>
+          <div className="flex">
           <input
-            type="text"
+            type={showPassword ? "text" : "password"}
             id="password"
             name="password"
-            className={`w-full outline-none ${
+            autoComplete="new-password"
+            className={`w-80 outline-none ${
               errors.password ? "border-b border-b-red-600" : "border-b"
             } `}
             {...register("password", {
@@ -117,7 +121,11 @@ const Login = () => {
                 message: "Password should be contain [A-Z,a-z,0-9]",
               },
             })}
-          />
+            />
+            <button className="border-b cursor-pointer" onClick={()=>setShowPassword(!showPassword)}>
+            <FaEyeSlash className="w-5"/>
+            </button>
+            </div>
           {errors.password && (
             <p className="text-red-500 text-end text-sm">
               {errors.password.message} *

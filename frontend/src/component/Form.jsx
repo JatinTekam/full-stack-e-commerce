@@ -8,10 +8,12 @@ import { UserSignUp } from "../features/signup/SignupSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { errorMsg, successMsg } from "../utils/messages";
+import { FaEyeSlash } from "react-icons/fa";
 
 
 const Form = () => {
   const [isSubmitting, setIsSubmiting] = useState(false);
+  const[showPassword,setShowPassword]=useState(true);
   const { user, loading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -147,12 +149,14 @@ const Form = () => {
               )}
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex  flex-col">
               <label htmlFor="password" className="pb-2">Password</label>
+              <div>
               <input
-                type="text"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
+                autoComplete="new-password"
                 className={`w-70 outline-none ${
                   errors.password ? "border-b border-b-red-600" : "border-b"
                 } `}
@@ -163,7 +167,12 @@ const Form = () => {
                     message: "Password should be contain [A-Z,a-z,0-9]",
                   },
                 })}
-              />
+                />
+              <button className="border-b pb-1 cursor-pointer" onClick={()=>setShowPassword(!showPassword)}>
+              <FaEyeSlash className="w-5"/>
+              </button>
+                </div>
+
               {errors.password && (
                 <p className="text-red-500 text-end text-sm">
                   {errors.password.message} *

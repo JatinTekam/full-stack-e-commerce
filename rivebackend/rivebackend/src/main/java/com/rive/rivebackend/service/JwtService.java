@@ -14,10 +14,10 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    @Value("${JWT_SECRET_KEY}")
+    @Value("${jwt_secret_key}")
     private String SECRET_KEY;
     private static final long ACCESS_TOKEN_EXP= 20 * 60 * 1000;
-    private static final long REFRESH_TOKEN_EXP= 7 * 24 * 60 * 60 * 1000L;
+    //private static final long REFRESH_TOKEN_EXP= 7 * 24 * 60 * 60 * 1000L;
 
 
     private Key getSigningKey() {
@@ -27,12 +27,12 @@ public class JwtService {
 
     public String generateToken(String email,boolean isAccessToken){
 
-        long expiration= isAccessToken ? ACCESS_TOKEN_EXP : REFRESH_TOKEN_EXP;
+       // long expiration= ACCESS_TOKEN_EXP;
 
         return Jwts.builder()
                 .subject(email)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis()+expiration))
+                .expiration(new Date(System.currentTimeMillis()+ACCESS_TOKEN_EXP))
                 .signWith(getSigningKey())
                 .compact();
 

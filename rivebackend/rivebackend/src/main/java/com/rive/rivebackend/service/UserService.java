@@ -101,14 +101,14 @@ public class UserService implements UserModel {
 
                 String accessToken=jwtService.generateToken(request.getEmail(),true);
 
-                String refreshToken=jwtService.generateToken(request.getEmail(),false);
+                //String refreshToken=jwtService.generateToken(request.getEmail(),false);
 
-                Cookie refreshCookie=new Cookie("refreshCookie",refreshToken);
-                refreshCookie.setHttpOnly(true);
-                refreshCookie.setSecure(true);
-                refreshCookie.setPath("/");
-                refreshCookie.setMaxAge(7*24*60*60);
-                response.addCookie(refreshCookie);
+//                Cookie refreshCookie=new Cookie("refreshCookie",refreshToken);
+//                refreshCookie.setHttpOnly(true);
+//                refreshCookie.setSecure(true);
+//                refreshCookie.setPath("/");
+//                refreshCookie.setMaxAge(7*24*60*60);
+//                response.addCookie(refreshCookie);
 
                 UserLogInResponse loginResponse=new UserLogInResponse();
                 loginResponse.setId(user.getId());
