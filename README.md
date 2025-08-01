@@ -68,7 +68,7 @@ This project is built with <strong>React</strong> for the frontend, <strong>Java
 
 
 ```diff
-git clone https://github.com/yourusername/fullstack-ecommerce.git
+git clone https://github.com/JatinTekam/full-stack-e-commerce.git
 cd fullstack-ecommerce
 
 ```
