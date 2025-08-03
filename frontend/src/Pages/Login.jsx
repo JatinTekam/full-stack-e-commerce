@@ -68,25 +68,25 @@ const Login = () => {
 
 
   return (
-    <div className="w-full h-screen  flex  gap-15 items-center relative bg-black">
+    <div className="w-full h-screen  flex  gap-15 items-center relative bg-black justify-center">
       <Rive/>
 
-      <div className="w-160 flex flex-col items-center border  py-10 rounded-2xl bg-white opacity-70">
+      <div className="w-[90vw] md:w-[45vw] xl:w-[40vw] sm:w-[55vw] flex flex-col items-center border  py-10 rounded-2xl bg-white opacity-70">
         <h1 className="text-center text-3xl mb-5">
           <i>Log in</i>
         </h1>
         <form
           action=""
-          className="w-80 flex flex-col gap-2 "
+          className="w-[90vw]  md:w-[45vw] sm:w-[55vw] xl:w-[40vw] flex flex-col gap-2 items-center "
           onSubmit={handleSubmit(onSubmit)}
           method="post"
         >
           <div className="flex flex-col">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" className="text-xl">Email</label>
             <input
               type="email"
               id="email"
-              className={`w-full outline-none ${
+              className={`w-[53vw] md:w-[30vw] sm:w-[35vw] outline-none ${
                 errors.email ? "border-b border-b-red-600" : "border-b"
               } `}
               {...register("email", {
@@ -104,14 +104,15 @@ const Login = () => {
             )}
           </div>
 
-          <label htmlFor="password">Password</label>
+          <div className="flex flex-col">
+          <label htmlFor="password" className="text-xl">Password</label>
           <div className="flex">
           <input
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
             autoComplete="new-password"
-            className={`w-80 outline-none ${
+            className={`w-[50vw] md:w-[29vw] sm:w-[32vw] outline-none ${
               errors.password ? "border-b border-b-red-600" : "border-b"
             } `}
             {...register("password", {
@@ -122,9 +123,9 @@ const Login = () => {
               },
             })}
             />
-            <button className="border-b cursor-pointer" onClick={()=>setShowPassword(!showPassword)}>
+            <span className="border-b cursor-pointer" onClick={()=>setShowPassword(!showPassword)}>
             <FaEyeSlash className="w-5"/>
-            </button>
+            </span>
             </div>
           {errors.password && (
             <p className="text-red-500 text-end text-sm">
@@ -132,10 +133,12 @@ const Login = () => {
             </p>
           )}
 
+          </div>
+
           <div className=" w-full flex justify-center items-center gap-12 mt-2 ">
-            <div className="w-full rounded-[16px]">
+            <div className="w-full rounded-[16px] flex justify-center">
               <button
-                className=" w-full bg-blue-500 p-2 text-white cursor-pointer rounded-[12px] hover:shadow-black flex items-center gap-2 justify-center"
+                className=" w-[50vw] md:w-[29vw] sm:w-[32vw]  bg-blue-500 p-2 text-white cursor-pointer rounded-[12px] hover:shadow-black flex items-center gap-2 justify-center"
                 disabled={isSubmitting}
                 type="submit"
               >

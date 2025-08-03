@@ -6,7 +6,7 @@ import img2 from "../assets/images/img3.jpg";
 
 const Rive = () => {
   return (
-    <div className="w-200 h-50 relative text-white text-center ">
+    <div className="w-200 h-50 relative text-white text-center hidden 2xl:block">
       <h1 className="text-4xl pb-2">Rive</h1>
       <div className="absolute -top-50 w-50 z-0 opacity-55 left-10">
         <img src={img1} alt="" />
