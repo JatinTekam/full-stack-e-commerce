@@ -77,17 +77,18 @@ const Login = () => {
         </h1>
         <form
           action=""
-          className="w-[90vw]  md:w-[45vw] sm:w-[55vw] xl:w-[40vw] flex flex-col gap-2 items-center "
+          className="w-[90vw]  md:w-[45vw] sm:w-[55vw] xl:w-[40vw] flex flex-col gap-3 items-center "
           onSubmit={handleSubmit(onSubmit)}
           method="post"
         >
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-xl">Email</label>
+            {/* <label htmlFor="email" className="text-xl">Email</label> */}
             <input
               type="email"
               id="email"
-              className={`w-[53vw] md:w-[30vw] sm:w-[35vw] outline-none ${
-                errors.email ? "border-b border-b-red-600" : "border-b"
+              placeholder="Email"
+              className={`w-[56vw] md:w-[23vw] sm:w-[35vw]  rounded-md outline-none bg-[#05060f0a] p-2 ${
+                errors.email ? "border border-red-600" : "border"
               } `}
               {...register("email", {
                 required: "Email is required",
@@ -98,22 +99,23 @@ const Login = () => {
               })}
             />
             {errors.email && (
-              <p className="text-red-500 text-end text-sm">
+              <p className="text-red-500  text-sm">
                 {errors.email.message} *
               </p>
             )}
           </div>
 
           <div className="flex flex-col">
-          <label htmlFor="password" className="text-xl">Password</label>
+          {/* <label htmlFor="password" className="text-xl">Password</label> */}
           <div className="flex">
           <input
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
+            placeholder="Password"
             autoComplete="new-password"
-            className={`w-[50vw] md:w-[29vw] sm:w-[32vw] outline-none ${
-              errors.password ? "border-b border-b-red-600" : "border-b"
+            className={`w-[50vw] md:w-[21vw] sm:w-[32vw] outline-none  bg-[#05060f0a] p-2  ${
+              errors.password ? "border-t border-b border-l rounded-tl-md rounded-bl-md border-l-red-600 border-t-red-600 border-b-red-600 order" : "border-b border-t border-l rounded-tl-md rounded-bl-md"
             } `}
             {...register("password", {
               required: "Password is required",
@@ -123,22 +125,22 @@ const Login = () => {
               },
             })}
             />
-            <span className="border-b cursor-pointer" onClick={()=>setShowPassword(!showPassword)}>
-            <FaEyeSlash className="w-5"/>
-            </span>
+            <div className={ `pt-3  pr-2 bg-[#05060f0a] ${errors.password ? "border-t border-b border-r rounded-br-md border-r-red-600 border-b-red-600 rounded-tr-md border-t-red-600" : 'border-b  border-t border-r rounded-tr-md rounded-br-md cursor-pointer '} `} onClick={()=>setShowPassword(!showPassword)}>
+            <FaEyeSlash className="w-6"/>
+            </div>
             </div>
           {errors.password && (
-            <p className="text-red-500 text-end text-sm">
+            <p className="text-red-500  text-sm">
               {errors.password.message} *
             </p>
           )}
-
+          
           </div>
 
           <div className=" w-full flex justify-center items-center gap-12 mt-2 ">
             <div className="w-full rounded-[16px] flex justify-center">
               <button
-                className=" w-[50vw] md:w-[29vw] sm:w-[32vw]  bg-blue-500 p-2 text-white cursor-pointer rounded-[12px] hover:shadow-black flex items-center gap-2 justify-center"
+                className=" w-[50vw] md:w-[22vw] sm:w-[32vw]  bg-blue-500 p-2 text-white cursor-pointer rounded-[12px] hover:shadow-black flex items-center gap-2 justify-center"
                 disabled={isSubmitting}
                 type="submit"
               >

@@ -8,7 +8,7 @@ const Signup = () => {
   return (
     <div className="w-full h-screen flex gap-2 items-center bg-black justify-center">
       <Rive/>
-      <div className="w-180 justify-around border p-5 rounded-2xl bg-white  opacity-70">
+      <div className="w-130 justify-around border p-5 rounded-2xl bg-white  opacity-70">
         <h1 className="text-center text-3xl mb-5">
           <i>Sign Up</i>
         </h1>
