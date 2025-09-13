@@ -1,19 +1,23 @@
 import Applayout from "./component/Applayout";
-import Heropage from "./Pages/Heropage";
-import { BrowserRouter, createBrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Signup from "./Pages/Signup";
-import Contact from "./Pages/Contact";
-import Collection from "./Pages/Collection";
-import IndiviualPage from "./Pages/IndiviualPage";
-import Login from "./Pages/Login";
-import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { AuthProvider, useAuth } from "./authContext/AuthContext";
-import {refreshUser } from "./features/login/loginSlice";
-import { useEffect, useState } from "react";
+import { lazy } from "react";
 import ProtectedRoutes  from "./procetedroutes/ProtectedRoutes";
 import NotFound from "./Pages/NotFound";
-import Profile from "./Pages/Profile";
-import ProductBuy from "./Pages/ProductBuy";
+
+
+
+const Heropage=lazy(()=>import("./Pages/Heropage"));
+const Profile=lazy(()=>import("./Pages/Profile"));
+const ProductBuy=lazy(()=>import("./Pages/ProductBuy"));
+const Login=lazy(()=>import("./Pages/Login"));
+const IndiviualPage=lazy(()=>import("./Pages/IndiviualPage"));
+const Collection=lazy(()=>import("./Pages/Collection"));
+const Contact=lazy(()=>import("./Pages/Contact"));
+const Signup=lazy(()=>import("./Pages/Signup"));
+
+
 
 
 function App() {
