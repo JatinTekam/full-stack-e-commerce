@@ -240,6 +240,53 @@ The backend API is available at http://localhost:3000/api/v1
    
  </table>
 
+### Test Card Details
+ <table>
+  <tr>
+    <th>
+      Card Network
+    </th>
+    <th>
+      Card Network
+    </th>
+    <th>
+     CVV
+    </th>
+    <th>
+      Expiry Date
+    </th>
+  </tr>
+   <tr>
+     <td>
+       Mastercard
+     </td>
+     <td>
+       2305 3242 5784 8228
+     </td>
+     <td>
+       Random CVV
+     </td>
+     <td>
+       Any future date
+     </td>
+   </tr>
+
+   <tr>
+     <td>
+       Visa
+     </td>
+     <td>
+       	4386 2894 0766 0153
+     </td>
+     <td>
+      Random CVV
+     </td>
+     <td>
+       Any future date
+     </td>
+   </tr>
+ </table>
+
 
  ## API Response Examples
 
